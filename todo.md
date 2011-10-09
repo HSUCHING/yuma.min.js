@@ -15,3 +15,4 @@
 * CSS style for button active/focus
 * Seadragon: Reposition/z-index should also work when switching between 
   Seadragon normal/fullscreen mode
+* Investigate the timing issue that causes issue #1, as reported by Klokan
