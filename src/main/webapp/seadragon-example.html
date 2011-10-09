@@ -22,6 +22,10 @@
     // Deepzoom viewer
 	var viewer;
 	
+	function init() {
+		canvas = new YUMA.SeajaxAnnotationLayer('viewer', viewer);
+	}
+	
     window.onload = function() {	
 		function onZoomitResponse(response) {
 			if (response.error) {
@@ -33,7 +37,6 @@
             if (content.ready) {
 				viewer = new Seadragon.Viewer("viewer");
 				viewer.openDzi(content.dzi);
-				canvas = new YUMA.SeajaxAnnotationLayer('viewer', viewer);
             } else if (content.failed) {
 				alert(content.url + " failed to convert.");
             } else {
@@ -52,7 +55,7 @@
   
   <body>
     <div id="viewer" style="width:640px;height:480px;"></div>
-    <input id="annotate-button" type="button" value="Add Note" onclick="canvas.createNewAnnotation()"/>
+    <input id="annotate-button" type="button" value="Add Note" onclick="if (!canvas) init(); canvas.createNewAnnotation();"/>
   </body>
 </html>
 
