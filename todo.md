@@ -1,5 +1,8 @@
 # TODOs
 
+* Some CSS properties (text colors etc.) are not yet defined in the stylesheet, and are inherited from
+  the CSS hierarchy - can lead to issues (e.g. if default text color is white, annotation popups will be
+  white on white background) -> fix this
 * Annotations created later always cover annotations created earlier -> fix, so that smaller annotations
   are never covered by larger ones!
 * Image: the annotation layer sometimes seems to be shifted upwards a varying number of pixels. Seems
