@@ -41,8 +41,13 @@ start your initialization.
      <head>
        ...
        <script type="text/javascript">
+       // You'll probably want to define this globally, so you can later
+       // access the annotation layer from other GUI elements (buttons etc.)
+       // on your page
+       var annotationLayer;
+       
        window.onYUMAready = function() {
-         var annotationLayer = new YUMA.ImageAnnotationLayer('annotateMe');
+         annotationLayer = new YUMA.ImageAnnotationLayer('annotateMe');
        }
        </script>
      </head>
