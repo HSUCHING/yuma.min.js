@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.editors;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -50,18 +51,18 @@ public abstract class Editor {
 					// Local-mode: just add the annotation without storing
 					annotatable.addAnnotation(a);
 				} else {
-					Create.executeJSONP(annotatable.getServerURL(), a, new AsyncCallback<String>() {
-						public void onSuccess(String result) {	
-							annotatable.addAnnotation(a);
+					Create.executeJSONP(annotatable.getServerURL(), a, new AsyncCallback<JavaScriptObject>() {
+						public void onSuccess(JavaScriptObject result) {
+							annotatable.addAnnotation((Annotation) result);
+							destroy();
 						}
 						
 						public void onFailure(Throwable t) {
 							YUMA.nonFatalError(t.getMessage());
+							destroy();
 						}
 					});
 				}
-				
-				destroy();
 			}
 		});
 		
