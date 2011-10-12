@@ -7,9 +7,9 @@ public class Delete {
 
 	private static final String JSONP_PATH = "api/annotation/jsonp/delete?id=";
 	
-	public static void executeJSONP(String serverURL, String annotationID, AsyncCallback<String> callback) {
+	public static void executeJSONP(String serverURL, String annotationID, AsyncCallback<Void> callback) {
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-		jsonp.requestString(serverURL + JSONP_PATH + annotationID, callback);
+		jsonp.send(serverURL + JSONP_PATH + annotationID, callback);
 	}
 	
 }

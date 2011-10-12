@@ -160,9 +160,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		
 		details.addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
-				System.out.println("Deleting " + a.getID());
-				Delete.executeJSONP(getServerURL(), a.getID(), new AsyncCallback<String>() {
-					public void onSuccess(String result) {
+				Delete.executeJSONP(getServerURL(), a.getID(), new AsyncCallback<Void>() {
+					public void onSuccess(Void result) {
 						removeAnnotation(a);
 					}			
 
