@@ -153,8 +153,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		DetailsPopup details = overlay.getDetailsPopup();
 		details.addEditHandler(new EditHandler() {
 			public void onEdit(Annotation annotation) {
-				new ResizableBoxEditor(thisAnnotatable, annotationLayer, annotation);
 				removeAnnotation(annotation);
+				new ResizableBoxEditor(thisAnnotatable, annotationLayer, annotation);
 			}
 		});
 		

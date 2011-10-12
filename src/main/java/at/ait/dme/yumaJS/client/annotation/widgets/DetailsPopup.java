@@ -38,7 +38,7 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 	
 	private FlowPanel container;
 	
-	private PushButton btnReply, btnEdit, btnDelete;
+	private PushButton /* btnReply, */ btnEdit, btnDelete;
 	
 	private Annotation annotation;
 	
@@ -50,16 +50,16 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		content.add(new InlineHTML(a.getText()));
 		
 		if (labels == null) {
-			btnReply = new PushButton("REPLY");
+			// btnReply = new PushButton("REPLY");
 			btnEdit = new PushButton("EDIT");
 			btnDelete = new PushButton("DELETE");
 		} else {
-			btnReply = new PushButton(labels.reply());
+			// btnReply = new PushButton(labels.reply());
 			btnEdit = new PushButton(labels.edit());
 			btnDelete = new PushButton(labels.delete());			
 		}
 
-		btnReply.setStyleName("annotation-popup-button");
+		// btnReply.setStyleName("annotation-popup-button");
 		btnEdit.setStyleName("annotation-popup-button");		
 		btnDelete.setStyleName("annotation-popup-button");
 		showButtons(false);
@@ -73,7 +73,7 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		container = new FlowPanel();
 		container.setStyleName("annotation-popup");		
 		container.add(content);
-		container.add(btnReply);
+		// container.add(btnReply);
 		container.add(btnEdit);
 		container.add(btnDelete);
 		setVisible(false);
@@ -102,7 +102,7 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 	}
 	
 	private void showButtons(boolean show) {
-		btnReply.setVisible(show);
+		// btnReply.setVisible(show);
 		btnEdit.setVisible(show);
 		btnDelete.setVisible(show);
 	}
