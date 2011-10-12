@@ -14,8 +14,13 @@ public class Create {
 	
 	public static void executeJSONP(String serverURL, Annotation a, AsyncCallback<JavaScriptObject> callback) {
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-		String json = URL.encodeQueryString(new JSONObject(a).toString());
-		jsonp.requestObject(serverURL + JSONP_PATH + json, callback);
+		JSONObject json = new JSONObject(a);
+		
+		// Note: GWT puts some sort of annoying hash key into overlay types - remove!
+		if (json.containsKey("$H"))
+			json.put("$H", null);
+		
+		jsonp.requestObject(serverURL + JSONP_PATH + URL.encodeQueryString(json.toString()), callback);
 	}
 
 }

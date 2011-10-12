@@ -41,11 +41,18 @@ public abstract class Editor {
 		
 		this.editForm.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				final Annotation a = Annotation.create(
+				final Annotation a;
+				if (initialAnnotation == null) {
+					a = Annotation.create(
 						annotatable.getObjectURI(),
 						annotatable.getMediaType(),
 						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()),
 						editForm.getText());
+				} else {
+					a = initialAnnotation;
+					a.setFragment(annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()));
+					a.setText(editForm.getText());
+				}
 				
 				if (annotatable.getServerURL() == null) {
 					// Local-mode: just add the annotation without storing

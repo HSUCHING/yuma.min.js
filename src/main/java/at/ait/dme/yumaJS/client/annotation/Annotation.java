@@ -23,13 +23,21 @@ public class Annotation extends JavaScriptObject {
 	public final native String getID() /*-{
 		return this.id;
 	}-*/;
-	
+
 	public final native String getFragment() /*-{
 		return this.fragment;
 	}-*/;
 	
+	public final native void setFragment(String fragment) /*-{
+		this.fragment = fragment;
+	}-*/;
+	
 	public final native String getText() /*-{
 		return this.text;
+	}-*/;
+	
+	public final native void setText(String text) /*-{
+		this.text = text;
 	}-*/;
 
 }
