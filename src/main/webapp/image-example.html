@@ -8,7 +8,7 @@
 	<script>
 	var annotationLayer;
 	window.onYUMAready = function() {
-		annotationLayer = new YUMA.ImageAnnotationLayer('sample-image');
+		annotationLayer = new YUMA.ImageAnnotationLayer('sample-image', { serverURL: "http://localhost:8081/yuma4j-server" });
 	}
 	</script>
   </head>
