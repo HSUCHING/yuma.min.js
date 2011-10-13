@@ -160,15 +160,19 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		
 		details.addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
-				Delete.executeJSONP(getServerURL(), a.getID(), new AsyncCallback<Void>() {
-					public void onSuccess(Void result) {
-						removeAnnotation(a);
-					}			
-
-					public void onFailure(Throwable t) {
-						YUMA.nonFatalError(t.getMessage());
-					}
-				});
+				if (getServerURL() == null) {
+					removeAnnotation(a);
+				} else {
+					Delete.executeJSONP(getServerURL(), a.getID(), new AsyncCallback<Void>() {
+						public void onSuccess(Void result) {
+							removeAnnotation(a);
+						}			
+	
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}
 			}
 		});
 		
