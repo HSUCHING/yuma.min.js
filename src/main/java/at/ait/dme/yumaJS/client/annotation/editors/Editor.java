@@ -57,6 +57,7 @@ public abstract class Editor {
 				if (annotatable.getServerURL() == null) {
 					// Local-mode: just add the annotation without storing
 					annotatable.addAnnotation(a);
+					destroy();
 				} else {
 					Create.executeJSONP(annotatable.getServerURL(), a, new AsyncCallback<JavaScriptObject>() {
 						public void onSuccess(JavaScriptObject result) {
