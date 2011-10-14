@@ -25,7 +25,9 @@ public class OpenLayersAnnotationOverlay {
 	public OpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a, BoxMarker marker, Labels labels) {
 		this.boxMarker = marker;
 		
-		Style markerStyle = boxMarker.getDiv().getStyle();
+		Element boxMarkerDiv = marker.getDiv();
+		
+		Style markerStyle = boxMarkerDiv.getStyle();
 		markerStyle.clearBorderColor();
 		markerStyle.clearBorderWidth();
 		markerStyle.clearBorderStyle();
@@ -37,10 +39,10 @@ public class OpenLayersAnnotationOverlay {
 		innerBorder.setStyleName("annotation-bbox-inner");
 		boxMarker.getDiv().appendChild(innerBorder.getElement());
 		
-		DOM.sinkEvents(boxMarker.getDiv(), 
+		DOM.sinkEvents(boxMarkerDiv, 
 				Event.ONMOUSEOVER |Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);
 		
-		Event.setEventListener(boxMarker.getDiv(), new EventListener() {
+		Event.setEventListener(boxMarkerDiv, new EventListener() {
 			public void onBrowserEvent(Event event) {
 				if (event.getTypeInt() == Event.ONMOUSEOUT) {
 					if (!detailsPopup.contains(event.getClientX(), event.getClientY()))
@@ -59,8 +61,7 @@ public class OpenLayersAnnotationOverlay {
 		
 		detailsPopup = new DetailsPopup(annotatable, a, labels);
 		detailsPopup.setVisible(false);
-		
-		RootPanel.get().add(detailsPopup);
+		RootPanel.get().add(detailsPopup, boxMarkerDiv.getAbsoluteLeft(), boxMarkerDiv.getAbsoluteTop());
 	}
 	
 	private void refresh() {
