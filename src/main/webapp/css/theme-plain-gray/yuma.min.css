@@ -1,3 +1,7 @@
+html {
+	border-width:0px;
+}
+
 .yuma-bbox-selection-outer {
 	padding:0px 2px 2px 0px;
 	border:1px solid #000;
