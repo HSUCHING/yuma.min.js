@@ -1,9 +1,11 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
@@ -20,6 +22,18 @@ public class OpenLayersAnnotationOverlay {
 	
 	public OpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a, BoxMarker marker, Labels labels) {
 		this.boxMarker = marker;
+		
+		Style markerStyle = boxMarker.getDiv().getStyle();
+		markerStyle.clearBorderColor();
+		markerStyle.clearBorderWidth();
+		markerStyle.clearBorderStyle();
+		boxMarker.getDiv().setClassName("annotation-bbox-outer");
+		
+		FlowPanel innerBorder = new FlowPanel();
+		innerBorder.setWidth("100%");
+		innerBorder.setHeight("100%");
+		innerBorder.setStyleName("annotation-bbox-inner");
+		boxMarker.getDiv().appendChild(innerBorder.getElement());
 		
 		DOM.sinkEvents(boxMarker.getDiv(), 
 				Event.ONMOUSEOVER |Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);
