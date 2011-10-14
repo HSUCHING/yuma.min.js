@@ -1,7 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers.api;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.Element;
 
 public class BoxMarker extends JavaScriptObject {
 
