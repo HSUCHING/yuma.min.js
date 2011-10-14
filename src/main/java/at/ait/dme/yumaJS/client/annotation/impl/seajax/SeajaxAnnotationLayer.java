@@ -106,7 +106,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 
 	@Override
 	public Range toRange(String fragment) {
-		// TODO Auto-generated method stub
+		// Zoomable images don't support range fragments
 		return null;
 	}
 
@@ -126,6 +126,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		ZoomableAnnotationOverlay overlay = 
 			new ZoomableAnnotationOverlay(a, this, viewer, getLabels());		
 		annotations.put(a, overlay);
+		fireOnAnnotationCreated(a);
 	}
 
 	@Override

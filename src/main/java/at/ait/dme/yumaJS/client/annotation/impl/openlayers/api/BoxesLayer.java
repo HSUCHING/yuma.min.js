@@ -10,8 +10,12 @@ public class BoxesLayer extends JavaScriptObject {
 		return new $wnd.OpenLayers.Layer.Boxes(name);
 	}-*/;
 	
-	public final native void addMaker(BoxMarker marker) /*-{
+	public final native void addMarker(BoxMarker marker) /*-{
 		this.addMarker(marker);
+	}-*/;
+	
+	public final native void removeMarker(BoxMarker marker) /*-{
+		this.removeMarker(marker);
 	}-*/;
 
 }

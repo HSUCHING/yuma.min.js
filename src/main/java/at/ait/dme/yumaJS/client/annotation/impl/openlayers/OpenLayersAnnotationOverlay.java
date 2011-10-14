@@ -12,26 +12,25 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
-public class OpenlayersAnnotationOverlay {
-	
-	private Element boxMarkerDiv;
+public class OpenLayersAnnotationOverlay {
+		
+	private BoxMarker boxMarker;
 	
 	private DetailsPopup detailsPopup;
 	
-	public OpenlayersAnnotationOverlay(Annotatable annotatable, Annotation a, BoxMarker marker, Labels labels) {
-		this.boxMarkerDiv = marker.getDiv();
+	public OpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a, BoxMarker marker, Labels labels) {
+		this.boxMarker = marker;
 		
-		DOM.sinkEvents(boxMarkerDiv, Event.ONMOUSEOVER | Event.ONMOUSEOUT);
-		Event.setEventListener(boxMarkerDiv, new EventListener() {
+		DOM.sinkEvents(boxMarker.getDiv(), 
+				Event.ONMOUSEOVER |Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);
+		
+		Event.setEventListener(boxMarker.getDiv(), new EventListener() {
 			public void onBrowserEvent(Event event) {
-				if (event.getTypeInt() == Event.ONMOUSEOVER) {
-					RootPanel.get().setWidgetPosition(detailsPopup, 
-							boxMarkerDiv.getAbsoluteLeft(), 
-							boxMarkerDiv.getAbsoluteTop() +  boxMarkerDiv.getOffsetHeight());
-					detailsPopup.setVisible(true);
-				} else if (event.getTypeInt() == Event.ONMOUSEOUT) {
+				if (event.getTypeInt() == Event.ONMOUSEOUT) {
 					if (!detailsPopup.contains(event.getClientX(), event.getClientY()))
 						detailsPopup.setVisible(false);
+				} else {
+					refresh();
 				}
 			}
 		});
@@ -40,6 +39,22 @@ public class OpenlayersAnnotationOverlay {
 		detailsPopup.setVisible(false);
 		
 		RootPanel.get().add(detailsPopup);
+	}
+	
+	private void refresh() {
+		Element boxMarkerDiv = boxMarker.getDiv();
+		RootPanel.get().setWidgetPosition(detailsPopup, 
+				boxMarkerDiv.getAbsoluteLeft(), 
+				boxMarkerDiv.getAbsoluteTop() +  boxMarkerDiv.getOffsetHeight());
+		detailsPopup.setVisible(true);	
+	}
+	
+	public BoxMarker getMarker() {
+		return boxMarker;
+	}
+	
+	public void destroy() {
+		detailsPopup.removeFromParent();
 	}
 
 }

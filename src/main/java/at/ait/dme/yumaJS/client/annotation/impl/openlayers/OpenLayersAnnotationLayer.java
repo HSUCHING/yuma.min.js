@@ -34,8 +34,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	
 	private AbsolutePanel editingLayer;
 	
-	private HashMap<Annotation, OpenlayersAnnotationOverlay> annotations = 
-		new HashMap<Annotation, OpenlayersAnnotationOverlay>();
+	private HashMap<Annotation, OpenLayersAnnotationOverlay> annotations = 
+		new HashMap<Annotation, OpenLayersAnnotationOverlay>();
 	
 	public OpenLayersAnnotationLayer(JavaScriptObject map) {
 		this(map, null);
@@ -129,10 +129,10 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	@Override
 	public void addAnnotation(Annotation annotation) {
 		BoxMarker marker = BoxMarker.create(toOpenLayersBounds(annotation.getFragment()));
-		annotationLayer.addMaker(marker);
+		annotationLayer.addMarker(marker);
 		
-		OpenlayersAnnotationOverlay overlay = 
-			new OpenlayersAnnotationOverlay(this, annotation, marker, getLabels());
+		OpenLayersAnnotationOverlay overlay = 
+			new OpenLayersAnnotationOverlay(this, annotation, marker, getLabels());
 
 		annotations.put(annotation, overlay);
 		fireOnAnnotationCreated(annotation);
@@ -140,8 +140,12 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void removeAnnotation(Annotation annotation) {
-		// TODO Auto-generated method stub
-		
+		OpenLayersAnnotationOverlay overlay = annotations.get(annotation);
+		if (overlay != null) {
+			annotationLayer.removeMarker(overlay.getMarker());
+			overlay.destroy();
+			annotations.remove(annotation);
+		}
 	}
 
 	@Override
