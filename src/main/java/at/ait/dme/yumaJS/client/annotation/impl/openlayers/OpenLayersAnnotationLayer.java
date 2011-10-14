@@ -31,6 +31,8 @@ import at.ait.dme.yumaJS.client.init.InitParams;
 public class OpenLayersAnnotationLayer extends Annotatable implements Exportable {
 
 	private static final String MEDIATYPE = "MAP";
+	
+	private String objectURI;
 
 	private Map map;
 	
@@ -41,13 +43,14 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	private HashMap<Annotation, OpenLayersAnnotationOverlay> annotations = 
 		new HashMap<Annotation, OpenLayersAnnotationOverlay>();
 	
-	public OpenLayersAnnotationLayer(JavaScriptObject openLayersMap, InitParams params) {
+	public OpenLayersAnnotationLayer(JavaScriptObject openLayersMap, String objectURI, InitParams params) {
 		super(params);
 
 		if (openLayersMap == null) 
 			YUMA.fatalError("Error: OpenLayers map undefined (not initialized yet?)");
 		
 		map = new Map(openLayersMap);
+		this.objectURI = objectURI;
 
 		// TODO make annotation layer name configurable via init params
 		annotationLayer = BoxesLayer.create("Annotations");
@@ -59,12 +62,15 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		editingLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
 		editingLayer.setPixelSize(parentDiv.getOffsetWidth(), parentDiv.getOffsetHeight());		
 		RootPanel.get().insert(editingLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop(), 0);
+		
+		if (getServerURL() != null) {
+			fetchAnnotations(getServerURL());
+		}
 	}
 
 	@Override
 	public String getObjectURI() {
-		// TODO Auto-generated method stub
-		return null;
+		return objectURI;
 	}
 
 	@Override

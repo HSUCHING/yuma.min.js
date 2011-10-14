@@ -1,6 +1,7 @@
 package at.ait.dme.yumaJS.client;
 
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
+import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -13,7 +14,10 @@ public class TestOpenLayersHosted implements EntryPoint {
 
 	public void onModuleLoad() {
 		final OpenLayersAnnotationLayer annotationLayer = 
-			new OpenLayersAnnotationLayer(getMap(), null);
+			new OpenLayersAnnotationLayer(
+					getMap(), 
+					"http://upload.wikimedia.org/wikipedia/commons/e/ec/Waldseemuller_map.jpg",
+					createInitParams());
 		
 		PushButton annotate = new PushButton("Add Note");
 		annotate.addClickHandler(new ClickHandler() {
@@ -27,6 +31,12 @@ public class TestOpenLayersHosted implements EntryPoint {
 	
 	private native JavaScriptObject getMap() /*-{
 		return $wnd.map;
+	}-*/;
+	
+	private native InitParams createInitParams() /*-{
+		return {
+			serverURL:"http://localhost:8081/yuma4j-server"
+		};
 	}-*/;
 	
 }
