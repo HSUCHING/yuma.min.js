@@ -41,10 +41,6 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	private HashMap<Annotation, OpenLayersAnnotationOverlay> annotations = 
 		new HashMap<Annotation, OpenLayersAnnotationOverlay>();
 	
-	public OpenLayersAnnotationLayer(JavaScriptObject map) {
-		this(map, null);
-	}
-	
 	public OpenLayersAnnotationLayer(JavaScriptObject openLayersMap, InitParams params) {
 		super(params);
 
@@ -52,7 +48,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			YUMA.fatalError("Error: OpenLayers map undefined (not initialized yet?)");
 		
 		map = new Map(openLayersMap);
-		
+
 		// TODO make annotation layer name configurable via init params
 		annotationLayer = BoxesLayer.create("Annotations");
 		map.addBoxesLayer(annotationLayer);

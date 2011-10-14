@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.DOM;
@@ -43,6 +45,12 @@ public class OpenLayersAnnotationOverlay {
 				if (event.getTypeInt() == Event.ONMOUSEOUT) {
 					if (!detailsPopup.contains(event.getClientX(), event.getClientY()))
 						detailsPopup.setVisible(false);
+				} else if (event.getTypeInt() == Event.ONMOUSEWHEEL) {
+					Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+						public void execute() {
+							refresh();
+						}
+					});
 				} else {
 					refresh();
 				}

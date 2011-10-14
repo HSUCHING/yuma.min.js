@@ -8,7 +8,7 @@ public class Map {
 	
 	private JavaScriptObject map;
 	
-	public Map(JavaScriptObject map) { 
+	public Map(JavaScriptObject map) {
 		this.map = map;
 	}
 

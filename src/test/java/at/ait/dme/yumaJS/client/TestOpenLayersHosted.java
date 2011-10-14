@@ -13,7 +13,7 @@ public class TestOpenLayersHosted implements EntryPoint {
 
 	public void onModuleLoad() {
 		final OpenLayersAnnotationLayer annotationLayer = 
-			new OpenLayersAnnotationLayer(getMap());
+			new OpenLayersAnnotationLayer(getMap(), null);
 		
 		PushButton annotate = new PushButton("Add Note");
 		annotate.addClickHandler(new ClickHandler() {
