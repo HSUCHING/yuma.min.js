@@ -13,12 +13,11 @@ import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -113,21 +112,8 @@ public class AnnotationTrack extends Composite {
 		currentPopup.setVisible(true);
 	}
 	
-	public void addAnnotation(Annotation a, Labels labels) {
-		DetailsPopup popup = new DetailsPopup(a, labels);
-		
-		popup.addEditHandler(new EditHandler() {
-			public void onEdit(Annotation annotation) {
-				// TODO need some restructuring first to implement this properly
-			}
-		});
-		
-		popup.addDeleteHandler(new DeleteHandler() {
-			public void onDelete(Annotation annotation) {
-				removeAnnotation(annotation);
-			}
-		});
-		
+	public void addAnnotation(Annotatable annotatable, Annotation a, Labels labels) {
+		DetailsPopup popup = new DetailsPopup(annotatable, a, labels);
 		annotations.put(a, popup);
 		refresh();
 	}

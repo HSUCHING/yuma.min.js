@@ -118,8 +118,13 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		
 	}
 
+	@Override
+	public void editAnnotation(Annotation a) {
+		new ResizableBoxEditor(this, editingLayer, a);
+	}
+	
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, editingLayer);
+		editAnnotation(null);
 	}
 	
 }

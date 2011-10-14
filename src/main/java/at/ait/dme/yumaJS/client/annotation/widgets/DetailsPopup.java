@@ -1,9 +1,10 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
+import at.ait.dme.yumaJS.client.YUMA;
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.Labels;
+import at.ait.dme.yumaJS.client.io.Delete;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -15,6 +16,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
@@ -40,11 +42,7 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 	
 	private PushButton /* btnReply, */ btnEdit, btnDelete;
 	
-	private Annotation annotation;
-	
-	public DetailsPopup(Annotation a, Labels labels) {
-		this.annotation = a;
-		
+	public DetailsPopup(final Annotatable annotatable, final Annotation a, Labels labels) {
 		FlowPanel content = new FlowPanel();
 		content.setStyleName("annotation-popup-content");
 		content.add(new InlineHTML(a.getText()));
@@ -61,7 +59,32 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 
 		// btnReply.setStyleName("annotation-popup-button");
 		btnEdit.setStyleName("annotation-popup-button");		
+		btnEdit.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				annotatable.removeAnnotation(a);
+				annotatable.editAnnotation(a);
+			}
+		});
+		
 		btnDelete.setStyleName("annotation-popup-button");
+		btnDelete.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (annotatable.getServerURL() == null) {
+					annotatable.removeAnnotation(a);
+				} else {
+					Delete.executeJSONP(annotatable.getServerURL(), a.getID(), new AsyncCallback<Void>() {
+						public void onSuccess(Void result) {
+							annotatable.removeAnnotation(a);
+						}			
+	
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}				
+			}
+		});
+		
 		showButtons(false);
 		
 		content.addDomHandler(new MouseOverHandler() {
@@ -76,6 +99,8 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		// container.add(btnReply);
 		container.add(btnEdit);
 		container.add(btnDelete);
+		
+		
 		setVisible(false);
 		
 		initWidget(container);
@@ -126,22 +151,6 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 			return false;
 		
 		return true;
-	}
-	
-	public void addDeleteHandler(final DeleteHandler handler) {
-		btnDelete.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				handler.onDelete(annotation);
-			}
-		});
-	}
-	
-	public void addEditHandler(final EditHandler handler) {
-		btnEdit.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				handler.onEdit(annotation);
-			}
-		});
 	}
 	
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {

@@ -48,7 +48,7 @@ public class ImageAnnotationOverlay {
 			}
 		});
 		
-		detailsPopup = new DetailsPopup(annotation, labels);
+		detailsPopup = new DetailsPopup(annotatable, annotation, labels);
 		detailsPopup.setVisible(false);
 		
 		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());

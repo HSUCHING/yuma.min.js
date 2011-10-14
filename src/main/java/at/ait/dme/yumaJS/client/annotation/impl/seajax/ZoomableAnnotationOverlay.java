@@ -55,7 +55,7 @@ public class ZoomableAnnotationOverlay {
 			}
 		});
 		
-		detailsPopup = new DetailsPopup(annotation, labels);
+		detailsPopup = new DetailsPopup(annotatable, annotation, labels);
 		detailsPopup.setVisible(false);
 		
 		SeadragonPoint anchor =

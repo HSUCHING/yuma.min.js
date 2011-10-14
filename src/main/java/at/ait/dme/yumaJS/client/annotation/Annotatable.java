@@ -95,6 +95,8 @@ public abstract class Annotatable implements Exportable {
 	public abstract void addAnnotation(Annotation annotation);
 	
 	public abstract void removeAnnotation(Annotation annotation);
+
+	public abstract void editAnnotation(Annotation a);
 				
 	@Export
 	public void addAnnotationCreatedListener(JavaScriptObject callback) {

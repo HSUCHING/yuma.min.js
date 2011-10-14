@@ -12,11 +12,7 @@ import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
-import at.ait.dme.yumaJS.client.io.Delete;
 
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -25,7 +21,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -147,35 +142,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	public void addAnnotation(final Annotation a) {
 		ImageAnnotationOverlay overlay = 
 			new ImageAnnotationOverlay(a, this, annotationLayer, getLabels());
-		
-		final Annotatable thisAnnotatable = this;
-		
-		DetailsPopup details = overlay.getDetailsPopup();
-		details.addEditHandler(new EditHandler() {
-			public void onEdit(Annotation annotation) {
-				removeAnnotation(annotation);
-				new ResizableBoxEditor(thisAnnotatable, annotationLayer, annotation);
-			}
-		});
-		
-		details.addDeleteHandler(new DeleteHandler() {
-			public void onDelete(Annotation annotation) {
-				if (getServerURL() == null) {
-					removeAnnotation(a);
-				} else {
-					Delete.executeJSONP(getServerURL(), a.getID(), new AsyncCallback<Void>() {
-						public void onSuccess(Void result) {
-							removeAnnotation(a);
-						}			
-	
-						public void onFailure(Throwable t) {
-							YUMA.nonFatalError(t.getMessage());
-						}
-					});
-				}
-			}
-		});
-		
+
 		annotations.put(a, overlay);
 		fireOnAnnotationCreated(a);
 	}
@@ -189,8 +156,13 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		}
 	}
 	
+	@Override
+	public void editAnnotation(Annotation a) {
+		new ResizableBoxEditor(this, annotationLayer, a);
+	}
+	
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, annotationLayer);
+		editAnnotation(null);
 	}
 
 }

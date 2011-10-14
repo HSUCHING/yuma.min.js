@@ -14,9 +14,6 @@ import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonMouseHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
-import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.core.client.JavaScriptObject;
@@ -127,24 +124,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	@Override
 	public void addAnnotation(Annotation a) {
 		ZoomableAnnotationOverlay overlay = 
-			new ZoomableAnnotationOverlay(a, this, viewer, getLabels());
-
-		final Annotatable thisAnnotatable = this;
-		
-		DetailsPopup popup = overlay.getDetailsPopup();
-		popup.addEditHandler(new EditHandler() {
-			public void onEdit(Annotation annotation) {
-				removeAnnotation(annotation);
-				new ResizableBoxEditor(thisAnnotatable, annotationLayer, annotation);
-			}
-		});
-		
-		popup.addDeleteHandler(new DeleteHandler() {
-			public void onDelete(Annotation annotation) {
-				removeAnnotation(annotation);
-			}
-		});
-		
+			new ZoomableAnnotationOverlay(a, this, viewer, getLabels());		
 		annotations.put(a, overlay);
 	}
 
@@ -157,8 +137,13 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		}
 	}
 
+	@Override
+	public void editAnnotation(Annotation a) {
+		new ResizableBoxEditor(this, annotationLayer, a);
+	}
+	
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, annotationLayer);
+		editAnnotation(null);
 	}
 	
 }
