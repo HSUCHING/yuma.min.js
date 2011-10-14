@@ -3,9 +3,12 @@ package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 import org.timepedia.exporter.client.Exportable;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -125,11 +128,28 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void addAnnotation(Annotation annotation) {
-		BoxMarker marker = BoxMarker.create(toOpenLayersBounds(annotation.getFragment()));
+		final BoxMarker marker = BoxMarker.create(toOpenLayersBounds(annotation.getFragment()));
 		annotationLayer.addMaker(marker);
-		marker.getDiv().addMouseOverHandler(new MouseOverHandler() {
-			public void onMouseOver(MouseOverEvent event) {
-				System.out.println("YEAH!");
+		
+		// Note that's a bit cumbersome - but apparently, wrapping an Element that 
+		// already has a child/parent relationship doesn't work (see here:
+		// http://code.google.com/p/google-web-toolkit/issues/detail?id=3591)
+		// One workaround is to attach the handler directly to the element -
+		// the hard way...
+		// Other alternative would be to add the handlers in native JS
+		// (compare {@link SeadragonViewer}
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+			public void onPreviewNativeEvent(NativePreviewEvent event) {
+				NativeEvent evt = event.getNativeEvent();
+				if (Element.is(evt.getEventTarget())) {
+					if (marker.getDiv().equals(evt.getEventTarget())) {
+						if (evt.getType().contains("mouseover")) {
+							// TODO
+						} else if (evt.getType().contains("mouseout")) {
+							// TODO
+						}
+					}
+				}
 			}
 		});
 	}
