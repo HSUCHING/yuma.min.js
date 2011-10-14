@@ -40,7 +40,7 @@ public class OpenLayersAnnotationOverlay {
 		boxMarker.getDiv().appendChild(innerBorder.getElement());
 		
 		DOM.sinkEvents(boxMarkerDiv, 
-				Event.ONMOUSEOVER |Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);
+				Event.ONMOUSEOVER | Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);
 		
 		Event.setEventListener(boxMarkerDiv, new EventListener() {
 			public void onBrowserEvent(Event event) {
