@@ -96,8 +96,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	@Override
 	public BoundingBox toBoundingBox(String fragment) {
 		Bounds bounds = toOpenLayersBounds(fragment);
-		LonLat llBottomLeft = LonLat.create(bounds.getBottom(), bounds.getLeft());
-		LonLat llTopRight = LonLat.create(bounds.getTop(), bounds.getRight());
+		LonLat llBottomLeft = LonLat.create(bounds.getLeft(), bounds.getBottom());
+		LonLat llTopRight = LonLat.create(bounds.getRight(), bounds.getTop());
 		
 		Pixel pxBottomLeft = map.getViewPortPixelFromLonLat(llBottomLeft);
 		Pixel pxTopRight = map.getViewPortPixelFromLonLat(llTopRight);
