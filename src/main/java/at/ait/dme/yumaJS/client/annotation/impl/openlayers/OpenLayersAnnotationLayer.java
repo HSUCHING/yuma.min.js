@@ -2,6 +2,8 @@ package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
 import java.util.HashMap;
 
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import com.google.gwt.core.client.JavaScriptObject;
@@ -24,6 +26,8 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
+@Export
+@ExportPackage("YUMA")
 public class OpenLayersAnnotationLayer extends Annotatable implements Exportable {
 
 	private static final String MEDIATYPE = "MAP";

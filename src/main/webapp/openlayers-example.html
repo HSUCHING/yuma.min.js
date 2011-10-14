@@ -3,8 +3,8 @@
   <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>OpenLayers Map Annotation - Sample Page</title>
-    <link rel="stylesheet" type="text/css" href="../css/theme-plain-gray/yuma.min.css" />
-    <script type="text/javascript" src="js/openlayers-2.11.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/theme-plain-gray/yuma.min.css" />
+    <script type="text/javascript" src="http://openlayers.org/dev/OpenLayers.js"></script>
     <script type="text/javascript" src="yuma.min/yuma.min.nocache.js"></script>
     <script type="text/javascript">    
     var map;
@@ -21,14 +21,15 @@
          map.zoomToMaxExtent();
     }
     
-    window.onYUMAreader = function() {
-    	annotationLayer = new YUMA.OpenLayersAnnotationLayer(map);	
+    function init() {
+    	annotationLayer = new YUMA.OpenLayersAnnotationLayer(map);
     }
 	</script>
   </head>
   
   <body>
     <div id="map" style="width:640px;height:480px;"></div>
+    <input id="annotate-button" type="button" value="Add Note" onclick="if (!annotationLayer) init(); annotationLayer.createNewAnnotation();"/>
   </body>
 </html>
 
