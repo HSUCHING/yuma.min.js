@@ -37,7 +37,7 @@ public class ZoomableAnnotationOverlay {
 	public ZoomableAnnotationOverlay(Annotation annotation, Annotatable annotatable, SeadragonViewer viewer, Labels labels) {
 		this.viewer = viewer;
 		
-		BoundingBox bbox = annotatable.toBounds(annotation.getFragment());
+		BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());
 		bboxOverlay = new BoundingBoxOverlay(bbox);
 		bboxDiv = bboxOverlay.getElement();
 		DOM.sinkEvents(bboxDiv, Event.ONMOUSEOVER | Event.ONMOUSEOUT);

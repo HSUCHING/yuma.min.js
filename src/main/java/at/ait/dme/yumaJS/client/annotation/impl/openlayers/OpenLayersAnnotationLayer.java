@@ -4,6 +4,8 @@ import org.timepedia.exporter.client.Exportable;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -69,20 +71,51 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	
 	@Override
 	public String toFragment(BoundingBox bbox, Range range) {
-		// TODO Auto-generated method stub
-		return null;
+		Pixel pxBottomLeft = Pixel.create(bbox.getX(), bbox.getY() + bbox.getHeight());
+		Pixel pxTopRight = Pixel.create(bbox.getX() + bbox.getWidth(), bbox.getY());
+		
+		LonLat llBottomLeft = map.getLonLatFromPixel(pxBottomLeft);
+		LonLat llTopRight = map.getLonLatFromPixel(pxTopRight);
+		
+		return "bbox=" 
+			+ llBottomLeft.getLon() + "," 
+			+ llBottomLeft.getLat() + ","
+			+ llTopRight.getLon() + "," 
+			+ llTopRight.getLat();
 	}
 
 	@Override
 	public Range toRange(String fragment) {
-		// TODO Auto-generated method stub
+		// Openlayers doesn't support range fragments
 		return null;
 	}
 
 	@Override
-	public BoundingBox toBounds(String fragment) {
-		// TODO Auto-generated method stub
-		return null;
+	public BoundingBox toBoundingBox(String fragment) {
+		Bounds bounds = toOpenLayersBounds(fragment);
+		LonLat llBottomLeft = LonLat.create(bounds.getBottom(), bounds.getLeft());
+		LonLat llTopRight = LonLat.create(bounds.getTop(), bounds.getRight());
+		
+		Pixel pxBottomLeft = map.getViewPortPixelFromLonLat(llBottomLeft);
+		Pixel pxTopRight = map.getViewPortPixelFromLonLat(llTopRight);
+		
+		return BoundingBox.create(
+				pxBottomLeft.getX(), 
+				pxTopRight.getY(),
+				pxTopRight.getX() - pxBottomLeft.getX(),
+				pxBottomLeft.getY() - pxTopRight.getY());
+	}
+	
+	private Bounds toOpenLayersBounds(String fragment) {
+		String[] bbox = fragment.substring(5).split(",");
+		if (bbox.length != 4)
+			return null;
+		
+		return Bounds.create(
+				Double.parseDouble(bbox[0]),
+				Double.parseDouble(bbox[1]),
+				Double.parseDouble(bbox[2]),
+				Double.parseDouble(bbox[3]));
 	}
 
 	@Override
@@ -92,24 +125,13 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void addAnnotation(Annotation annotation) {
-		// TODO this transformation needs to be done inside the
-		// editor - otherwise we'll run into conflicts with
-		// addMethod calls from server-side AJAX load
-		BoundingBox bbox = toBounds(annotation.getFragment());
-		Pixel topLeft = Pixel.create(bbox.getX(), bbox.getY());
-		Pixel bottomRight = Pixel.create(topLeft.getX() + bbox.getWidth(),
-				topLeft.getY() + bbox.getHeight());
-		
-		LonLat llTopLeft = map.getLonLatFromPixel(topLeft);
-		LonLat llBottomRight = map.getLonLatFromPixel(bottomRight);
-		
-		Bounds bounds = Bounds.create(
-				llTopLeft.getLon(),
-				llBottomRight.getLat(),
-				llBottomRight.getLon(),
-				llTopLeft.getLat());
-		
-		annotationLayer.addMaker(BoxMarker.create(bounds));
+		BoxMarker marker = BoxMarker.create(toOpenLayersBounds(annotation.getFragment()));
+		annotationLayer.addMaker(marker);
+		marker.getDiv().addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				System.out.println("YEAH!");
+			}
+		});
 	}
 
 	@Override

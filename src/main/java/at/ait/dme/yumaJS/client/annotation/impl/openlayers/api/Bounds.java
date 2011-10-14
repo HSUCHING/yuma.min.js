@@ -10,4 +10,20 @@ public class Bounds extends JavaScriptObject {
 		return new $wnd.OpenLayers.Bounds(left, bottom, right, top);
 	}-*/;
 	
+	public final native double getLeft() /*-{
+		return this.left;
+	}-*/;
+
+	public final native double getBottom() /*-{
+		return this.bottom;
+	}-*/;
+	
+	public final native double getRight() /*-{
+		return this.right;
+	}-*/;
+	
+	public final native double getTop() /*-{
+		return this.top;
+	}-*/;
+	
 }

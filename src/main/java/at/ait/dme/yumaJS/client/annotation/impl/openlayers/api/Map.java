@@ -36,12 +36,12 @@ public class Map {
 		return map.getLonLatFromPixel(px);
 	}-*/;
 
-	public Pixel getPixelFromLonLat(LonLat lonlat) {
-		return _getPixelFromLonLat(map, lonlat);
+	public Pixel getViewPortPixelFromLonLat(LonLat lonlat) {
+		return _getViewPortPixelFromLonLat(map, lonlat);
 	}
 	
-	private native Pixel _getPixelFromLonLat(JavaScriptObject map, LonLat lonlat) /*-{
-		return map.getPixelFromLonLat(lonlat);
+	private native Pixel _getViewPortPixelFromLonLat(JavaScriptObject map, LonLat lonlat) /*-{
+		return map.getViewPortPxFromLonLat(lonlat);
 	}-*/;
 
 	

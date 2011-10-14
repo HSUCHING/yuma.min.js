@@ -28,7 +28,7 @@ public class ImageAnnotationOverlay {
 	public ImageAnnotationOverlay(Annotation annotation, Annotatable annotatable,
 			final AbsolutePanel annotationLayer, Labels labels) {
 		
-		final BoundingBox bbox = annotatable.toBounds(annotation.getFragment());
+		final BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());
 		
 		bboxOverlay = new BoundingBoxOverlay(bbox);
 		

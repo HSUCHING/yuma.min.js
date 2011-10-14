@@ -31,7 +31,7 @@ public class ResizableBoxEditor extends Editor {
 		
 		BoundingBox bbox = null;
 		if (initialValue != null)
-			bbox = annotatable.toBounds(initialValue.getFragment()); 
+			bbox = annotatable.toBoundingBox(initialValue.getFragment()); 
 				
 		Selection selection = new ResizableBoxSelection(panel, annotatable.getLabels(), bbox);
 		selection.setSelectionChangedHandler(new SelectionChangedHandler() {

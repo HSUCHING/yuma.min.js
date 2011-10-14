@@ -6,6 +6,10 @@ public class LonLat extends JavaScriptObject {
 	
 	protected LonLat() { }
 	
+	public static native LonLat create(double lon, double lat) /*-{
+		return new $wnd.OpenLayers.LonLat(lon, lat);
+	}-*/;
+	
 	public final native double getLon() /*-{
 		return this.lon;
 	}-*/;

@@ -88,7 +88,7 @@ public abstract class Annotatable implements Exportable {
 	
 	public abstract Range toRange(String fragment);
 	
-	public abstract BoundingBox toBounds(String fragment);
+	public abstract BoundingBox toBoundingBox(String fragment);
 	
 	protected abstract void onWindowResize(int width, int height);
 	

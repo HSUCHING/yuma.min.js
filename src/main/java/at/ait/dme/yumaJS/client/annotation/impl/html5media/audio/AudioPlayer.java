@@ -191,7 +191,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	}
 
 	@Override
-	public BoundingBox toBounds(String fragment) {
+	public BoundingBox toBoundingBox(String fragment) {
 		// Audio player does not support bounding boxes
 		return null;
 	}

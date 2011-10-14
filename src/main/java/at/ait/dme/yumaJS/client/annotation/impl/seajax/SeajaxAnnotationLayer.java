@@ -111,7 +111,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	}
 
 	@Override
-	public BoundingBox toBounds(String fragment) {
+	public BoundingBox toBoundingBox(String fragment) {
 		// TODO Auto-generated method stub
 		return null;
 	}

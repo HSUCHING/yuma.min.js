@@ -113,7 +113,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 
 	@Override
-	public BoundingBox toBounds(String fragment) {
+	public BoundingBox toBoundingBox(String fragment) {
 		if (fragment.startsWith("xywh=pixel:")) {
 			fragment = fragment.substring(11);
 		} else if (fragment.startsWith("xywh=")) {
