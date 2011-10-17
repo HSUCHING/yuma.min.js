@@ -55,6 +55,10 @@ public class ImageAnnotationOverlay {
 		annotationLayer.add(detailsPopup, bbox.getX(), bbox.getY() + bbox.getHeight());
 	}
 	
+	public BoundingBoxOverlay getBoundingBoxOverlay() {
+		return bboxOverlay;
+	}
+	
 	public DetailsPopup getDetailsPopup() {
 		return detailsPopup;
 	}

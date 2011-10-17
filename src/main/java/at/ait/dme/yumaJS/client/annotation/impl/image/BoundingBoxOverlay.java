@@ -18,17 +18,18 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class BoundingBoxOverlay extends Composite implements HasMouseOverHandlers, HasMouseOutHandlers {
+public class BoundingBoxOverlay extends Composite 
+	implements HasMouseOverHandlers, HasMouseOutHandlers, Comparable<BoundingBoxOverlay> {
 	
 	/**
 	 * The outer border DIV
 	 */
-	protected FlowPanel outerBorder;
+	private FlowPanel outerBorder;
 	
 	/**
 	 * The inner border DIV
 	 */
-	protected FlowPanel innerBorder;
+	private FlowPanel innerBorder;
 	
 	public BoundingBoxOverlay(BoundingBox bbox) {
 		outerBorder = new FlowPanel();
@@ -51,5 +52,22 @@ public class BoundingBoxOverlay extends Composite implements HasMouseOverHandler
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-
+	
+	public void setZIndex(int idx) {
+		outerBorder.getElement().getStyle().setZIndex(idx);
+	}
+	
+	public int compareTo(BoundingBoxOverlay other) {
+		int thisArea = outerBorder.getOffsetWidth() * outerBorder.getOffsetHeight();
+		int otherArea = other.outerBorder.getOffsetWidth() * other.outerBorder.getOffsetHeight();
+		
+		if (thisArea > otherArea)
+			return -1;
+		
+		if (thisArea < otherArea)
+			return 1;
+		
+		return 0;
+	}
+	
 }

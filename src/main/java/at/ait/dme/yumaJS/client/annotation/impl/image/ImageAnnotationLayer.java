@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.timepedia.exporter.client.Export;
@@ -145,7 +147,23 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			new ImageAnnotationOverlay(a, this, annotationLayer, getLabels());
 
 		annotations.put(a, overlay);
+		sortOverlaysByArea();
 		fireOnAnnotationCreated(a);
+	}
+	
+	private void sortOverlaysByArea() {
+		ArrayList<BoundingBoxOverlay> overlays = new ArrayList<BoundingBoxOverlay>();
+		for (Annotation a : annotations.keySet()) {
+			overlays.add(annotations.get(a).getBoundingBoxOverlay());
+		}
+		Collections.sort(overlays);
+		
+		// Re-assign z-indexes
+		int zIndex = 9010;
+		for (BoundingBoxOverlay bbox : overlays) {
+			bbox.setZIndex(zIndex);
+			zIndex++;
+		}
 	}
 	
 	@Override

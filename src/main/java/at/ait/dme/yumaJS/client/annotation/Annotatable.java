@@ -111,5 +111,5 @@ public abstract class Annotatable implements Exportable {
 	private native void _fireOnAnnotationCreated(Annotation a, JavaScriptObject callback) /*-{
 		callback(a);
 	}-*/;
-	
+		
 }
