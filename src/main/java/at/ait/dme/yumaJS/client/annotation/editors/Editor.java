@@ -1,6 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.editors;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -45,6 +46,8 @@ public abstract class Editor {
 				if (initialAnnotation == null) {
 					a = Annotation.create(
 						annotatable.getObjectURI(),
+						Document.get().getURL(),
+						Document.get().getTitle(),
 						annotatable.getMediaType(),
 						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()),
 						editForm.getText());

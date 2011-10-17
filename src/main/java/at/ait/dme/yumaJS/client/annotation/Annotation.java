@@ -11,9 +11,10 @@ public class Annotation extends JavaScriptObject {
 	
 	protected Annotation() { }
 	
-	public static native Annotation create(String objectURI, String mediatype, String fragment, String text) /*-{
+	public static native Annotation create(String objectURI, String contextURI, String contextTitle, String mediatype, String fragment, String text) /*-{
 		return { 
 				 objectURI: objectURI,
+				 context: { uri: contextURI, title: contextTitle },
 		         mediatype: mediatype,
 		         fragment: fragment, 
 		         text: text 
