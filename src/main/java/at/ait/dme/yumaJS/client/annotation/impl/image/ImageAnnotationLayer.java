@@ -62,7 +62,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		objectURI = Image.wrap(image).getUrl();
 
 		annotationLayer = new AbsolutePanel();
-		annotationLayer.setStyleName("image-canvas");		
+		annotationLayer.setStyleName("image-canvas");	
+		annotationLayer.addStyleName("no-hover");
 		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
 		annotationLayer.setPixelSize(image.getClientWidth(), image.getClientHeight());
 		
