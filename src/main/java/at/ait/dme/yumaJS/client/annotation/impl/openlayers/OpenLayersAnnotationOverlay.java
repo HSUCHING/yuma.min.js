@@ -16,7 +16,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
-public class OpenLayersAnnotationOverlay {
+public class OpenLayersAnnotationOverlay implements Comparable<OpenLayersAnnotationOverlay> {
 		
 	private BoxMarker boxMarker;
 	
@@ -78,6 +78,23 @@ public class OpenLayersAnnotationOverlay {
 	
 	public void destroy() {
 		detailsPopup.removeFromParent();
+	}
+	
+	public void setZIndex(int idx) {
+		boxMarker.getDiv().getStyle().setZIndex(idx);
+	}
+
+	public int compareTo(OpenLayersAnnotationOverlay other) {
+		int thisArea = boxMarker.getDiv().getOffsetWidth() * boxMarker.getDiv().getOffsetHeight();
+		int otherArea = other.boxMarker.getDiv().getOffsetWidth() * other.boxMarker.getDiv().getOffsetHeight();
+		
+		if (thisArea > otherArea)
+			return -1;
+		
+		if (thisArea < otherArea)
+			return 1;
+		
+		return 0;
 	}
 
 }

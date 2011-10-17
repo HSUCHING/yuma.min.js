@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.timepedia.exporter.client.Export;
@@ -141,7 +143,23 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			new OpenLayersAnnotationOverlay(this, annotation, marker, getLabels());
 
 		annotations.put(annotation, overlay);
+		sortOverlaysByArea();
 		fireOnAnnotationCreated(annotation);
+	}
+	
+	private void sortOverlaysByArea() {
+		ArrayList<OpenLayersAnnotationOverlay> overlays = new ArrayList<OpenLayersAnnotationOverlay>();
+		for (Annotation a : annotations.keySet()) {
+			overlays.add(annotations.get(a));
+		}
+		Collections.sort(overlays);
+		
+		// Re-assign z-indexes
+		int zIndex = 9010;
+		for (OpenLayersAnnotationOverlay overlay : overlays) {
+			overlay.setZIndex(zIndex);
+			zIndex++;
+		}
 	}
 
 	@Override
