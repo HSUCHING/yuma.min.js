@@ -14,7 +14,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.PushButton;
 
 /**
@@ -36,9 +35,13 @@ public class SimpleDetailsPopup extends DetailsPopup {
 	private PushButton btnEdit, btnDelete;
 	
 	public SimpleDetailsPopup(final Annotatable annotatable, final Annotation a, Labels labels) {
-		FlowPanel content = new FlowPanel();
-		content.setStyleName("annotation-popup-content");
-		content.add(new InlineHTML(a.getText()));
+		AnnotationWidget annotationWidget = new AnnotationWidget(a); 
+		annotationWidget.addDomHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				showButtons(true);
+			}
+		}, MouseOverEvent.getType());
+
 		
 		if (labels == null) {
 			btnEdit = new PushButton("EDIT");
@@ -76,16 +79,10 @@ public class SimpleDetailsPopup extends DetailsPopup {
 		});
 		
 		showButtons(false);
-		
-		content.addDomHandler(new MouseOverHandler() {
-			public void onMouseOver(MouseOverEvent event) {
-				showButtons(true);
-			}
-		}, MouseOverEvent.getType());
-		
+				
 		container = new FlowPanel();
 		container.setStyleName("annotation-popup");		
-		container.add(content);
+		container.add(annotationWidget);
 		container.add(btnEdit);
 		container.add(btnDelete);		
 		setVisible(false);

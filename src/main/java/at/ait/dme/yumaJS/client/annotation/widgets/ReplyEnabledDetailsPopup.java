@@ -18,7 +18,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.TextArea;
 
 public class ReplyEnabledDetailsPopup extends DetailsPopup {
@@ -32,9 +31,7 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	public ReplyEnabledDetailsPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
 		this.rootAnnotation = rootAnnotation;
 		
-		FlowPanel content = new FlowPanel();
-		content.setStyleName("annotation-popup-content");
-		content.add(new InlineHTML(rootAnnotation.getText()));
+		AnnotationWidget annotationWidget = new AnnotationWidget(rootAnnotation); 
 		
 		replyField = new TextArea();
 		replyField.setStyleName("annotation-popup-add-comment");
@@ -71,7 +68,7 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 		
 		container = new FlowPanel();
 		container.setStyleName("annotation-popup");		
-		container.add(content);
+		container.add(annotationWidget);
 		container.add(replyField);
 		
 		initWidget(container);
@@ -89,11 +86,7 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 		
 		replyField.setText(null);
 		replyField.setFocus(false);
-		
-		FlowPanel replyPanel = new FlowPanel();
-		replyPanel.setStyleName("annotation-popup-content");
-		replyPanel.add(new InlineHTML(reply.getText()));
-		container.insert(replyPanel, container.getWidgetCount() - 1);
+		container.insert(new AnnotationWidget(reply), container.getWidgetCount() - 1);
 		
 		replies.add(reply);
 	}

@@ -115,7 +115,7 @@ html {
 	-webkit-transition-delay:0s;
 }
 
-.annotation-popup-content {
+.yuma-annotation {
 	font-family:Verdana, Arial;
 	font-size:11px;
 	background-color:#eee;	
