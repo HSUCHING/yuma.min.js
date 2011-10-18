@@ -131,6 +131,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	protected void onWindowResize(int width, int height) {
+		editingLayer.setPixelSize(width, height);
 		RootPanel.get().setWidgetPosition(editingLayer, map.getDiv().getAbsoluteLeft(), map.getDiv().getAbsoluteTop());
 	}
 
