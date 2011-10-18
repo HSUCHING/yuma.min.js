@@ -143,8 +143,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void addAnnotation(final Annotation a) {
-		ImageAnnotationOverlay overlay = 
-			new ImageAnnotationOverlay(a, this, annotationLayer, getLabels());
+		ImageAnnotationOverlay overlay = new ImageAnnotationOverlay(
+				a, this, annotationLayer, getInitParams().enableReplies(), getLabels());
 
 		annotations.put(a, overlay);
 		sortOverlaysByArea();

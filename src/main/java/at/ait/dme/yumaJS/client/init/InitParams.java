@@ -32,4 +32,10 @@ public class InitParams extends JavaScriptObject {
 		return this.icons;
 	}-*/;
 	
+	public final native boolean enableReplies() /*-{
+		if (this.enableReplies)
+			return this.enableReplies;
+		return false;
+	}-*/;
+	
 }

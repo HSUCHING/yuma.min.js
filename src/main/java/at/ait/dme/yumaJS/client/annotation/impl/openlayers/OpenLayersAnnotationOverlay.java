@@ -13,14 +13,14 @@ import com.google.gwt.user.client.ui.RootPanel;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
-import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.SimpleDetailsPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 public class OpenLayersAnnotationOverlay implements Comparable<OpenLayersAnnotationOverlay> {
 		
 	private BoxMarker boxMarker;
 	
-	private DetailsPopup detailsPopup;
+	private SimpleDetailsPopup detailsPopup;
 	
 	public OpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a, BoxMarker marker, Labels labels) {
 		this.boxMarker = marker;
@@ -59,7 +59,7 @@ public class OpenLayersAnnotationOverlay implements Comparable<OpenLayersAnnotat
 			}
 		});
 		
-		detailsPopup = new DetailsPopup(annotatable, a, labels);
+		detailsPopup = new SimpleDetailsPopup(annotatable, a, labels);
 		detailsPopup.setVisible(false);
 		RootPanel.get().add(detailsPopup, boxMarkerDiv.getAbsoluteLeft(), boxMarkerDiv.getAbsoluteTop());
 	}

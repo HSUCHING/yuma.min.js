@@ -4,6 +4,8 @@ import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledDetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.SimpleDetailsPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -11,11 +13,12 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Composite;
 
 /**
  * An overlay that represents an annotation on an {@link ImageAnnotationLayer}
  * by combining a {@link BoundingBoxOverlay} with a fixed-location
- * {@link DetailsPopup}.
+ * {@link SimpleDetailsPopup}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
@@ -26,7 +29,7 @@ public class ImageAnnotationOverlay {
 	private DetailsPopup detailsPopup;
 	
 	public ImageAnnotationOverlay(Annotation annotation, Annotatable annotatable,
-			final AbsolutePanel annotationLayer, Labels labels) {
+			final AbsolutePanel annotationLayer, boolean enableReplies, Labels labels) {
 		
 		final BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());
 		
@@ -48,7 +51,11 @@ public class ImageAnnotationOverlay {
 			}
 		});
 		
-		detailsPopup = new DetailsPopup(annotatable, annotation, labels);
+		if (enableReplies) {
+			detailsPopup = new ReplyEnabledDetailsPopup(annotatable, annotation, labels);	 
+		} else {
+			detailsPopup = new SimpleDetailsPopup(annotatable, annotation, labels);
+		}
 		detailsPopup.setVisible(false);
 		
 		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
@@ -59,7 +66,7 @@ public class ImageAnnotationOverlay {
 		return bboxOverlay;
 	}
 	
-	public DetailsPopup getDetailsPopup() {
+	public Composite getDetailsPopup() {
 		return detailsPopup;
 	}
 	

@@ -14,13 +14,13 @@ import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonAnimationHan
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonPoint;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonRect;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
-import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.SimpleDetailsPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * An overlay that represents an annotation on a {@link SeajaxAnnotationLayer} by attaching a 
  * {@link BoundingBoxOverlay} to a Seadragon rectangle overlay and combining it with a movable
- * {@link DetailsPopup}.
+ * {@link SimpleDetailsPopup}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
@@ -32,7 +32,7 @@ public class ZoomableAnnotationOverlay {
 	
 	private Element bboxDiv;
 	
-	private DetailsPopup detailsPopup;
+	private SimpleDetailsPopup detailsPopup;
 	
 	public ZoomableAnnotationOverlay(Annotation annotation, Annotatable annotatable, SeadragonViewer viewer, Labels labels) {
 		this.viewer = viewer;
@@ -55,7 +55,7 @@ public class ZoomableAnnotationOverlay {
 			}
 		});
 		
-		detailsPopup = new DetailsPopup(annotatable, annotation, labels);
+		detailsPopup = new SimpleDetailsPopup(annotatable, annotation, labels);
 		detailsPopup.setVisible(false);
 		
 		SeadragonPoint anchor =
@@ -84,7 +84,7 @@ public class ZoomableAnnotationOverlay {
 		RootPanel.get().add(detailsPopup);
 	}
 	
-	public DetailsPopup getDetailsPopup() {
+	public SimpleDetailsPopup getDetailsPopup() {
 		return detailsPopup;
 	}
 	

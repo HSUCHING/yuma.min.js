@@ -119,7 +119,7 @@ html {
 	font-family:Verdana, Arial;
 	font-size:11px;
 	background-color:#eee;	
-	padding:3px 5px 3px 5px;
+	padding:3px;
 	color:#000;
 	border:1px solid #fff;
 	opacity:0.9;
@@ -152,6 +152,15 @@ html {
 
 .annotation-popup-button:hover {
 	background:#999;
+}
+
+.annotation-popup-add-comment {
+	margin:3px 0px;
+	padding:3px;
+	resize:none;
+	border:1px solid #888;
+	font-family:Verdana, Arial;
+	font-size:11px;
 }
 
 .yuma-audio-player {

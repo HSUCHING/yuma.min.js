@@ -34,6 +34,7 @@ public class TestImageHosted implements EntryPoint {
 				'edit': 'BEARBEITEN',
 				'delete': 'L\u00d6SCHEN'
 			},
+			enableReplies: true,
 			serverURL:"http://localhost:8081/yuma4j-server"
 		};
 	}-*/;
