@@ -25,6 +25,8 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	
 	private Annotation rootAnnotation;
 	
+	private TextArea replyField;
+	
 	private List<Annotation> replies = new ArrayList<Annotation>();
 	
 	public ReplyEnabledDetailsPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
@@ -34,10 +36,10 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 		content.setStyleName("annotation-popup-content");
 		content.add(new InlineHTML(rootAnnotation.getText()));
 		
-		final TextArea textArea = new TextArea();
-		textArea.setStyleName("annotation-popup-add-comment");
-		textArea.getElement().setAttribute("placeholder", "Add a Comment...");
-		textArea.addKeyUpHandler(new KeyUpHandler() {
+		replyField = new TextArea();
+		replyField.setStyleName("annotation-popup-add-comment");
+		replyField.getElement().setAttribute("placeholder", "Add a Comment...");
+		replyField.addKeyUpHandler(new KeyUpHandler() {
 			public void onKeyUp(KeyUpEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					Annotation a = Annotation.create(
@@ -45,7 +47,7 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 							Document.get().getURL(),
 							Document.get().getTitle(),
 							annotatable.getMediaType(),
-							textArea.getText(),
+							replyField.getText(),
 							null,
 							rootAnnotation.getID());
 					
@@ -70,7 +72,7 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 		container = new FlowPanel();
 		container.setStyleName("annotation-popup");		
 		container.add(content);
-		container.add(textArea);
+		container.add(replyField);
 		
 		initWidget(container);
 		
@@ -82,9 +84,18 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	}
 	
 	public void addReply(Annotation reply) {
-		if (reply.getIsReplyTo().equals(rootAnnotation.getID())) {
-			replies.add(reply);
-		}
+		if (!reply.getIsReplyTo().equals(rootAnnotation.getID()))
+			return;
+		
+		replyField.setText(null);
+		replyField.setFocus(false);
+		
+		FlowPanel replyPanel = new FlowPanel();
+		replyPanel.setStyleName("annotation-popup-content");
+		replyPanel.add(new InlineHTML(reply.getText()));
+		container.insert(replyPanel, container.getWidgetCount() - 1);
+		
+		replies.add(reply);
 	}
 
 }

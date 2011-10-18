@@ -185,7 +185,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void removeAnnotation(Annotation a) {
-		ImageAnnotationOverlay overlay = overlays.get(a);
+		ImageAnnotationOverlay overlay = overlays.get(a.getID());
 		if (overlay != null) {
 			overlay.destroy();
 			overlays.remove(a.getID());
