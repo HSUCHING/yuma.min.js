@@ -116,6 +116,7 @@ html {
 }
 
 .yuma-annotation {
+	width:300px;
 	font-family:Verdana, Arial;
 	font-size:11px;
 	background-color:#eee;	
@@ -131,8 +132,13 @@ html {
 	margin:3px 0px 0px 0px;
 }
 
+.yuma-annotation-btn {
+	padding:0px 2px;
+	color:#777;
+}
+
 .yuma-annotation-username {
-	color:#333377;
+	color:#000;
 	font-weight:bold;
 	padding-right:5px;
 }
@@ -170,10 +176,13 @@ html {
 	margin:3px 0px;
 	padding:3px;
 	resize:none;
-	width:100%;
+	width:300px;
 	border:1px solid #888;
 	font-family:Verdana, Arial;
 	font-size:11px;
+	-moz-box-shadow:2px 2px 2px #222;
+	-webkit-box-shadow:2px 2px 2px #222;
+	box-shadow:2px 2px 2px #222; 
 }
 
 .yuma-audio-player {

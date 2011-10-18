@@ -8,9 +8,12 @@ import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.init.Labels;
 import at.ait.dme.yumaJS.client.io.Create;
+import at.ait.dme.yumaJS.client.io.Delete;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -22,6 +25,8 @@ import com.google.gwt.user.client.ui.TextArea;
 
 public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	
+	private Annotatable annotatable;
+	
 	private Annotation rootAnnotation;
 	
 	private TextArea replyField;
@@ -29,6 +34,7 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	private List<Annotation> replies = new ArrayList<Annotation>();
 	
 	public ReplyEnabledDetailsPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
+		this.annotatable = annotatable;
 		this.rootAnnotation = rootAnnotation;
 		
 		AnnotationWidget annotationWidget = new AnnotationWidget(rootAnnotation); 
@@ -80,13 +86,34 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 		}, MouseOutEvent.getType());
 	}
 	
-	public void addReply(Annotation reply) {
+	public void addReply(final Annotation reply) {
 		if (!reply.getIsReplyTo().equals(rootAnnotation.getID()))
 			return;
 		
 		replyField.setText(null);
 		replyField.setFocus(false);
-		container.insert(new AnnotationWidget(reply), container.getWidgetCount() - 1);
+
+		final AnnotationWidget widget = new AnnotationWidget(reply);
+		widget.addDeleteClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (annotatable.getServerURL() == null) {
+					annotatable.removeAnnotation(reply);
+					widget.removeFromParent();
+				} else {
+					Delete.executeJSONP(annotatable.getServerURL(), reply.getID(), new AsyncCallback<Void>() {
+						public void onSuccess(Void result) {
+							annotatable.removeAnnotation(reply);
+							widget.removeFromParent();
+						}			
+	
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}				
+			}
+		});
+		container.insert(widget, container.getWidgetCount() - 1);
 		
 		replies.add(reply);
 	}
