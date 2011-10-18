@@ -10,19 +10,32 @@ import com.google.gwt.core.client.JavaScriptObject;
 public class Annotation extends JavaScriptObject {
 	
 	protected Annotation() { }
+
+	public static Annotation create(String objectURI, String contextURI, String contextTitle, String mediatype, String text, String fragment) {
+		return create(objectURI, contextURI, contextTitle, mediatype, text, fragment, null);
+	}
 	
-	public static native Annotation create(String objectURI, String contextURI, String contextTitle, String mediatype, String fragment, String text) /*-{
+	public static native Annotation create(String objectURI, String contextURI, String contextTitle, String mediatype, String text, String fragment, String isReplyTo) /*-{
 		return { 
 				 objectURI: objectURI,
 				 context: { uri: contextURI, title: contextTitle },
 		         mediatype: mediatype,
 		         fragment: fragment, 
-		         text: text 
+		         text: text,
+		         isReplyTo: isReplyTo 
 		       };
 	}-*/;
 	
 	public final native String getID() /*-{
 		return this.id;
+	}-*/;
+	
+	public final native void setID(String id) /*-{
+		this.id = id;
+	}-*/;
+	
+	public final native String getIsReplyTo() /*-{
+		return this.isReplyTo;
 	}-*/;
 
 	public final native String getFragment() /*-{

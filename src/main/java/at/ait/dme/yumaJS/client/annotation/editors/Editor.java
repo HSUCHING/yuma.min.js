@@ -49,8 +49,8 @@ public abstract class Editor {
 						Document.get().getURL(),
 						Document.get().getTitle(),
 						annotatable.getMediaType(),
-						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()),
-						editForm.getText());
+						editForm.getText(),
+						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()));
 				} else {
 					a = initialAnnotation;
 					a.setFragment(annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()));

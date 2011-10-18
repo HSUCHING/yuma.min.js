@@ -14,6 +14,7 @@ import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledDetailsPopup;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.dom.client.Style.Overflow;
@@ -44,8 +45,11 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	private AbsolutePanel annotationLayer;
 	
-	private HashMap<Annotation, ImageAnnotationOverlay> annotations = 
-		new HashMap<Annotation, ImageAnnotationOverlay>();
+	// { annotationID -> overlay }
+	private HashMap<String, ImageAnnotationOverlay> overlays = 
+		new HashMap<String, ImageAnnotationOverlay>();
+	
+	private int annotationCtr = 0;
 	
 	public ImageAnnotationLayer(String id) {
 		this(id, null);
@@ -142,25 +146,38 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	@Override
-	public void addAnnotation(final Annotation a) {
-		ImageAnnotationOverlay overlay = new ImageAnnotationOverlay(
-				a, this, annotationLayer, getInitParams().enableReplies(), getLabels());
+	public void addAnnotation(Annotation a) {
+		if (a.getID() == null && getInitParams().serverURL() == null)
+			a.setID(Integer.toString(annotationCtr++));
+			
+		if (a.getIsReplyTo() == null) {
+			// Root annotation - add new overlay
+			ImageAnnotationOverlay overlay = new ImageAnnotationOverlay(
+					a, this, annotationLayer, getInitParams().isRepliesEnabled(), getLabels());
 
-		annotations.put(a, overlay);
-		sortOverlaysByArea();
+			overlays.put(a.getID(), overlay);
+			sortOverlaysByArea();
+		} else {
+			// Reply - ignore if replies are not enabled!
+			if (getInitParams().isRepliesEnabled()) {
+				ImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
+				((ReplyEnabledDetailsPopup) overlay.getDetailsPopup()).addReply(a);
+			}
+		}
+
 		fireOnAnnotationCreated(a);
 	}
 	
 	private void sortOverlaysByArea() {
-		ArrayList<BoundingBoxOverlay> overlays = new ArrayList<BoundingBoxOverlay>();
-		for (Annotation a : annotations.keySet()) {
-			overlays.add(annotations.get(a).getBoundingBoxOverlay());
+		ArrayList<BoundingBoxOverlay> sortedOverlays = new ArrayList<BoundingBoxOverlay>();
+		for (String id : overlays.keySet()) {
+			sortedOverlays.add(overlays.get(id).getBoundingBoxOverlay());
 		}
-		Collections.sort(overlays);
+		Collections.sort(sortedOverlays);
 		
 		// Re-assign z-indexes
 		int zIndex = 9010;
-		for (BoundingBoxOverlay bbox : overlays) {
+		for (BoundingBoxOverlay bbox : sortedOverlays) {
 			bbox.setZIndex(zIndex);
 			zIndex++;
 		}
@@ -168,10 +185,10 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void removeAnnotation(Annotation a) {
-		ImageAnnotationOverlay overlay = annotations.get(a);
+		ImageAnnotationOverlay overlay = overlays.get(a);
 		if (overlay != null) {
 			overlay.destroy();
-			annotations.remove(a);
+			overlays.remove(a.getID());
 		}
 	}
 	

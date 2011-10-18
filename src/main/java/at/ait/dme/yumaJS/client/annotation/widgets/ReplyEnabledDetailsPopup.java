@@ -1,5 +1,8 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
@@ -20,10 +23,16 @@ import com.google.gwt.user.client.ui.TextArea;
 
 public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	
-	public ReplyEnabledDetailsPopup(final Annotatable annotatable, Annotation a, Labels labels) {
+	private Annotation rootAnnotation;
+	
+	private List<Annotation> replies = new ArrayList<Annotation>();
+	
+	public ReplyEnabledDetailsPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
+		this.rootAnnotation = rootAnnotation;
+		
 		FlowPanel content = new FlowPanel();
 		content.setStyleName("annotation-popup-content");
-		content.add(new InlineHTML(a.getText()));
+		content.add(new InlineHTML(rootAnnotation.getText()));
 		
 		final TextArea textArea = new TextArea();
 		textArea.setStyleName("annotation-popup-add-comment");
@@ -36,16 +45,17 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 							Document.get().getURL(),
 							Document.get().getTitle(),
 							annotatable.getMediaType(),
+							textArea.getText(),
 							null,
-							textArea.getText());
+							rootAnnotation.getID());
 					
 					if (annotatable.getServerURL() == null) {
 						// Local-mode: just add the annotation without storing
-						// annotatable.addAnnotation(a);
+						annotatable.addAnnotation(a);
 					} else {
 						Create.executeJSONP(annotatable.getServerURL(), a, new AsyncCallback<JavaScriptObject>() {
 							public void onSuccess(JavaScriptObject result) {
-								// annotatable.addAnnotation((Annotation) result);
+								annotatable.addAnnotation((Annotation) result);
 							}
 							
 							public void onFailure(Throwable t) {
@@ -69,6 +79,12 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 				setVisible(false);
 			}
 		}, MouseOutEvent.getType());
+	}
+	
+	public void addReply(Annotation reply) {
+		if (reply.getIsReplyTo().equals(rootAnnotation.getID())) {
+			replies.add(reply);
+		}
 	}
 
 }
