@@ -12,8 +12,12 @@ import at.ait.dme.yumaJS.client.io.Delete;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -31,6 +35,8 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	
 	private TextArea replyField;
 	
+	private boolean hasFocus = false;
+	
 	private List<Annotation> replies = new ArrayList<Annotation>();
 	
 	public ReplyEnabledDetailsPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
@@ -42,6 +48,16 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 		replyField = new TextArea();
 		replyField.setStyleName("annotation-popup-add-comment");
 		replyField.getElement().setAttribute("placeholder", "Add a Comment...");
+		replyField.addFocusHandler(new FocusHandler() {
+			public void onFocus(FocusEvent event) {
+				hasFocus = true;
+			}
+		});
+		replyField.addBlurHandler(new BlurHandler() {
+			public void onBlur(BlurEvent event) {
+				hasFocus = false;
+			}
+		});
 		replyField.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
@@ -81,7 +97,8 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 		
 		addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				setVisible(false);
+				if (!hasFocus)
+					setVisible(false);
 			}
 		}, MouseOutEvent.getType());
 	}
