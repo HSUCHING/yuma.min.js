@@ -131,6 +131,18 @@ html {
 	margin:3px 0px 0px 0px;
 }
 
+.yuma-annotation-username {
+	color:#333377;
+	font-weight:bold;
+	padding-right:5px;
+}
+
+.yuma-annotation-modified {
+	color:#777;
+	display:block;
+	margin-top:4px;
+}
+
 .annotation-popup-button {
 	float:left;
 	text-align:center;

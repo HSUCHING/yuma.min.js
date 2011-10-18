@@ -35,7 +35,7 @@ public class TestImageHosted implements EntryPoint {
 				'delete': 'L\u00d6SCHEN'
 			},
 			enableReplies: true,
-			// serverURL:"http://localhost:8081/yuma4j-server"
+			serverURL:"http://localhost:8081/yuma4j-server"
 		};
 	}-*/;
 

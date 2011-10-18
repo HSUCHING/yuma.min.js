@@ -53,5 +53,17 @@ public class Annotation extends JavaScriptObject {
 	public final native void setText(String text) /*-{
 		this.text = text;
 	}-*/;
+	
+	public final native String getUsername() /*-{
+		return this.creator.username;
+	}-*/;
+	
+	public final native String getUserRealName() /*-{
+		return this.creator.name;
+	}-*/;
+	
+	public final native double getModified() /*-{
+		return this.modified;
+	}-*/;
 
 }
