@@ -24,10 +24,9 @@ import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.TextArea;
 
-public class ReplyEnabledDetailsPopup extends DetailsPopup {
+public class ReplyEnabledInfoPopup extends InfoPopup {
 	
 	private Annotatable annotatable;
 	
@@ -39,12 +38,12 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 	
 	private List<Annotation> replies = new ArrayList<Annotation>();
 	
-	public ReplyEnabledDetailsPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
+	public ReplyEnabledInfoPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
+		super(annotatable, rootAnnotation, labels);
+		
 		this.annotatable = annotatable;
 		this.rootAnnotation = rootAnnotation;
-		
-		AnnotationWidget annotationWidget = new AnnotationWidget(rootAnnotation); 
-		
+				
 		replyField = new TextArea();
 		replyField.setStyleName("annotation-popup-add-comment");
 		replyField.getElement().setAttribute("placeholder", "Add a Comment...");
@@ -88,13 +87,9 @@ public class ReplyEnabledDetailsPopup extends DetailsPopup {
 			}
 		});
 		
-		container = new FlowPanel();
-		container.setStyleName("annotation-popup");		
-		container.add(annotationWidget);
 		container.add(replyField);
 		
-		initWidget(container);
-		
+		// TODO resolve conflicting behavior with super-class!
 		addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				if (!hasFocus)

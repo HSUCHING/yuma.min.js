@@ -3,9 +3,8 @@ package at.ait.dme.yumaJS.client.annotation.impl.image;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
-import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledDetailsPopup;
-import at.ait.dme.yumaJS.client.annotation.widgets.SimpleDetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledInfoPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -26,7 +25,7 @@ public class ImageAnnotationOverlay {
 		
 	private BoundingBoxOverlay bboxOverlay;
 	
-	private DetailsPopup detailsPopup;
+	private InfoPopup detailsPopup;
 	
 	public ImageAnnotationOverlay(Annotation annotation, Annotatable annotatable,
 			final AbsolutePanel annotationLayer, boolean enableReplies, Labels labels) {
@@ -52,9 +51,9 @@ public class ImageAnnotationOverlay {
 		});
 		
 		if (enableReplies) {
-			detailsPopup = new ReplyEnabledDetailsPopup(annotatable, annotation, labels);	 
+			detailsPopup = new ReplyEnabledInfoPopup(annotatable, annotation, labels);	 
 		} else {
-			detailsPopup = new SimpleDetailsPopup(annotatable, annotation, labels);
+			detailsPopup = new InfoPopup(annotatable, annotation, labels);
 		}
 		detailsPopup.setVisible(false);
 		

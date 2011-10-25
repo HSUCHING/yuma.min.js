@@ -23,18 +23,18 @@ public class AnnotationWidget extends Composite {
 	
 	private PushButton btnEdit, btnDelete;
 	
-	public AnnotationWidget(Annotation a) {
+	public AnnotationWidget(final Annotation annotation) {
 		panel = new FlowPanel();
 		panel.setStyleName("yuma-annotation");
 		
-		btnDelete = new PushButton("delete");
+		btnDelete = new PushButton("DELETE");
 		btnDelete.setStyleName("yuma-annotation-btn");
 		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
 		btnDelete.getElement().getStyle().setCursor(Cursor.POINTER);
 		btnDelete.setVisible(false);
 		panel.add(btnDelete);
 		
-		btnEdit = new PushButton("edit");
+		btnEdit = new PushButton("EDIT");
 		btnEdit.setStyleName("yuma-annotation-btn");
 		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
 		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
@@ -42,20 +42,19 @@ public class AnnotationWidget extends Composite {
 		panel.add(btnEdit);
 		
 		InlineHTML username = new InlineHTML();
-		if (a.getUserRealName() == null) {
-			username.setHTML(a.getUsername());
+		if (annotation.getUserRealName() == null) {
+			username.setHTML(annotation.getUsername());
 		} else {
-			username.setHTML(a.getUserRealName());
+			username.setHTML(annotation.getUserRealName());
 		}
 		username.setStyleName("yuma-annotation-username");
 
-		
 		InlineHTML timestamp = new InlineHTML();
-		timestamp.setHTML(new Date((long) a.getModified()).toString());
+		timestamp.setHTML(new Date((long) annotation.getModified()).toString());
 		timestamp.setStyleName("yuma-annotation-modified");
 		
 		panel.add(username);
-		panel.add(new InlineHTML(a.getText() + "<br/>"));
+		panel.add(new InlineHTML(annotation.getText() + "<br/>"));
 		panel.add(timestamp);
 		
 		panel.addDomHandler(new MouseOverHandler() {
@@ -75,7 +74,6 @@ public class AnnotationWidget extends Composite {
 	}
 	
 	public HandlerRegistration addEditClickHandler(ClickHandler handler) {
-		System.out.println("Ok");
 		return btnEdit.addClickHandler(handler);
 	}
 	

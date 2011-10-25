@@ -14,7 +14,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonAnimationHan
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonPoint;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonRect;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
-import at.ait.dme.yumaJS.client.annotation.widgets.SimpleDetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
@@ -32,7 +32,7 @@ public class ZoomableAnnotationOverlay {
 	
 	private Element bboxDiv;
 	
-	private SimpleDetailsPopup detailsPopup;
+	private InfoPopup detailsPopup;
 	
 	public ZoomableAnnotationOverlay(Annotation annotation, Annotatable annotatable, SeadragonViewer viewer, Labels labels) {
 		this.viewer = viewer;
@@ -55,7 +55,7 @@ public class ZoomableAnnotationOverlay {
 			}
 		});
 		
-		detailsPopup = new SimpleDetailsPopup(annotatable, annotation, labels);
+		detailsPopup = new InfoPopup(annotatable, annotation, labels);
 		detailsPopup.setVisible(false);
 		
 		SeadragonPoint anchor =
@@ -84,7 +84,7 @@ public class ZoomableAnnotationOverlay {
 		RootPanel.get().add(detailsPopup);
 	}
 	
-	public SimpleDetailsPopup getDetailsPopup() {
+	public InfoPopup getDetailsPopup() {
 		return detailsPopup;
 	}
 	

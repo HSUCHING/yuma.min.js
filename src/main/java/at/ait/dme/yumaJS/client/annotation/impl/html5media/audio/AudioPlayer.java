@@ -14,7 +14,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.html5media.AnnotationTrack;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.SimpleDetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.dom.client.AudioElement;
@@ -146,7 +146,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			
 			progressBar.addDomHandler(new MouseOutHandler() {
 				public void onMouseOut(MouseOutEvent event) {
-					SimpleDetailsPopup popup = annotationTrack.getCurrentPopup();
+					InfoPopup popup = annotationTrack.getCurrentPopup();
 					if (popup != null) {
 						if (!popup.contains(event.getClientX(), event.getClientY())) {
 							annotationTrack.clearCurrentPopup();	

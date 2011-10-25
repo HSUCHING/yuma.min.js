@@ -1,13 +1,36 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.init.Labels;
+
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Visibility;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
-public abstract class DetailsPopup extends Composite {
+public class InfoPopup extends Composite {
 	
 	protected FlowPanel container;
+	
+	public InfoPopup(final Annotatable annotatable, final Annotation a, Labels labels) {
+		AnnotationWidget annotationWidget = new AnnotationWidget(a); 
+				
+		container = new FlowPanel();
+		container.setStyleName("annotation-popup");		
+		container.add(annotationWidget);	
+		setVisible(false);
+		
+		initWidget(container);
+		
+		addDomHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				setVisible(false);
+			}
+		}, MouseOutEvent.getType());
+	}
 	
 	@Override
 	public void setVisible(boolean visible) {

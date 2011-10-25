@@ -14,7 +14,7 @@ import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledDetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledInfoPopup;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.dom.client.Style.Overflow;
@@ -161,7 +161,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
 				ImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
-				((ReplyEnabledDetailsPopup) overlay.getDetailsPopup()).addReply(a);
+				((ReplyEnabledInfoPopup) overlay.getDetailsPopup()).addReply(a);
 			}
 		}
 

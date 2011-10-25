@@ -17,7 +17,7 @@ import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.SimpleDetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -29,9 +29,9 @@ public class AnnotationTrack extends Composite {
 	
 	private ProgressBar progressBar;
 	
-	private Map<Annotation, SimpleDetailsPopup> annotations = new HashMap<Annotation, SimpleDetailsPopup>();
+	private Map<Annotation, InfoPopup> annotations = new HashMap<Annotation, InfoPopup>();
 	
-	private SimpleDetailsPopup currentPopup = null;
+	private InfoPopup currentPopup = null;
 	
 	public AnnotationTrack(final ProgressBar progressBar, InitParams params) throws InadequateBrowserException {
 		this.progressBar = progressBar;
@@ -95,11 +95,11 @@ public class AnnotationTrack extends Composite {
 		}
 	}
 	
-	public SimpleDetailsPopup getCurrentPopup() {
+	public InfoPopup getCurrentPopup() {
 		return currentPopup;
 	}
 	
-	private void showPopup(SimpleDetailsPopup popup, int x, int y) {
+	private void showPopup(InfoPopup popup, int x, int y) {
 		if (currentPopup != null && currentPopup != popup) {
 			clearCurrentPopup();
 		}
@@ -113,7 +113,7 @@ public class AnnotationTrack extends Composite {
 	}
 	
 	public void addAnnotation(Annotatable annotatable, Annotation a, Labels labels) {
-		SimpleDetailsPopup popup = new SimpleDetailsPopup(annotatable, a, labels);
+		InfoPopup popup = new InfoPopup(annotatable, a, labels);
 		annotations.put(a, popup);
 		refresh();
 	}
