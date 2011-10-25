@@ -116,11 +116,11 @@ html {
 }
 
 .yuma-annotation {
-	width:300px;
+	max-width:300px;
 	font-family:Verdana, Arial;
 	font-size:11px;
 	background-color:#eee;	
-	padding:3px;
+	padding:4px 6px 6px 4px;
 	color:#000;
 	border:1px solid #fff;
 	opacity:0.9;
@@ -129,12 +129,19 @@ html {
 	-moz-box-shadow:2px 2px 2px #222;
 	-webkit-box-shadow:2px 2px 2px #222;
 	box-shadow:2px 2px 2px #222; 
-	margin:3px 0px 0px 0px;
+	margin:3px 0px 0px 1px;
 }
 
-.yuma-annotation-btn { width:16px; height:16px; outline:none; }
-.yuma-annotation-btn-edit { background:url('edit.png'); }
-.yuma-annotation-btn-delete { background:url('delete.png'); }
+.yuma-annotation-btn { 
+	width:16px;
+	height:16px;
+	outline:none;
+	background-repeat:no-repeat; 
+	background-position:right;
+}
+
+.yuma-annotation-btn-edit { background-image:url('edit.png'); margin-left:12px; }
+.yuma-annotation-btn-delete { position:relative; left:3px; background-image:url('delete.png'); }
 
 .yuma-annotation-username {
 	color:#000;
