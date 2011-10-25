@@ -101,6 +101,7 @@ html {
 
 .annotation-popup {
 	padding-top:2px;
+	max-width:320px;
 	z-index:99010;
 	opacity:0;
 	transition:visibility 0.15s linear 0s, opacity 0.15s linear;
@@ -116,8 +117,7 @@ html {
 }
 
 .yuma-annotation {
-	line-height:120%;
-	max-width:400px;
+	line-height:135%;
 	font-family:Verdana, Arial;
 	font-size:11px;
 	background-color:#eee;	
