@@ -1,13 +1,18 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
+import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.init.Labels;
+import at.ait.dme.yumaJS.client.io.Delete;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Visibility;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
@@ -17,6 +22,31 @@ public class InfoPopup extends Composite {
 	
 	public InfoPopup(final Annotatable annotatable, final Annotation a, Labels labels) {
 		AnnotationWidget annotationWidget = new AnnotationWidget(a); 
+		
+		annotationWidget.addEditClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				annotatable.removeAnnotation(a);
+				annotatable.editAnnotation(a);
+			}
+		});
+		
+		annotationWidget.addDeleteClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (annotatable.getServerURL() == null) {
+					annotatable.removeAnnotation(a);
+				} else {
+					Delete.executeJSONP(annotatable.getServerURL(), a.getID(), new AsyncCallback<Void>() {
+						public void onSuccess(Void result) {
+							annotatable.removeAnnotation(a);
+						}			
+
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}							
+			}
+		});
 				
 		container = new FlowPanel();
 		container.setStyleName("annotation-popup");		
