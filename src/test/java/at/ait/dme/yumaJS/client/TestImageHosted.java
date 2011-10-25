@@ -27,14 +27,7 @@ public class TestImageHosted implements EntryPoint {
 	
 	private native InitParams createInitParams() /*-{
 		return {
-			labels:{
-				'save': 'SPEICHERN',
-				'cancel': 'ABBRECHEN',
-				'reply': 'ANTWORTEN',
-				'edit': 'BEARBEITEN',
-				'delete': 'L\u00d6SCHEN'
-			},
-			serverURL:"http://localhost:8081/yuma4j-server"
+			// serverURL:"http://localhost:8081/yuma4j-server"
 		};
 	}-*/;
 

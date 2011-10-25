@@ -55,20 +55,27 @@ public class AnnotationWidget extends Composite {
 			btnEdit.setTitle(labels.editTooltip());
 		}
 		
-		InlineHTML username = new InlineHTML();
-		if (annotation.getUserRealName() == null) {
-			username.setHTML(annotation.getUsername());
-		} else {
-			username.setHTML(annotation.getUserRealName());
+		// Username will be undefined in server-less mode!
+		InlineHTML username = null;
+		if (annotation.getUserRealName() != null) {
+			username = new InlineHTML(annotation.getUserRealName());
+		} else if (annotation.getUsername() != null) {
+			username = new InlineHTML(annotation.getUsername());
 		}
-		username.setStyleName("yuma-annotation-username");
-
-		InlineHTML timestamp = new InlineHTML();
-		Date modified = new Date((long) annotation.getModified());
-		timestamp.setHTML(DateTimeFormat.getFormat(DATE_FORMAT).format(modified));
-		timestamp.setStyleName("yuma-annotation-modified");
 		
-		panel.add(username);
+		if (username != null) {
+			username.setStyleName("yuma-annotation-username");
+			panel.add(username);
+		}
+
+		// Timestamps will be -1 in server-less mode!
+		InlineHTML timestamp = new InlineHTML();
+		long modified = annotation.getModified();
+		if (modified > 0) {
+			timestamp.setHTML(DateTimeFormat.getFormat(DATE_FORMAT).format(new Date(modified)));
+			timestamp.setStyleName("yuma-annotation-modified");
+		}
+		
 		panel.add(new InlineHTML(annotation.getText() + "<br/>"));
 		panel.add(timestamp);
 		
