@@ -25,6 +25,7 @@ public class AnnotationWidget extends Composite {
 	
 	private PushButton btnEdit, btnDelete;
 	
+	private static final String CSS_HIDDEN = "yuma-annotation-btn-hidden";
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
 	public AnnotationWidget(final Annotation annotation, Labels labels) {
@@ -34,17 +35,17 @@ public class AnnotationWidget extends Composite {
 		btnDelete = new PushButton();
 		btnDelete.setStyleName("yuma-annotation-btn");
 		btnDelete.addStyleName("yuma-annotation-btn-delete");
+		btnDelete.addStyleName(CSS_HIDDEN);
 		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
 		btnDelete.getElement().getStyle().setCursor(Cursor.POINTER);
-		btnDelete.setVisible(false);
 		panel.add(btnDelete);
 		
 		btnEdit = new PushButton();
 		btnEdit.setStyleName("yuma-annotation-btn");
 		btnEdit.addStyleName("yuma-annotation-btn-edit");
+		btnEdit.addStyleName(CSS_HIDDEN);
 		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
 		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
-		btnEdit.setVisible(false);
 		panel.add(btnEdit);
 		
 		if (labels == null) {
@@ -81,14 +82,15 @@ public class AnnotationWidget extends Composite {
 		
 		panel.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
-				btnEdit.setVisible(true);
-				btnDelete.setVisible(true);
+				btnEdit.removeStyleName(CSS_HIDDEN);
+				btnDelete.removeStyleName(CSS_HIDDEN);
 			}
 		}, MouseOverEvent.getType());
+		
 		panel.addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				btnEdit.setVisible(false);
-				btnDelete.setVisible(false);	
+				btnEdit.addStyleName(CSS_HIDDEN);
+				btnDelete.addStyleName(CSS_HIDDEN);
 			}
 		}, MouseOutEvent.getType());
 		
