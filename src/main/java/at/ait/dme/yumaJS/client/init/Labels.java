@@ -26,12 +26,12 @@ public class Labels extends JavaScriptObject {
 		return this.reply;
 	}-*/;
 	
-	public final native String edit() /*-{
-		return this.edit;
+	public final native String editTooltip() /*-{
+		return this.editTooltip;
 	}-*/;
 	
-	public final native String delete() /*-{
-		return this['delete'];
+	public final native String deleteTooltip() /*-{
+		return this.deleteTooltip;
 	}-*/;
 	
 }

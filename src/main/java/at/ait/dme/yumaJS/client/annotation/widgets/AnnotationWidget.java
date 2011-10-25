@@ -3,6 +3,7 @@ package at.ait.dme.yumaJS.client.annotation.widgets;
 import java.util.Date;
 
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Float;
@@ -26,13 +27,11 @@ public class AnnotationWidget extends Composite {
 	
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
-	public AnnotationWidget(final Annotation annotation) {
+	public AnnotationWidget(final Annotation annotation, Labels labels) {
 		panel = new FlowPanel();
 		panel.setStyleName("yuma-annotation");
 		
 		btnDelete = new PushButton();
-		// TODO make configurable via Labels
-		btnDelete.setTitle("Delete this Comment");
 		btnDelete.setStyleName("yuma-annotation-btn");
 		btnDelete.addStyleName("yuma-annotation-btn-delete");
 		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
@@ -41,14 +40,20 @@ public class AnnotationWidget extends Composite {
 		panel.add(btnDelete);
 		
 		btnEdit = new PushButton();
-		// TODO make configurable via Labels
-		btnEdit.setTitle("Edit this Comment");
 		btnEdit.setStyleName("yuma-annotation-btn");
 		btnEdit.addStyleName("yuma-annotation-btn-edit");
 		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
 		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
 		btnEdit.setVisible(false);
 		panel.add(btnEdit);
+		
+		if (labels == null) {
+			btnDelete.setTitle("Delete this Comment");
+			btnEdit.setTitle("Edit this Comment");
+		} else {
+			btnDelete.setTitle(labels.deleteTooltip());
+			btnEdit.setTitle(labels.editTooltip());
+		}
 		
 		InlineHTML username = new InlineHTML();
 		if (annotation.getUserRealName() == null) {

@@ -21,7 +21,7 @@ public class InfoPopup extends Composite {
 	protected FlowPanel container;
 	
 	public InfoPopup(final Annotatable annotatable, final Annotation a, Labels labels) {
-		AnnotationWidget annotationWidget = new AnnotationWidget(a); 
+		AnnotationWidget annotationWidget = new AnnotationWidget(a, labels); 
 		
 		annotationWidget.addEditClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

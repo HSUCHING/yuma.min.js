@@ -105,7 +105,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		replyField.setText(null);
 		replyField.setFocus(false);
 
-		final AnnotationWidget widget = new AnnotationWidget(reply);
+		final AnnotationWidget widget = new AnnotationWidget(reply, annotatable.getLabels());
 		widget.addDeleteClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (annotatable.getServerURL() == null) {
