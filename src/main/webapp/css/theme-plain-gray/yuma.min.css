@@ -132,10 +132,9 @@ html {
 	margin:3px 0px 0px 0px;
 }
 
-.yuma-annotation-btn {
-	padding:0px 2px;
-	color:#777;
-}
+.yuma-annotation-btn { width:16px; height:16px; outline:none; }
+.yuma-annotation-btn-edit { background:url('edit.png'); }
+.yuma-annotation-btn-delete { background:url('delete.png'); }
 
 .yuma-annotation-username {
 	color:#000;

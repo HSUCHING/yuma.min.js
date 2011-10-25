@@ -27,15 +27,21 @@ public class AnnotationWidget extends Composite {
 		panel = new FlowPanel();
 		panel.setStyleName("yuma-annotation");
 		
-		btnDelete = new PushButton("DELETE");
+		btnDelete = new PushButton();
+		// TODO make configurable via Labels
+		btnDelete.setTitle("Delete this Comment");
 		btnDelete.setStyleName("yuma-annotation-btn");
+		btnDelete.addStyleName("yuma-annotation-btn-delete");
 		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
 		btnDelete.getElement().getStyle().setCursor(Cursor.POINTER);
 		btnDelete.setVisible(false);
 		panel.add(btnDelete);
 		
-		btnEdit = new PushButton("EDIT");
+		btnEdit = new PushButton();
+		// TODO make configurable via Labels
+		btnEdit.setTitle("Edit this Comment");
 		btnEdit.setStyleName("yuma-annotation-btn");
+		btnEdit.addStyleName("yuma-annotation-btn-edit");
 		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
 		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
 		btnEdit.setVisible(false);
