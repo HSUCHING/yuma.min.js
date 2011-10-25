@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
@@ -22,6 +23,8 @@ public class AnnotationWidget extends Composite {
 	private FlowPanel panel;
 	
 	private PushButton btnEdit, btnDelete;
+	
+	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
 	public AnnotationWidget(final Annotation annotation) {
 		panel = new FlowPanel();
@@ -56,7 +59,8 @@ public class AnnotationWidget extends Composite {
 		username.setStyleName("yuma-annotation-username");
 
 		InlineHTML timestamp = new InlineHTML();
-		timestamp.setHTML(new Date((long) annotation.getModified()).toString());
+		Date modified = new Date((long) annotation.getModified());
+		timestamp.setHTML(DateTimeFormat.getFormat(DATE_FORMAT).format(modified));
 		timestamp.setStyleName("yuma-annotation-modified");
 		
 		panel.add(username);
