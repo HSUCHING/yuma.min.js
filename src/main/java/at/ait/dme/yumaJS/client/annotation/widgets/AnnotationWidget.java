@@ -21,41 +21,22 @@ import com.google.gwt.user.client.ui.PushButton;
 
 public class AnnotationWidget extends Composite {
 	
-	private FlowPanel panel;
+	private FlowPanel container;
+	
+	private FlowPanel annotationPanel;
+	
+	private FlowPanel buttonPanel;
 	
 	private PushButton btnEdit, btnDelete;
 	
-	private static final String CSS_HIDDEN = "yuma-annotation-btn-hidden";
+	private static final String CSS_HIDDEN = "yuma-button-hidden";
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
 	public AnnotationWidget(final Annotation annotation, Labels labels) {
-		panel = new FlowPanel();
-		panel.setStyleName("yuma-annotation");
-		
-		btnDelete = new PushButton();
-		btnDelete.setStyleName("yuma-annotation-btn");
-		btnDelete.addStyleName("yuma-annotation-btn-delete");
-		btnDelete.addStyleName(CSS_HIDDEN);
-		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
-		btnDelete.getElement().getStyle().setCursor(Cursor.POINTER);
-		panel.add(btnDelete);
-		
-		btnEdit = new PushButton();
-		btnEdit.setStyleName("yuma-annotation-btn");
-		btnEdit.addStyleName("yuma-annotation-btn-edit");
-		btnEdit.addStyleName(CSS_HIDDEN);
-		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
-		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
-		panel.add(btnEdit);
-		
-		if (labels == null) {
-			btnDelete.setTitle("Delete this Comment");
-			btnEdit.setTitle("Edit this Comment");
-		} else {
-			btnDelete.setTitle(labels.deleteTooltip());
-			btnEdit.setTitle(labels.editTooltip());
-		}
-		
+		// Construct annotation panel
+		annotationPanel = new FlowPanel();
+		annotationPanel.setStyleName("yuma-annotation-content");
+						
 		// Username will be undefined in server-less mode!
 		InlineHTML username = null;
 		if (annotation.getUserRealName() != null) {
@@ -66,7 +47,7 @@ public class AnnotationWidget extends Composite {
 		
 		if (username != null) {
 			username.setStyleName("yuma-annotation-username");
-			panel.add(username);
+			annotationPanel.add(username);
 		}
 
 		// Timestamps will be -1 in server-less mode!
@@ -77,24 +58,58 @@ public class AnnotationWidget extends Composite {
 			timestamp.setStyleName("yuma-annotation-modified");
 		}
 		
-		panel.add(new InlineHTML(annotation.getText() + "<br/>"));
-		panel.add(timestamp);
-		
-		panel.addDomHandler(new MouseOverHandler() {
+		annotationPanel.add(new InlineHTML(annotation.getText() + "<br/>"));
+		annotationPanel.add(timestamp);
+
+		annotationPanel.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				btnEdit.removeStyleName(CSS_HIDDEN);
 				btnDelete.removeStyleName(CSS_HIDDEN);
 			}
 		}, MouseOverEvent.getType());
+
+		// Construct button panel
+		buttonPanel = new FlowPanel();
+		buttonPanel.setStyleName("yuma-annotation-buttons");
 		
-		panel.addDomHandler(new MouseOutHandler() {
+		btnDelete = new PushButton();
+		btnDelete.setStyleName("yuma-button");
+		btnDelete.addStyleName("yuma-button-delete");
+		btnDelete.addStyleName(CSS_HIDDEN);
+		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
+		btnDelete.getElement().getStyle().setCursor(Cursor.POINTER);
+		
+		btnEdit = new PushButton();
+		btnEdit.setStyleName("yuma-button");
+		btnEdit.addStyleName("yuma-button-edit");
+		btnEdit.addStyleName(CSS_HIDDEN);
+		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
+		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
+	
+		if (labels == null) {
+			btnDelete.setTitle("Delete this Comment");
+			btnEdit.setTitle("Edit this Comment");
+		} else {
+			btnDelete.setTitle(labels.deleteTooltip());
+			btnEdit.setTitle(labels.editTooltip());
+		}
+		buttonPanel.add(btnDelete);
+		buttonPanel.add(btnEdit);
+
+		// Wrap everything into the container panel
+		container = new FlowPanel();
+		container.setStyleName("yuma-annotation");
+		container.add(annotationPanel);
+		container.add(buttonPanel);
+		
+		container.addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				btnEdit.addStyleName(CSS_HIDDEN);
 				btnDelete.addStyleName(CSS_HIDDEN);
 			}
 		}, MouseOutEvent.getType());
-		
-		initWidget(panel);
+
+		initWidget(container);
 	}
 	
 	public HandlerRegistration addEditClickHandler(ClickHandler handler) {

@@ -49,7 +49,7 @@ public class InfoPopup extends Composite {
 		});
 				
 		container = new FlowPanel();
-		container.setStyleName("annotation-popup");		
+		container.setStyleName("yuma-annotation-list");		
 		container.add(annotationWidget);	
 		setVisible(false);
 		

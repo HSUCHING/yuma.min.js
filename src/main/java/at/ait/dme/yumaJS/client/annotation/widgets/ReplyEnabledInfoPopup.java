@@ -45,7 +45,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		this.rootAnnotation = rootAnnotation;
 				
 		replyField = new TextArea();
-		replyField.setStyleName("annotation-popup-add-comment");
+		replyField.setStyleName("yuma-annotation-list-add-comment");
 		replyField.getElement().setAttribute("placeholder", "Add a Comment...");
 		replyField.addFocusHandler(new FocusHandler() {
 			public void onFocus(FocusEvent event) {
