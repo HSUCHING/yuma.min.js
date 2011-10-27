@@ -13,13 +13,14 @@ configurations {
 
 repositories {
 	mavenCentral()
+	mavenRepo urls: 'http://oss.sonatype.org/content/repositories/snapshots'
 }
 
 dependencies {
 	providedCompile 'com.google.gwt:gwt-servlet:2.3.0'
 	providedCompile 'com.google.gwt:gwt-dev:2.3.0'
 	providedCompile 'com.google.gwt:gwt-user:2.3.0'
-	providedCompile 'org.timepedia.exporter:gwtexporter:2.3.0'
+	providedCompile 'org.timepedia.exporter:gwtexporter:2.3.1-SNAPSHOT'
 	providedCompile 'javax.validation:validation-api:1.0.0.GA:sources'
 }
 
