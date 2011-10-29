@@ -24,6 +24,8 @@ public class EditForm extends Composite {
 	
 	private TextArea textArea;
 	
+	private FlowPanel buttonContainer;
+	
 	private PushButton btnSave;
 	
 	private PushButton btnCancel;
@@ -58,11 +60,15 @@ public class EditForm extends Composite {
 		btnCancel.setStyleName("button");
 		btnCancel.addStyleName("button-cancel");
 		
+		buttonContainer = new FlowPanel();
+		buttonContainer.setStyleName("yuma-editform-buttons");
+		buttonContainer.add(btnSave);
+		buttonContainer.add(btnCancel);
+		
 		container = new FlowPanel();
-		container.setStyleName("annotation-editform");
+		container.setStyleName("yuma-editform");
 		container.add(textArea);
-		container.add(btnSave);
-		container.add(btnCancel);
+		container.add(buttonContainer);
 		initWidget(container);
 	}
 	
