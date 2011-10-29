@@ -41,6 +41,8 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 	public ReplyEnabledInfoPopup(final Annotatable annotatable, final Annotation rootAnnotation, Labels labels) {
 		super(annotatable, rootAnnotation, labels);
 		
+		container.setStyleName("yuma-annotation-list");	
+		
 		this.annotatable = annotatable;
 		this.rootAnnotation = rootAnnotation;
 				

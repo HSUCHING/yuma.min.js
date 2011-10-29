@@ -19,6 +19,23 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.PushButton;
 
+/**
+ * The {@link AnnotationWidget} is the elemental GUI element displaying
+ * the contents of an annotation:
+ * 
+ * <ul>
+ * <li>the creator's real name or username (not in server-less mode)</li>
+ * <li>the annotation text</li>
+ * <li>the creation timestamp (not in server-less mode)</li>
+ * </ul> 
+ * 
+ * The {@link AnnotationWidget} also include the edit and delete button
+ * elements. (However, it does not define their behavior! This needs to 
+ * be defined externally by adding edit/delete {@link ClickHandler}s
+ * using the appropriate methods.
+ * 
+ * @author Rainer Simon <rainer.simon@ait.ac.at.>
+ */
 public class AnnotationWidget extends Composite {
 	
 	private FlowPanel container;

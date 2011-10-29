@@ -36,7 +36,6 @@ html {
 	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
 }
 
-
 .annotation-bbox-inner {
 	border:1px solid #fff;
 	z-index:9009;
@@ -120,6 +119,7 @@ html {
 }
 
 .yuma-annotation-content {
+	margin:3px 0px 0px 1px;
 	display:inline-block;
 	float:left;
 	line-height:135%;
@@ -138,10 +138,15 @@ html {
 	box-shadow:2px 2px 2px #222;
 }
 
+.yuma-annotation-list .yuma-annotation-content {
+	width:250px;
+}
+
 .yuma-annotation-buttons {
 	display:inline-block;
 	width:38px;
 	height:18px;
+	margin-top:3px;
 }
 
 .yuma-annotation .yuma-button { 
@@ -158,23 +163,14 @@ html {
 .yuma-annotation .yuma-button-delete { background-image:url('delete.png'); }
 .yuma-annotation .yuma-button-hidden { visibility:hidden; }
 
-.yuma-annotation-username {
-	color:#000;
-	font-weight:bold;
-	padding-right:5px;
-}
-
-.yuma-annotation-modified {
-	color:#777;
-	display:block;
-	margin-top:4px;
-}
+.yuma-annotation-username { color:#000; font-weight:bold; padding-right:5px; }
+.yuma-annotation-modified { color:#777; display:block; margin-top:4px; }
 
 .yuma-annotation-list-add-comment {
 	margin:3px 0px 0px 1px;
-	padding:3px;
+	padding:4px 6px 4px 4px;
 	resize:none;
-	width:300px;
+	width:250px;
 	border:1px solid #888;
 	font-family:Verdana, Arial;
 	font-size:11px;

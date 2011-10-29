@@ -20,7 +20,7 @@ public class Annotation extends JavaScriptObject {
 				 objectURI: objectURI,
 				 context: { uri: contextURI, title: contextTitle },
 		         mediatype: mediatype,
-		         fragment: fragment, 
+		         fragment: fragment,
 		         text: text,
 		         isReplyTo: isReplyTo 
 		       };

@@ -10,6 +10,7 @@ import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 import at.ait.dme.yumaJS.client.io.ListAll;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -67,6 +68,7 @@ public abstract class Annotatable implements Exportable {
 	protected void fetchAnnotations(String serverURL) {
 		ListAll.executeJSONP(serverURL, getObjectURI(), new AsyncCallback<JavaScriptObject>() {
 			public void onSuccess(JavaScriptObject result) {
+				GWT.log(result.toString());
 				@SuppressWarnings("unchecked")
 				JsArray<JavaScriptObject> annotations = (JsArray<JavaScriptObject>) result;
 				for (int i=0; i<annotations.length(); i++) {
