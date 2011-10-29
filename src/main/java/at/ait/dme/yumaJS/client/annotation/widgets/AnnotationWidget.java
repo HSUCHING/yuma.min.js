@@ -46,10 +46,14 @@ public class AnnotationWidget extends Composite {
 	
 	private PushButton btnEdit, btnDelete;
 	
+	private Annotation annotation;
+	
 	private static final String CSS_HIDDEN = "yuma-button-hidden";
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
-	public AnnotationWidget(final Annotation annotation, Labels labels) {
+	public AnnotationWidget(Annotation a, Labels labels) {
+		this.annotation = a;
+		
 		// Construct annotation panel
 		annotationPanel = new FlowPanel();
 		annotationPanel.setStyleName("yuma-annotation-content");
@@ -128,7 +132,13 @@ public class AnnotationWidget extends Composite {
 
 		initWidget(container);
 	}
-	
+
+	public void makeEditable(ClickHandler saveClickHandler, Labels labels) {
+		annotationPanel.setVisible(false);
+		container.insert(new CommentField(annotation.getText(), labels),
+				container.getWidgetIndex(annotationPanel));			
+	}
+
 	public HandlerRegistration addEditClickHandler(ClickHandler handler) {
 		return btnEdit.addClickHandler(handler);
 	}

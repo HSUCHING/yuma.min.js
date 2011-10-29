@@ -7,24 +7,13 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.init.Labels;
-import at.ait.dme.yumaJS.client.io.Create;
 import at.ait.dme.yumaJS.client.io.Delete;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.FocusEvent;
-import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.TextArea;
 
 public class ReplyEnabledInfoPopup extends InfoPopup {
 	
@@ -32,9 +21,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 	
 	private Annotation rootAnnotation;
 	
-	private TextArea replyField;
-	
-	private boolean hasFocus = false;
+	private CommentField replyField;
 	
 	private List<Annotation> replies = new ArrayList<Annotation>();
 	
@@ -46,19 +33,9 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		this.annotatable = annotatable;
 		this.rootAnnotation = rootAnnotation;
 				
-		replyField = new TextArea();
-		replyField.setStyleName("yuma-annotation-list-add-comment");
-		replyField.getElement().setAttribute("placeholder", "Add a Comment...");
-		replyField.addFocusHandler(new FocusHandler() {
-			public void onFocus(FocusEvent event) {
-				hasFocus = true;
-			}
-		});
-		replyField.addBlurHandler(new BlurHandler() {
-			public void onBlur(BlurEvent event) {
-				hasFocus = false;
-			}
-		});
+		replyField = new CommentField(labels);
+		
+		/*
 		replyField.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
@@ -87,14 +64,14 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 					}
 				}
 			}
-		});
+		});*/
 		
 		container.add(replyField);
 		
 		// TODO resolve conflicting behavior with super-class!
 		addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				if (!hasFocus)
+				if (!replyField.hasFocus())
 					setVisible(false);
 			}
 		}, MouseOutEvent.getType());
@@ -106,8 +83,18 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		
 		replyField.setText(null);
 		replyField.setFocus(false);
-
+		
 		final AnnotationWidget widget = new AnnotationWidget(reply, annotatable.getLabels());
+		widget.addEditClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				widget.makeEditable(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						// TODO update (and save to server)
+					}
+				}, annotatable.getLabels());
+			}
+		});
+		
 		widget.addDeleteClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (annotatable.getServerURL() == null) {

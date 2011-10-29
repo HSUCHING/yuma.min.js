@@ -46,43 +46,43 @@ html {
 	border-color:#ffa500;
 }
 
-.annotation-editform {
-	width:230px;
-	margin:4px 0px 0px -4px;
-	padding:2px 5px;
+.yuma-comment {
+	margin:0px;
+	padding:0px;
+	height:40px;
 	z-index:99010;
 }
 
-.annotation-editform textarea {
-	width:230px;
-	height:60px;
-	float:left;
-	outline:none;
+.yuma-comment-textarea {
+	margin:1px 0px 0px 1px;
+	width:238px;
+	height:30px;
+	padding:4px 6px 4px 4px;
+	resize:none;
+	border:1px solid #888;
 	font-family:Verdana, Arial;
 	font-size:11px;
-	background-color:#eee;	
-	color:#000;
-	border:1px solid #fff;
-	padding:6px;
-	margin:0px;
-	resize: none;
-	opacity:0.95;
-	filter:alpha(opacity=95);
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=95)";
 	-moz-box-shadow:2px 2px 2px #222;
 	-webkit-box-shadow:2px 2px 2px #222;
 	box-shadow:2px 2px 2px #222; 
 }
 
-.annotation-editform .button {
-	float:left;
+.yuma-comment-buttons {
+	margin:-4px 0px 0px 1px;
+	padding:0px;
+	width:253px;
+}
+
+.yuma-comment .yuma-button {
+	float:right;
+	width:40px;
 	text-align:center;
 	font-family:Verdana, Arial;
 	font-size:10px;	
 	border:1px solid #777;
 	color:#ddd;
-	padding:3px 8px;
-	margin:3px 3px 0px 0px;
+	padding:2px 6px;
+	margin:0px 3px 0px 0px;
 	-moz-box-shadow: 2px 2px 2px #222;
 	-webkit-box-shadow: 2px 2px 2px #222;
 	box-shadow: 2px 2px 2px #222; 
@@ -94,7 +94,7 @@ html {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#888888', endColorstr='#555555');
 }
 
-.annotation-editform .button:hover {
+.yuma-comment .yuma-button:hover {
 	background:#999;
 }
 
@@ -123,7 +123,7 @@ html {
 	display:inline-block;
 	float:left;
 	line-height:135%;
-	max-width:250px;
+	max-width:238px;
 	font-family:Verdana, Arial;
 	font-size:11px;
 	background-color:#eee;	
@@ -165,19 +165,6 @@ html {
 
 .yuma-annotation-username { color:#000; font-weight:bold; padding-right:5px; }
 .yuma-annotation-modified { color:#777; display:block; margin-top:4px; }
-
-.yuma-annotation-list-add-comment {
-	margin:3px 0px 0px 1px;
-	padding:4px 6px 4px 4px;
-	resize:none;
-	width:250px;
-	border:1px solid #888;
-	font-family:Verdana, Arial;
-	font-size:11px;
-	-moz-box-shadow:2px 2px 2px #222;
-	-webkit-box-shadow:2px 2px 2px #222;
-	box-shadow:2px 2px 2px #222; 
-}
 
 .yuma-audio-player {
 	font-family:Verdana, Arial;
