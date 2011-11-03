@@ -165,7 +165,6 @@ html {
 	background-repeat:no-repeat;
 	cursor:pointer;
 	cursor:hand;
-	background-color:#888;
 }
 
 .yuma-annotation .yuma-button-edit { background-image:url('edit.png'); margin-right:2px; }
