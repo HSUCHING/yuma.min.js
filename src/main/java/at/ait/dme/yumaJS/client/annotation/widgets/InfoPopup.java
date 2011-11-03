@@ -57,9 +57,13 @@ public class InfoPopup extends Composite {
 		
 		addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				setVisible(false);
+				onMouseLeave();
 			}
 		}, MouseOutEvent.getType());
+	}
+	
+	protected void onMouseLeave() {
+		setVisible(false);
 	}
 	
 	@Override

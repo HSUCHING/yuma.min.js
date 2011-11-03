@@ -9,7 +9,7 @@ import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.ResizableBoxSelection;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.SelectionChangedHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
+import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
 
 /**
  * An {@link Editor} implementation for images and zoomable images,
@@ -45,15 +45,20 @@ public class ResizableBoxEditor extends Editor {
 		});
 		setSelection(selection);
 		
-		EditForm editForm = new EditForm(selection, annotatable.getLabels(), initialValue);
-		setEditForm(editForm);
-		panel.add(editForm, 0, 0);
+		CommentField commentField;
+		if (initialValue == null) {
+			commentField = new CommentField(annotatable.getLabels(), true);
+		} else {
+			commentField = new CommentField(initialValue.getText(), annotatable.getLabels(), true);
+		}
+		setCommentField(commentField);
+		panel.add(commentField, 0, 0);
 		updateEditForm();
 	}
 	
 	private void updateEditForm() {
 		BoundingBox bbox = selection.getSelectedBounds();
-		panel.setWidgetPosition(editForm, bbox.getX(), bbox.getY() + bbox.getHeight());
+		panel.setWidgetPosition(commentField, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
 	}
 	
 }

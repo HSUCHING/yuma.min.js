@@ -19,17 +19,17 @@ public class CommentField extends Composite {
 	
 	private TextArea textArea = new TextArea();
 	
-	private PushButton btnSave;
+	private PushButton btnSave, btnCancel;
 	
 	private FlowPanel buttonContainer = new FlowPanel();
 	
 	private boolean hasFocus = false;
 	
-	public CommentField(Labels labels) {
-		this(null, labels);
+	public CommentField(Labels labels, boolean showCancelButton) {
+		this(null, labels, showCancelButton);
 	}
 
-	public CommentField(String text, Labels labels) {
+	public CommentField(String text, Labels labels, boolean showCancelButton) {
 		container.setStyleName("yuma-comment");
 		textArea.setStyleName("yuma-comment-textarea");
 		
@@ -51,9 +51,8 @@ public class CommentField extends Composite {
 			}
 		});
 		
-		PushButton btnCancel;
 		if (labels == null) {
-			btnSave = new PushButton("SAVE");
+			btnSave = new PushButton("OK");
 			btnCancel = new PushButton("CANCEL");
 		} else {
 			btnSave = new PushButton(labels.save());
@@ -67,8 +66,10 @@ public class CommentField extends Composite {
 		btnCancel.addStyleName("yuma-button-cancel");
 
 		buttonContainer.setStyleName("yuma-comment-buttons");
+		if (showCancelButton)
+			buttonContainer.add(btnCancel);
+		
 		buttonContainer.add(btnSave);
-		buttonContainer.add(btnCancel);
 
 		container.add(textArea);
 		container.add(buttonContainer);
@@ -91,16 +92,12 @@ public class CommentField extends Composite {
 		textArea.setFocus(focused);
 	}
 	
-	public HandlerRegistration setSaveClickHandler(ClickHandler handler) {
+	public HandlerRegistration addSaveClickHandler(ClickHandler handler) {
 		return btnSave.addClickHandler(handler);
 	}
 	
-	public void showButtons() {
-		
-	}
-	
-	public void hideButtons() {
-		
+	public HandlerRegistration addCancelClickHandler(ClickHandler handler) {
+		return btnCancel.addClickHandler(handler);
 	}
 	
 }

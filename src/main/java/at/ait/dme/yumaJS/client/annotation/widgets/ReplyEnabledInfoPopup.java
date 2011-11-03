@@ -14,8 +14,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class ReplyEnabledInfoPopup extends InfoPopup {
@@ -36,21 +36,29 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		this.annotatable = annotatable;
 		this.rootAnnotation = rootAnnotation;
 				
-		replyField = new CommentField(labels);
-		replyField.setSaveClickHandler(new ClickHandler() {
+		replyField = new CommentField(labels, false);
+		replyField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				save();
 			}
 		});
+		replyField.setVisible(false);
+		
 		container.add(replyField);
 		
-		// TODO resolve conflicting behavior with super-class!
-		addDomHandler(new MouseOutHandler() {
-			public void onMouseOut(MouseOutEvent event) {
-				if (!replyField.hasFocus())
-					setVisible(false);
+		addDomHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				replyField.setVisible(true);
 			}
-		}, MouseOutEvent.getType());
+		}, MouseOverEvent.getType());
+	}
+	
+	@Override
+	protected void onMouseLeave() {
+		if (!replyField.hasFocus()) {
+			replyField.setVisible(false);
+			setVisible(false);
+		}
 	}
 	
 	public void addReply(final Annotation reply) {

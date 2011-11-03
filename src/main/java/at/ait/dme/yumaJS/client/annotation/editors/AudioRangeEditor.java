@@ -8,7 +8,7 @@ import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.RangeSelection;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
-import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
+import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
 
 public class AudioRangeEditor extends Editor {
 	
@@ -35,10 +35,15 @@ public class AudioRangeEditor extends Editor {
 				
 		setSelection(selection);
 		
-		EditForm editForm = new EditForm(selection, annotatable.getLabels(), annotation);
-		setEditForm(editForm);
+		CommentField commentField;
+		if (annotation == null) {
+			commentField = new CommentField(annotatable.getLabels(), true);
+		} else {
+			commentField = new CommentField(annotation.getText(), annotatable.getLabels(), true);
+		}
+		setCommentField(commentField);
 		
-		RootPanel.get().add(editForm, selection.getStartOffsetX()+ progressBar.getAbsoluteLeft(), 
+		RootPanel.get().add(commentField, selection.getStartOffsetX()+ progressBar.getAbsoluteLeft(), 
 				progressBar.getAbsoluteTop() + progressBar.getOffsetHeight());
 	}
 

@@ -10,7 +10,7 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
-import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
+import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
 import at.ait.dme.yumaJS.client.io.Create;
 
 /**
@@ -26,7 +26,7 @@ public abstract class Editor {
 		
 	protected Selection selection;
 	
-	protected EditForm editForm;
+	protected CommentField commentField;
 	
 	public Editor(Annotatable annotatable, Annotation initialAnnotation) {
 		this.annotatable = annotatable;
@@ -37,10 +37,10 @@ public abstract class Editor {
 		this.selection = selection;
 	}
 	
-	protected void setEditForm(final EditForm editForm) {
-		this.editForm = editForm;
+	protected void setCommentField(final CommentField commentField) {
+		this.commentField = commentField;
 		
-		this.editForm.addSaveClickHandler(new ClickHandler() {
+		this.commentField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				final Annotation a;
 				if (initialAnnotation == null) {
@@ -49,12 +49,12 @@ public abstract class Editor {
 						Document.get().getURL(),
 						Document.get().getTitle(),
 						annotatable.getMediaType(),
-						editForm.getText(),
+						commentField.getText(),
 						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()));
 				} else {
 					a = initialAnnotation;
 					a.setFragment(annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()));
-					a.setText(editForm.getText());
+					a.setText(commentField.getText());
 				}
 				
 				if (annotatable.getServerURL() == null) {
@@ -77,7 +77,7 @@ public abstract class Editor {
 			}
 		});
 		
-		this.editForm.addCancelClickHandler(new ClickHandler() {
+		this.commentField.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (initialAnnotation != null)
 					annotatable.addAnnotation(initialAnnotation);
@@ -87,7 +87,7 @@ public abstract class Editor {
 	}
 		
 	private void destroy() {
-		editForm.removeFromParent();
+		commentField.removeFromParent();
 		selection.destroy();
 	}
 	

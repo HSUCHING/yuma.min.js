@@ -84,13 +84,13 @@ html {
 
 .yuma-comment-buttons .yuma-button {
 	float:right;
-	min-width:35px;
+	min-width:15px;
 	text-align:center;
 	font-family:Verdana, Arial;
 	font-size:10px;	
 	border:1px solid #777;
 	color:#ddd;
-	padding:0px 2px;
+	padding:2px 8px 3px 8px;
 	margin:0px 0px 0px 2px;
 	cursor:pointer;
 	cursor:hand;
@@ -122,6 +122,7 @@ html {
 .yuma-annotation {
 	clear:both;
 	padding-top:1px;
+	white-space:nowrap;
 }
 
 .yuma-annotation-content {
@@ -132,7 +133,7 @@ html {
 	max-width:238px;
 	font-family:Verdana, Arial;
 	font-size:11px;
-	background-color:#eee;	
+	background-color:#fff;	
 	padding:4px 6px 4px 4px;
 	color:#000;
 	border:1px solid #ccc;
@@ -144,7 +145,7 @@ html {
 	box-shadow:2px 2px 2px #222;
 }
 
-.yuma-annotation-list .yuma-annotation-content {
+.yuma-annotation-content {
 	width:250px;
 }
 
