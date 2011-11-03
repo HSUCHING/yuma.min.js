@@ -13,7 +13,7 @@ The present version of yuma.min.js provides annotation for
      (http://gallery.expression.microsoft.com/SeadragonAjax) JavaScript viewer (unfinished) 
    * audio files (unfinished, HTML5-capable browsers only)
 
-## Getting Started
+## Getting Started: Images
 
 To make content in your Web page annotatable, simply perform the following three steps:
 
@@ -60,6 +60,14 @@ start your initialization.
      </body>
      
 Calling ``annotationLayer.createNewAnnotation();`` will open the annotation editing form. That's it for the basics. 
+
+## Getting Started: OpenLayers
+
+Todo... 
+
+An example of using yuma.min.js with OpenLayers is online at http://yuma-js.github.com/openlayers-demo
+
+For the time being, please take a look at the source of the demo page, as we are working on better documentation.
 
 ## What Else is in There?
 
