@@ -56,8 +56,8 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 	@Override
 	protected void onMouseLeave() {
 		if (!replyField.hasFocus()) {
-			replyField.setVisible(false);
 			setVisible(false);
+			replyField.setVisible(false);
 		}
 	}
 	
