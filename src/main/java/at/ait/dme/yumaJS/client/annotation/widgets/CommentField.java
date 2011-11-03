@@ -4,8 +4,10 @@ import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PushButton;
@@ -16,6 +18,8 @@ public class CommentField extends Composite {
 	private FlowPanel container = new FlowPanel();
 	
 	private TextArea textArea = new TextArea();
+	
+	private PushButton btnSave;
 	
 	private FlowPanel buttonContainer = new FlowPanel();
 	
@@ -47,7 +51,7 @@ public class CommentField extends Composite {
 			}
 		});
 		
-		PushButton btnSave, btnCancel;
+		PushButton btnCancel;
 		if (labels == null) {
 			btnSave = new PushButton("SAVE");
 			btnCancel = new PushButton("CANCEL");
@@ -71,7 +75,6 @@ public class CommentField extends Composite {
 		initWidget(container);
 	}
 
-	
 	public boolean hasFocus() {
 		return hasFocus;
 	}
@@ -80,8 +83,16 @@ public class CommentField extends Composite {
 		textArea.setText(text);
 	}
 	
+	public String getText() {
+		return textArea.getText();
+	}
+	
 	public void setFocus(boolean focused) {
 		textArea.setFocus(focused);
+	}
+	
+	public HandlerRegistration setSaveClickHandler(ClickHandler handler) {
+		return btnSave.addClickHandler(handler);
 	}
 	
 	public void showButtons() {

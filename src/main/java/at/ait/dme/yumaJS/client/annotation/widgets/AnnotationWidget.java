@@ -135,8 +135,10 @@ public class AnnotationWidget extends Composite {
 
 	public void makeEditable(ClickHandler saveClickHandler, Labels labels) {
 		annotationPanel.setVisible(false);
-		container.insert(new CommentField(annotation.getText(), labels),
-				container.getWidgetIndex(annotationPanel));			
+		
+		CommentField commentField = new CommentField(annotation.getText(), labels);
+		commentField.setSaveClickHandler(saveClickHandler);
+		container.insert(commentField, container.getWidgetIndex(annotationPanel));			
 	}
 
 	public HandlerRegistration addEditClickHandler(ClickHandler handler) {

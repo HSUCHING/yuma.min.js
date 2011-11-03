@@ -7,8 +7,11 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.init.Labels;
+import at.ait.dme.yumaJS.client.io.Create;
 import at.ait.dme.yumaJS.client.io.Delete;
 
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -34,38 +37,11 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		this.rootAnnotation = rootAnnotation;
 				
 		replyField = new CommentField(labels);
-		
-		/*
-		replyField.addKeyDownHandler(new KeyDownHandler() {
-			public void onKeyDown(KeyDownEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					Annotation a = Annotation.create(
-							annotatable.getObjectURI(),
-							Document.get().getURL(),
-							Document.get().getTitle(),
-							annotatable.getMediaType(),
-							replyField.getText(),
-							null,
-							rootAnnotation.getID());
-					
-					if (annotatable.getServerURL() == null) {
-						// Local-mode: just add the annotation without storing
-						annotatable.addAnnotation(a);
-					} else {
-						Create.executeJSONP(annotatable.getServerURL(), a, new AsyncCallback<JavaScriptObject>() {
-							public void onSuccess(JavaScriptObject result) {
-								annotatable.addAnnotation((Annotation) result);
-							}
-							
-							public void onFailure(Throwable t) {
-								YUMA.nonFatalError(t.getMessage());
-							}
-						});
-					}
-				}
+		replyField.setSaveClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				save();
 			}
-		});*/
-		
+		});
 		container.add(replyField);
 		
 		// TODO resolve conflicting behavior with super-class!
@@ -89,7 +65,8 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 			public void onClick(ClickEvent event) {
 				widget.makeEditable(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						// TODO update (and save to server)
+						System.out.println("yo");
+						save();
 					}
 				}, annotatable.getLabels());
 			}
@@ -117,6 +94,32 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		container.insert(widget, container.getWidgetCount() - 1);
 		
 		replies.add(reply);
+	}
+	
+	private void save() {
+		Annotation a = Annotation.create(
+				annotatable.getObjectURI(),
+				Document.get().getURL(),
+				Document.get().getTitle(),
+				annotatable.getMediaType(),
+				replyField.getText(),
+				null,
+				rootAnnotation.getID());
+		
+		if (annotatable.getServerURL() == null) {
+			// Local-mode: just add the annotation without storing
+			annotatable.addAnnotation(a);
+		} else {
+			Create.executeJSONP(annotatable.getServerURL(), a, new AsyncCallback<JavaScriptObject>() {
+				public void onSuccess(JavaScriptObject result) {
+					annotatable.addAnnotation((Annotation) result);
+				}
+				
+				public void onFailure(Throwable t) {
+					YUMA.nonFatalError(t.getMessage());
+				}
+			});
+		}
 	}
 
 }
