@@ -67,7 +67,7 @@ Todo...
 
 An example of using yuma.min.js with OpenLayers is online at http://yuma-js.github.com/openlayers-demo
 
-For the time being, please take a look at the source of the demo page, as we are working on the documentation.
+For the time being, please take a look at the source code of the demo page, as we are working on the documentation.
 
 ## What Else is in There?
 
