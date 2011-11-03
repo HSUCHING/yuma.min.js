@@ -128,6 +128,7 @@ html {
 }
 
 .yuma-annotation-content {
+	white-space:normal;
 	margin:3px 0px 0px 1px;
 	display:inline-block;
 	float:left;
