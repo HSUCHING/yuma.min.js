@@ -65,6 +65,13 @@ public abstract class Annotatable implements Exportable {
 		}
 	}
 	
+	public boolean getRepliesEnabled() {
+		if (initParams == null)
+			return false;
+		
+		return initParams.isRepliesEnabled();
+	}
+	
 	protected void fetchAnnotations(String serverURL) {
 		ListAll.executeJSONP(serverURL, getObjectURI(), new AsyncCallback<JavaScriptObject>() {
 			public void onSuccess(JavaScriptObject result) {

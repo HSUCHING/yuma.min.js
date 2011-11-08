@@ -147,13 +147,13 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void addAnnotation(Annotation a) {
-		if (a.getID() == null && getInitParams().serverURL() == null)
+		if (a.getID() == null && getServerURL() == null)
 			a.setID(Integer.toString(annotationCtr++));
 			
 		if (a.getIsReplyTo() == null) {
 			// Root annotation - add new overlay
 			ImageAnnotationOverlay overlay = new ImageAnnotationOverlay(
-					a, this, annotationLayer, getInitParams().isRepliesEnabled(), getLabels());
+					a, this, annotationLayer, getRepliesEnabled(), getLabels());
 
 			overlays.put(a.getID(), overlay);
 			sortOverlaysByArea();

@@ -66,10 +66,11 @@ public class CommentField extends Composite {
 		btnCancel.addStyleName("yuma-button-cancel");
 
 		buttonContainer.setStyleName("yuma-comment-buttons");
+		
+		buttonContainer.add(btnSave);
 		if (showCancelButton)
 			buttonContainer.add(btnCancel);
 		
-		buttonContainer.add(btnSave);
 
 		container.add(textArea);
 		container.add(buttonContainer);
