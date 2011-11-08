@@ -50,12 +50,12 @@ html {
 
 .yuma-comment {
 	clear:both;
-	display:inline-block;
+	line-height:100%;
 	margin:3px 0px 0px 1px;
 	padding:1px;
-	width:246px;
 	background-color:#ccc;	
 	color:#000;
+	width:240px;
 	border:1px solid #aaa;
 	-moz-box-shadow:2px 2px 2px #222;
 	-webkit-box-shadow:2px 2px 2px #222;
@@ -64,28 +64,28 @@ html {
 }
 
 .yuma-comment-textarea {
+	display:block;
 	background-color:#fff;
-	display:inline-block;
-	width:240px;
+	width:234px;
 	height:30px;
 	resize:none;
 	outline:none;
 	border:1px solid #aaa;
 	font-family:Verdana, Arial;
 	font-size:11px;
+	padding:2px;
 }
 
 .yuma-comment-buttons {
-	clear:both;
-	float:right;
-	margin:-4px 0px 0px 0px;
-	display:inline-block;
+	border:1px solid transparent;
+	text-align:right;
+	margin-right:2px;
 	padding:0px;
-	width:240px;
+	width:238px;
 }
 
 .yuma-comment-buttons .yuma-button {
-	float:right;
+	display:inline-block;
 	min-width:15px;
 	text-align:center;
 	font-family:Verdana, Arial;
