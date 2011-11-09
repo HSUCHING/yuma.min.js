@@ -79,7 +79,7 @@ public class AnnotationWidget extends Composite {
 			timestamp.setStyleName("yuma-annotation-modified");
 		}
 		
-		annotationPanel.add(new InlineHTML(annotation.getText() + "<br/>"));
+		annotationPanel.add(new InlineHTML(toHTML(annotation.getText()) + "<br/>"));
 		annotationPanel.add(timestamp);
 
 		annotationPanel.addDomHandler(new MouseOverHandler() {
@@ -132,6 +132,11 @@ public class AnnotationWidget extends Composite {
 
 		initWidget(container);
 	}
+	
+	private native String toHTML(String text) /*-{
+	    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    return text.replace(exp,"<a href='$1'>$1</a>"); 
+	}-*/;
 
 	public void makeEditable(ClickHandler saveClickHandler, Labels labels) {
 		annotationPanel.setVisible(false);
