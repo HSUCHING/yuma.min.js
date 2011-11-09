@@ -133,6 +133,7 @@ html {
 	display:inline-block;
 	float:left;
 	line-height:135%;
+	word-wrap:break-word;
 	max-width:238px;
 	font-family:Verdana, Arial;
 	font-size:11px;
