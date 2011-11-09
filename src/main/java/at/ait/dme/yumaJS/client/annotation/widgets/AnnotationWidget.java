@@ -135,7 +135,7 @@ public class AnnotationWidget extends Composite {
 	
 	private native String toHTML(String text) /*-{
 	    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    return text.replace(exp,"<a href='$1'>$1</a>"); 
+	    return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
 	}-*/;
 
 	public void makeEditable(ClickHandler saveClickHandler, Labels labels) {
