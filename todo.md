@@ -1,6 +1,5 @@
 # TODOs
 
-* Auto-detect HTTP URLs in annotation text and make them clickable!
 * AJAX load indicators needed inside the edit form when saving/updating/deleting
 * JavaDoc
 * Consistent naming of CSS classes throughout the project
