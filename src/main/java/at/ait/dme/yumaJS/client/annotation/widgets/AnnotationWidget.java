@@ -139,7 +139,7 @@ public class AnnotationWidget extends Composite {
 	    return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
 	}-*/;
 
-	public void makeEditable(ClickHandler saveClickHandler, Labels labels) {
+	public void makeEditable(EditHandler editHandler, Labels labels) {
 		annotationPanel.setVisible(false);
 		buttonPanel.setVisible(false);
 		
@@ -170,6 +170,12 @@ public class AnnotationWidget extends Composite {
 	
 	public HandlerRegistration addDeleteClickHandler(ClickHandler handler) {
 		return btnDelete.addClickHandler(handler);
+	}
+	
+	public interface EditHandler {
+
+		public void onSave(String text);
+		
 	}
 
 }
