@@ -94,14 +94,14 @@ public class AnnotationWidget extends Composite {
 		buttonPanel.setStyleName("yuma-annotation-buttons");
 		
 		btnDelete = new PushButton();
-		btnDelete.setStyleName("yuma-button");
+		btnDelete.setStyleName("yuma-icon-button");
 		btnDelete.addStyleName("yuma-button-delete");
 		btnDelete.addStyleName(CSS_HIDDEN);
 		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
 		btnDelete.getElement().getStyle().setCursor(Cursor.POINTER);
 		
 		btnEdit = new PushButton();
-		btnEdit.setStyleName("yuma-button");
+		btnEdit.setStyleName("yuma-icon-button");
 		btnEdit.addStyleName("yuma-button-edit");
 		btnEdit.addStyleName(CSS_HIDDEN);
 		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
@@ -140,6 +140,7 @@ public class AnnotationWidget extends Composite {
 
 	public void makeEditable(ClickHandler saveClickHandler, Labels labels) {
 		annotationPanel.setVisible(false);
+		buttonPanel.setVisible(false);
 		
 		CommentField commentField = new CommentField(annotation.getText(), labels, true);
 		commentField.addSaveClickHandler(saveClickHandler);

@@ -40,6 +40,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		replyField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				save();
+				replyField.setVisible(false);
 			}
 		});
 		replyField.setVisible(false);
@@ -73,7 +74,6 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 			public void onClick(ClickEvent event) {
 				widget.makeEditable(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						System.out.println("yo");
 						save();
 					}
 				}, annotatable.getLabels());
