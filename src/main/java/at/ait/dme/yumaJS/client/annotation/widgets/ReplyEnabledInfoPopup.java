@@ -72,6 +72,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		final AnnotationWidget widget = new AnnotationWidget(reply, annotatable.getLabels());
 		widget.addEditClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				replyField.setVisible(false);
 				widget.makeEditable(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						save();

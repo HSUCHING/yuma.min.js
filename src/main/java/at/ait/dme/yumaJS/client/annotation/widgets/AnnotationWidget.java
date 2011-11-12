@@ -7,6 +7,7 @@ import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -142,8 +143,24 @@ public class AnnotationWidget extends Composite {
 		annotationPanel.setVisible(false);
 		buttonPanel.setVisible(false);
 		
-		CommentField commentField = new CommentField(annotation.getText(), labels, true);
+		final CommentField commentField = new CommentField(annotation.getText(), labels, true);
+		
+		/*
+		commentField.addSaveClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				commentField.removeFromParent();
+			}
+		});
 		commentField.addSaveClickHandler(saveClickHandler);
+		*/
+		
+		commentField.addCancelClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				commentField.removeFromParent();
+				annotationPanel.setVisible(true);
+				buttonPanel.setVisible(true);
+			}
+		});
 		container.insert(commentField, container.getWidgetIndex(annotationPanel));			
 	}
 
