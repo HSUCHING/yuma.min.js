@@ -26,6 +26,23 @@ public class SeadragonViewer {
 		return viewer.source.xmlUrl;
 	}-*/;
 	
+
+	public SeadragonPoint toImageCoordinates(SeadragonPoint pt) {
+		return _toImageCoordinates(pt, viewer);
+	}
+	
+	private native SeadragonPoint _toImageCoordinates(SeadragonPoint pt, JavaScriptObject viewer) /*-{
+		return new Seadragon.Point(pt.x * viewer.source.width, pt.y * viewer.source.height * viewer.source.aspectRatio);
+	}-*/;
+
+	public SeadragonPoint toWorldCoordinates(SeadragonPoint pt) {
+		return _toWorldCoordinates(pt, viewer);
+	}
+	
+	private native SeadragonPoint _toWorldCoordinates(SeadragonPoint pt, JavaScriptObject viewer) /*-{
+		   return new Seadragon.Point(pt.x / viewer.source.width, pt.y / viewer.source.height / viewer.source.aspectRatio);	
+	}-*/;
+	
 	public SeadragonPoint pointFromPixel(SeadragonPoint p) {
 		return _pointFromPixel(viewer, p);
 	}
@@ -33,6 +50,7 @@ public class SeadragonViewer {
 	private native SeadragonPoint _pointFromPixel(JavaScriptObject viewer, SeadragonPoint p) /*-{
 		return viewer.viewport.pointFromPixel(p, true);
 	}-*/;
+
 	
 	public void addOverlay(Element el, SeadragonRect rect) {
 		_addOverlay(viewer, el, rect);
