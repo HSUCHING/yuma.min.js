@@ -139,20 +139,18 @@ public class AnnotationWidget extends Composite {
 	    return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
 	}-*/;
 
-	public void makeEditable(EditHandler editHandler, Labels labels) {
+	public void makeEditable(final EditHandler editHandler, Labels labels) {
 		annotationPanel.setVisible(false);
 		buttonPanel.setVisible(false);
 		
 		final CommentField commentField = new CommentField(annotation.getText(), labels, true);
-		
-		/*
+		 
 		commentField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				editHandler.onSave(commentField.getText());
 				commentField.removeFromParent();
 			}
 		});
-		commentField.addSaveClickHandler(saveClickHandler);
-		*/
 		
 		commentField.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
