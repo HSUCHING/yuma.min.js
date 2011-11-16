@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.impl.image.overlay;
+package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
