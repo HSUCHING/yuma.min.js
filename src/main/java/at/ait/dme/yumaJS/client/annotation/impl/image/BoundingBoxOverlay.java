@@ -53,11 +53,10 @@ public class BoundingBoxOverlay extends Composite
 	
 	public BoundingBoxOverlay(AbsolutePanel panel, BoundingBox bbox) {
 		this.panel = panel;
-		this.bbox = bbox;
-		
+
 		outerBorder = new FlowPanel();
 		outerBorder.setStyleName("annotation-bbox-outer");
-		outerBorder.setPixelSize(bbox.getWidth(), bbox.getHeight());
+		setBoundingBox(bbox);
 		
 		innerBorder = new FlowPanel();
 		innerBorder.setWidth("100%");
@@ -87,6 +86,7 @@ public class BoundingBoxOverlay extends Composite
 	
 	public void setBoundingBox(BoundingBox bbox) {
 		this.bbox = bbox;
+		outerBorder.setPixelSize(bbox.getWidth(), bbox.getHeight());
 	}
 	
 	public BoundingBox getBoundingBox() {

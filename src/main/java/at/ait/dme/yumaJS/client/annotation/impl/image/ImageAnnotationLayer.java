@@ -164,27 +164,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 
 			overlay.getAnnotationWidget().addEditClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					overlay.startEditing(new AnnotationEditHandler() {
-						public void onSave(Annotation annotation) {
-							if (getServerURL() == null) {
-								
-							} else {
-								Create.executeJSONP(getServerURL(), a, new AsyncCallback<JavaScriptObject>() {
-									public void onSuccess(JavaScriptObject result) {
-										// addAnnotation((Annotation) result);
-									}
-									
-									public void onFailure(Throwable t) {
-										YUMA.nonFatalError(t.getMessage());
-									}
-								});
-							}
-						}
-						
-						public void onCancel() {
-							// TODO Auto-generated method stub
-						}
-					});	
+					editAnnotation(a);
 				}
 			});
 			
@@ -221,6 +201,10 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void editAnnotation(Annotation a) {
+		editAnnotation(a, false);
+	}
+		
+	private void editAnnotation(Annotation a, final boolean removeOnCancel) {
 		final SingleImageAnnotationOverlay overlay = overlays.get(a.getID());
 		if (overlay != null) {
 			overlay.startEditing(new AnnotationEditHandler() {
@@ -229,7 +213,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 				}
 				
 				public void onCancel() {
-					overlay.destroy();
+					if (removeOnCancel)
+						overlay.destroy();
 				}
 			});
 		}		
@@ -263,7 +248,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		Annotation empty = emptyAnnotation();
 		empty.setFragment(EMPTY_ANNOTATION);
 		addAnnotation(empty);
-		editAnnotation(empty);
+		editAnnotation(empty, true);
 	}
 
 }

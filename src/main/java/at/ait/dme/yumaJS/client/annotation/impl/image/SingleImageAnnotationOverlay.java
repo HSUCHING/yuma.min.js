@@ -66,7 +66,8 @@ public class SingleImageAnnotationOverlay {
 		
 		annotationWidget.addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				annotationWidget.setVisible(false);
+				if (!annotationWidget.isEditing())
+					annotationWidget.setVisible(false);
 			}
 		}, MouseOutEvent.getType());
 		
@@ -77,6 +78,8 @@ public class SingleImageAnnotationOverlay {
 	}
 	
 	public void startEditing(final AnnotationEditHandler handler) {
+		final BoundingBox initialPosition = bboxOverlay.getBoundingBox();
+		
 		bboxOverlay.startEditing(new SelectionChangedHandler() {
 			public void onRangeChanged(Range range) {
 				// No range selection in image annotation
@@ -98,6 +101,9 @@ public class SingleImageAnnotationOverlay {
 
 			public void onCancel() {
 				bboxOverlay.cancelEditing();
+				annotationLayer.setWidgetPosition(annotationWidget, initialPosition.getX(), 
+						initialPosition.getY() + initialPosition.getHeight() + 2);
+				annotationWidget.setVisible(false);
 				handler.onCancel();
 			}
 		});
