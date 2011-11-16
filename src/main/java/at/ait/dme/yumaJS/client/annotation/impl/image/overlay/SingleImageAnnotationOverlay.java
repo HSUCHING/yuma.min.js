@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.impl.image;
+package at.ait.dme.yumaJS.client.annotation.impl.image.overlay;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
@@ -100,7 +100,7 @@ public class SingleImageAnnotationOverlay {
 			}
 
 			public void onCancel() {
-				bboxOverlay.cancelEditing();
+				bboxOverlay.stopEditing();
 				annotationLayer.setWidgetPosition(annotationWidget, initialPosition.getX(), 
 						initialPosition.getY() + initialPosition.getHeight() + 2);
 				annotationWidget.setVisible(false);

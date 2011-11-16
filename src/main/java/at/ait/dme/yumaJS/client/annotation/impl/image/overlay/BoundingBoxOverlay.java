@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.impl.image;
+package at.ait.dme.yumaJS.client.annotation.impl.image.overlay;
 
 import at.ait.dme.yumaJS.client.annotation.widgets.FragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 /**
- * An overlay element used to represent the bounding box of
+ * An implementation of {@link FragmentWidget} that represents the bounding box of
  * an annotation, composed of two nested DIVs.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
@@ -78,10 +78,6 @@ public class BoundingBoxOverlay extends Composite
 		selection.destroy();
 		selection = null;
 		this.setVisible(true);
-	}
-	
-	public void cancelEditing() {
-		stopEditing();
 	}
 	
 	public void setBoundingBox(BoundingBox bbox) {

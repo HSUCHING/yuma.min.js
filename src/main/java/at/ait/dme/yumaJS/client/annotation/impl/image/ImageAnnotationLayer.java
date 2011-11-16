@@ -11,6 +11,8 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.impl.image.overlay.BoundingBoxOverlay;
+import at.ait.dme.yumaJS.client.annotation.impl.image.overlay.SingleImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;

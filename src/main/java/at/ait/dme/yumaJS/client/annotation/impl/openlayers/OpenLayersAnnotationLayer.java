@@ -23,7 +23,6 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -170,11 +169,17 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			annotationLayer.removeMarker(overlay.getMarker());
 			overlay.destroy();
 			annotations.remove(annotation);
-		}
+		} 
 	}
 	
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, editingLayer);
+		// new ResizableBoxEditor(this, editingLayer);
+	}
+
+	@Override
+	public void editAnnotation(Annotation annotation) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
