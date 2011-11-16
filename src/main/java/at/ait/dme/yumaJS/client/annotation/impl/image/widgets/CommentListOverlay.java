@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.dev.util.collect.HashMap;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
@@ -31,12 +37,49 @@ public class CommentListOverlay {
 	
 	private BoundingBoxOverlay bboxOverlay;
 	
+	private FlowPanel annotationListPanel = new FlowPanel();
+	
 	private HashMap<Annotation, AnnotationWidget> annotations = new HashMap<Annotation, AnnotationWidget>();
 	
 	public CommentListOverlay(Annotation rootAnnotation, Annotatable annotatable, AbsolutePanel annotationLayer, Labels labels) {
 		this.rootAnnotation = rootAnnotation;
 		this.annotatable = annotatable;
 		this.annotationLayer = annotationLayer;
+		
+		final BoundingBox bbox = annotatable.toBoundingBox(rootAnnotation.getFragment());
+		
+		bboxOverlay = new BoundingBoxOverlay(annotationLayer, bbox);
+		
+		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				annotationListPanel.setVisible(true);
+			}
+		});
+		
+		bboxOverlay.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				if (!annotationWidget.contains(
+						event.getRelativeX(annotationLayer.getElement()) + annotationLayer.getAbsoluteLeft(), 
+						event.getRelativeY(annotationLayer.getElement()) + annotationLayer.getAbsoluteTop()))
+					
+					annotationWidget.setVisible(false);
+			}
+		});
+		
+		annotationWidget = new AnnotationWidget(annotation, labels);
+		
+		annotationWidget.addDomHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				if (!annotationWidget.isEditing())
+					annotationWidget.setVisible(false);
+			}
+		}, MouseOutEvent.getType());
+		
+		annotationWidget.setVisible(false);
+		
+		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
+		annotationLayer.add(annotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
+
 	}
 
 }
