@@ -12,6 +12,7 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.BoundingBoxOverlay;
+import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.CommentListOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.SingleImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
@@ -159,8 +160,9 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			
 		if (a.getIsReplyTo() == null) {
 			// Root annotation - add new overlay
-			final SingleImageAnnotationOverlay overlay = new SingleImageAnnotationOverlay(
-					a, this, annotationLayer, getLabels());
+			final ImageAnnotationOverlay overlay = (getRepliesEnabled()) ? 
+					new CommentListOverlay(a, this, annotationLayer, getLabels()) :
+					new SingleImageAnnotationOverlay(a, this, annotationLayer, getLabels());
 
 			overlay.getAnnotationWidget().addEditClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
