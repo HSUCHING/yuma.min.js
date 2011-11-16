@@ -38,7 +38,7 @@ public class ZoomableAnnotationOverlay {
 		this.viewer = viewer;
 		
 		BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());
-		bboxOverlay = new BoundingBoxOverlay(bbox);
+		bboxOverlay = new BoundingBoxOverlay(null, bbox);
 		bboxDiv = bboxOverlay.getElement();
 		DOM.sinkEvents(bboxDiv, Event.ONMOUSEOVER | Event.ONMOUSEOUT);
 		Event.setEventListener(bboxDiv, new EventListener() {

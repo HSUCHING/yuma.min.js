@@ -13,6 +13,7 @@ import at.ait.dme.yumaJS.client.io.ListAll;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
@@ -103,9 +104,19 @@ public abstract class Annotatable implements Exportable {
 	
 	public abstract void addAnnotation(Annotation annotation);
 	
+	public abstract void editAnnotation(Annotation annotation);
+	
 	public abstract void removeAnnotation(Annotation annotation);
-
-	public abstract void editAnnotation(Annotation a);
+	
+	protected Annotation emptyAnnotation() {
+		return Annotation.create(
+				this.getObjectURI(),
+				Document.get().getURL(),
+				Document.get().getTitle(),
+				this.getMediaType(),
+				null,
+				null);
+	}
 				
 	@Export
 	public void addAnnotationCreatedListener(JavaScriptObject callback) {

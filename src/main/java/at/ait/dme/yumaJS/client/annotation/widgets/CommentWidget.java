@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextArea;
 
-public class CommentField extends Composite {
+public class CommentWidget extends Composite {
 		
 	private FlowPanel container = new FlowPanel();
 	
@@ -25,11 +25,11 @@ public class CommentField extends Composite {
 	
 	private boolean hasFocus = false;
 	
-	public CommentField(Labels labels, boolean showCancelButton) {
+	public CommentWidget(Labels labels, boolean showCancelButton) {
 		this(null, labels, showCancelButton);
 	}
 
-	public CommentField(String text, Labels labels, boolean showCancelButton) {
+	public CommentWidget(String text, Labels labels, boolean showCancelButton) {
 		container.setStyleName("yuma-comment");
 		textArea.setStyleName("yuma-comment-textarea");
 		

@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
+import at.ait.dme.yumaJS.client.annotation.widgets.CommentWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.ResizableBoxSelection;
@@ -33,7 +33,7 @@ public class ResizableBoxEditor extends Editor {
 		if (initialValue != null)
 			bbox = annotatable.toBoundingBox(initialValue.getFragment()); 
 				
-		Selection selection = new ResizableBoxSelection(panel, annotatable.getLabels(), bbox);
+		Selection selection = new ResizableBoxSelection(panel, bbox);
 		selection.setSelectionChangedHandler(new SelectionChangedHandler() {
 			public void onBoundsChanged(BoundingBox bbox) {
 				updateEditForm();
@@ -45,11 +45,11 @@ public class ResizableBoxEditor extends Editor {
 		});
 		setSelection(selection);
 		
-		CommentField commentField;
+		CommentWidget commentField;
 		if (initialValue == null) {
-			commentField = new CommentField(annotatable.getLabels(), true);
+			commentField = new CommentWidget(annotatable.getLabels(), true);
 		} else {
-			commentField = new CommentField(initialValue.getText(), annotatable.getLabels(), true);
+			commentField = new CommentWidget(initialValue.getText(), annotatable.getLabels(), true);
 		}
 		setCommentField(commentField);
 		panel.add(commentField, 0, 0);

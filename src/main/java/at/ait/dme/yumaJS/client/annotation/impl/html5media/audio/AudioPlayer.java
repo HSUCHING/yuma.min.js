@@ -210,10 +210,5 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	public void removeAnnotation(Annotation annotation) {
 		annotationTrack.removeAnnotation(annotation);
 	}
-
-	@Override
-	public void editAnnotation(Annotation a) {
-		// No action necessary for audio
-	}
 	
 }

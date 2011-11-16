@@ -19,7 +19,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * An sub-class of {@link Selection} that implements a resizable-box selection
@@ -57,7 +56,7 @@ public class ResizableBoxSelection extends Selection {
 	// The SelectionChangedHandler (if any)
 	private SelectionChangedHandler selectionChangedHandler = null;
 
-	public ResizableBoxSelection(AbsolutePanel parent, Labels labels, BoundingBox initialValue) {
+	public ResizableBoxSelection(AbsolutePanel parent, BoundingBox initialValue) {
 		this.parent = parent;
 		
 		if (initialValue == null)

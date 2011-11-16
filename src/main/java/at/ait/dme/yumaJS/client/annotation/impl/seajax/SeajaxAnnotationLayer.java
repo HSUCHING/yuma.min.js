@@ -149,14 +149,9 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 			annotations.remove(a);
 		}
 	}
-
-	@Override
-	public void editAnnotation(Annotation a) {
-		new ResizableBoxEditor(this, annotationLayer, a);
-	}
 	
 	public void createNewAnnotation() {
-		editAnnotation(null);
+		new ResizableBoxEditor(this, annotationLayer);
 	}
 	
 }

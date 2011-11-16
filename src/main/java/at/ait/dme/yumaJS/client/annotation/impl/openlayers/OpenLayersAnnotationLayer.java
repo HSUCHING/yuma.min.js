@@ -172,14 +172,9 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			annotations.remove(annotation);
 		}
 	}
-
-	@Override
-	public void editAnnotation(Annotation a) {
-		new ResizableBoxEditor(this, editingLayer, a);
-	}
 	
 	public void createNewAnnotation() {
-		editAnnotation(null);
+		new ResizableBoxEditor(this, editingLayer);
 	}
 	
 }

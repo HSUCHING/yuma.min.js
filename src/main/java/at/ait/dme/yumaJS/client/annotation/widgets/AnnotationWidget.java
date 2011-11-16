@@ -5,8 +5,10 @@ import java.util.Date;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.init.Labels;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -38,51 +40,49 @@ import com.google.gwt.user.client.ui.PushButton;
  * @author Rainer Simon <rainer.simon@ait.ac.at.>
  */
 public class AnnotationWidget extends Composite {
-	
+		
 	private FlowPanel container;
 	
 	private FlowPanel annotationPanel;
 	
 	private FlowPanel buttonPanel;
 	
+	private InlineHTML username;
+	
+	private InlineHTML text;
+	
+	private InlineHTML timestamp;
+	
 	private PushButton btnEdit, btnDelete;
+		
+	private boolean isEditing = false;
 	
 	private Annotation annotation;
+
+	private Labels labels;
 	
 	private static final String CSS_HIDDEN = "yuma-button-hidden";
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
 	public AnnotationWidget(Annotation a, Labels labels) {
 		this.annotation = a;
-		
+		this.labels = labels;
+
 		// Construct annotation panel
 		annotationPanel = new FlowPanel();
 		annotationPanel.setStyleName("yuma-annotation-content");
-						
-		// Username will be undefined in server-less mode!
-		InlineHTML username = null;
-		if (annotation.getUserRealName() != null) {
-			username = new InlineHTML(annotation.getUserRealName());
-		} else if (annotation.getUsername() != null) {
-			username = new InlineHTML(annotation.getUsername());
-		}
-		
-		if (username != null) {
-			username.setStyleName("yuma-annotation-username");
-			annotationPanel.add(username);
-		}
 
-		// Timestamps will be -1 in server-less mode!
-		InlineHTML timestamp = new InlineHTML();
-		long modified = annotation.getModified();
-		if (modified > 0) {
-			timestamp.setHTML(DateTimeFormat.getFormat(DATE_FORMAT).format(new Date(modified)));
-			timestamp.setStyleName("yuma-annotation-modified");
-		}
-		
-		annotationPanel.add(new InlineHTML(toHTML(annotation.getText()) + "<br/>"));
+		username = new InlineHTML();
+		username.setStyleName("yuma-annotation-username");
+		annotationPanel.add(username);
+
+		text = new InlineHTML();
+		annotationPanel.add(text);
+
+		timestamp = new InlineHTML();
+		timestamp.setStyleName("yuma-annotation-modified");
 		annotationPanel.add(timestamp);
-
+	
 		annotationPanel.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				btnEdit.removeStyleName(CSS_HIDDEN);
@@ -90,6 +90,8 @@ public class AnnotationWidget extends Composite {
 			}
 		}, MouseOverEvent.getType());
 
+		setAnnotation(a);
+		
 		// Construct button panel
 		buttonPanel = new FlowPanel();
 		buttonPanel.setStyleName("yuma-annotation-buttons");
@@ -134,32 +136,67 @@ public class AnnotationWidget extends Composite {
 		initWidget(container);
 	}
 	
+	public void setAnnotation(Annotation a) {				
+		// Username will be undefined in server-less mode!
+		if (annotation.getUserRealName() != null) {
+			username.setHTML(annotation.getUserRealName());
+		} else if (annotation.getUsername() != null) {
+			username.setHTML(annotation.getUsername());
+		} else {
+			username.setVisible(false);
+		}
+
+		if (annotation.getText() != null)
+			text.setHTML(toHTML(annotation.getText()) + "<br/>");
+
+		// Timestamps will be -1 in server-less mode!
+		long modified = annotation.getModified();
+		if (modified > 0) {
+			timestamp.setHTML(DateTimeFormat.getFormat(DATE_FORMAT).format(new Date(modified)));
+		} else {
+			timestamp.setVisible(false);
+		}
+	}
+
 	private native String toHTML(String text) /*-{
-	    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
+    	var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    	return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
 	}-*/;
 
-	public void makeEditable(final EditHandler editHandler, Labels labels) {
+	public void startEditing(final EditHandler handler) {
+		isEditing = true;
+		
+		// Hide panel and edit/delete buttons
 		annotationPanel.setVisible(false);
 		buttonPanel.setVisible(false);
-		
-		final CommentField commentField = new CommentField(annotation.getText(), labels, true);
+
+		// Add comment field in place
+		final CommentWidget commentField = new CommentWidget(annotation.getText(), labels, true);
 		 
 		commentField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				editHandler.onSave(commentField.getText());
+				handler.onSave(commentField.getText());
 				commentField.removeFromParent();
+				annotationPanel.setVisible(true);
+				buttonPanel.setVisible(true);
+				isEditing = false;
 			}
 		});
 		
 		commentField.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				handler.onCancel();
 				commentField.removeFromParent();
 				annotationPanel.setVisible(true);
 				buttonPanel.setVisible(true);
+				isEditing = false;
 			}
 		});
 		container.insert(commentField, container.getWidgetIndex(annotationPanel));			
+	}
+		
+	public boolean isEditing() {
+		return isEditing;
 	}
 
 	public HandlerRegistration addEditClickHandler(ClickHandler handler) {
@@ -170,9 +207,46 @@ public class AnnotationWidget extends Composite {
 		return btnDelete.addClickHandler(handler);
 	}
 	
+	@Override
+	public void setVisible(boolean visible) {
+		container.setVisible(true);
+		Style style = container.getElement().getStyle();
+		if (visible) {
+			style.setVisibility(Visibility.VISIBLE);
+			style.setOpacity(1);
+		} else {
+			style.setVisibility(Visibility.HIDDEN);
+			style.setOpacity(0);
+		}
+	}
+
+	
+	public boolean contains(int x, int y) {
+		int left = container.getAbsoluteLeft();
+		int top = container.getAbsoluteTop();
+		int w = container.getOffsetWidth();
+		int h = container.getOffsetHeight();
+		
+		if (x < left)
+			return false;
+		
+		if (x > left + w)
+			return false;
+		
+		if (y < top)
+			return false;
+		
+		if (y > top + h)
+			return false;
+		
+		return true;
+	}
+	
 	public interface EditHandler {
 
 		public void onSave(String text);
+		
+		public void onCancel();
 		
 	}
 

@@ -11,19 +11,24 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledInfoPopup;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxEditor;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
+import at.ait.dme.yumaJS.client.io.Create;
+import at.ait.dme.yumaJS.client.io.Delete;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -37,6 +42,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 @ExportPackage("YUMA")
 public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
+	private static final String EMPTY_ANNOTATION = "xywh=30,30,60,60";
+	
 	private static final String MEDIATYPE = "IMAGE";
 	
 	private static String objectURI;
@@ -46,8 +53,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	private AbsolutePanel annotationLayer;
 	
 	// { annotationID -> overlay }
-	private HashMap<String, ImageAnnotationOverlay> overlays = 
-		new HashMap<String, ImageAnnotationOverlay>();
+	private HashMap<String, SingleImageAnnotationOverlay> overlays = 
+		new HashMap<String, SingleImageAnnotationOverlay>();
 	
 	private int annotationCtr = 0;
 	
@@ -146,26 +153,95 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	@Override
-	public void addAnnotation(Annotation a) {
+	public void addAnnotation(final Annotation a) {
 		if (a.getID() == null && getServerURL() == null)
 			a.setID(Integer.toString(annotationCtr++));
 			
 		if (a.getIsReplyTo() == null) {
 			// Root annotation - add new overlay
-			ImageAnnotationOverlay overlay = new ImageAnnotationOverlay(
-					a, this, annotationLayer, getRepliesEnabled(), getLabels());
+			final SingleImageAnnotationOverlay overlay = new SingleImageAnnotationOverlay(
+					a, this, annotationLayer, getLabels());
 
+			overlay.getAnnotationWidget().addEditClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					overlay.startEditing(new AnnotationEditHandler() {
+						public void onSave(Annotation annotation) {
+							if (getServerURL() == null) {
+								
+							} else {
+								Create.executeJSONP(getServerURL(), a, new AsyncCallback<JavaScriptObject>() {
+									public void onSuccess(JavaScriptObject result) {
+										// addAnnotation((Annotation) result);
+									}
+									
+									public void onFailure(Throwable t) {
+										YUMA.nonFatalError(t.getMessage());
+									}
+								});
+							}
+						}
+						
+						public void onCancel() {
+							// TODO Auto-generated method stub
+						}
+					});	
+				}
+			});
+			
+			overlay.getAnnotationWidget().addDeleteClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					if (getServerURL() == null) {
+						removeAnnotation(a);
+					} else {
+						Delete.executeJSONP(getServerURL(), a.getID(), new AsyncCallback<Void>() {
+							public void onSuccess(Void result) {
+								removeAnnotation(a);
+							}			
+
+							public void onFailure(Throwable t) {
+								YUMA.nonFatalError(t.getMessage());
+							}
+						});
+					}							
+				}
+			});
+			
 			overlays.put(a.getID(), overlay);
 			sortOverlaysByArea();
 		} else {
-			// Reply - ignore if replies are not enabled!
+			/* Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
-				ImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
+				SingleImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
 				((ReplyEnabledInfoPopup) overlay.getDetailsPopup()).addReply(a);
-			}
+			}*/
 		}
 
 		fireOnAnnotationCreated(a);
+	}
+	
+	@Override
+	public void editAnnotation(Annotation a) {
+		final SingleImageAnnotationOverlay overlay = overlays.get(a.getID());
+		if (overlay != null) {
+			overlay.startEditing(new AnnotationEditHandler() {
+				public void onSave(Annotation a) {
+					overlay.setAnnotation(a);
+				}
+				
+				public void onCancel() {
+					overlay.destroy();
+				}
+			});
+		}		
+	}
+	
+	@Override
+	public void removeAnnotation(Annotation a) {
+		SingleImageAnnotationOverlay overlay = overlays.get(a.getID());
+		if (overlay != null) {
+			overlay.destroy();
+			overlays.remove(a.getID());
+		}
 	}
 	
 	private void sortOverlaysByArea() {
@@ -182,23 +258,12 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			zIndex++;
 		}
 	}
-	
-	@Override
-	public void removeAnnotation(Annotation a) {
-		ImageAnnotationOverlay overlay = overlays.get(a.getID());
-		if (overlay != null) {
-			overlay.destroy();
-			overlays.remove(a.getID());
-		}
-	}
-	
-	@Override
-	public void editAnnotation(Annotation a) {
-		new ResizableBoxEditor(this, annotationLayer, a);
-	}
-	
+		
 	public void createNewAnnotation() {
-		editAnnotation(null);
+		Annotation empty = emptyAnnotation();
+		empty.setFragment(EMPTY_ANNOTATION);
+		addAnnotation(empty);
+		editAnnotation(empty);
 	}
 
 }

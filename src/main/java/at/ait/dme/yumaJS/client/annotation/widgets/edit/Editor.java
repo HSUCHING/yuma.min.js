@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
+import at.ait.dme.yumaJS.client.annotation.widgets.CommentWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
 import at.ait.dme.yumaJS.client.io.Create;
 
@@ -26,7 +26,7 @@ public abstract class Editor {
 		
 	protected Selection selection;
 	
-	protected CommentField commentField;
+	protected CommentWidget commentField;
 	
 	public Editor(Annotatable annotatable, Annotation initialAnnotation) {
 		this.annotatable = annotatable;
@@ -37,7 +37,7 @@ public abstract class Editor {
 		this.selection = selection;
 	}
 	
-	protected void setCommentField(final CommentField commentField) {
+	protected void setCommentField(final CommentWidget commentField) {
 		this.commentField = commentField;
 		
 		this.commentField.addSaveClickHandler(new ClickHandler() {

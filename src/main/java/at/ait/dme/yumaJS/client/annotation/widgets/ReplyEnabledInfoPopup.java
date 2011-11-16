@@ -24,7 +24,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 	
 	private Annotation rootAnnotation;
 	
-	private CommentField replyField;
+	private CommentWidget replyField;
 	
 	private List<Annotation> replies = new ArrayList<Annotation>();
 	
@@ -36,7 +36,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		this.annotatable = annotatable;
 		this.rootAnnotation = rootAnnotation;
 				
-		replyField = new CommentField(labels, false);
+		replyField = new CommentWidget(labels, false);
 		replyField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				save(Annotation.create(
@@ -80,12 +80,13 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		widget.addEditClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				replyField.setVisible(false);
-				widget.makeEditable(new AnnotationWidget.EditHandler() {
+				widget.setEditHandler(new AnnotationWidget.EditHandler() {
 					public void onSave(String text) {
 						reply.setText(text);
 						save(reply);
 					}
-				}, annotatable.getLabels());
+				});
+				widget.setEditable(true);
 			}
 		});
 		

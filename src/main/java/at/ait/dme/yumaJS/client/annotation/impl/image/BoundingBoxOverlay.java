@@ -1,6 +1,10 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
+import at.ait.dme.yumaJS.client.annotation.widgets.FragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.ResizableBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.SelectionChangedHandler;
 
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.HasMouseOverHandlers;
@@ -9,6 +13,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
@@ -19,7 +24,12 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
 public class BoundingBoxOverlay extends Composite 
-	implements HasMouseOverHandlers, HasMouseOutHandlers, Comparable<BoundingBoxOverlay> {
+	implements FragmentWidget, HasMouseOverHandlers, HasMouseOutHandlers, Comparable<BoundingBoxOverlay> {
+
+	/**
+	 * The parent AbsolutePanel
+	 */
+	private AbsolutePanel panel;
 	
 	/**
 	 * The outer border DIV
@@ -30,8 +40,21 @@ public class BoundingBoxOverlay extends Composite
 	 * The inner border DIV
 	 */
 	private FlowPanel innerBorder;
+
+	/**
+	 * The current bounding box
+	 */
+	private BoundingBox bbox;
 	
-	public BoundingBoxOverlay(BoundingBox bbox) {
+	/**
+	 * The selection or <code>null</code> if not in editing mode
+	 */
+	private Selection selection = null;
+	
+	public BoundingBoxOverlay(AbsolutePanel panel, BoundingBox bbox) {
+		this.panel = panel;
+		this.bbox = bbox;
+		
 		outerBorder = new FlowPanel();
 		outerBorder.setStyleName("annotation-bbox-outer");
 		outerBorder.setPixelSize(bbox.getWidth(), bbox.getHeight());
@@ -44,6 +67,33 @@ public class BoundingBoxOverlay extends Composite
 		outerBorder.add(innerBorder);
 		initWidget(outerBorder);
 	}
+		
+	public void startEditing(SelectionChangedHandler handler) {
+		this.setVisible(false);
+		selection =  new ResizableBoxSelection(panel, bbox);
+		selection.setSelectionChangedHandler(handler);
+	} 
+	
+	public void stopEditing() {
+		bbox = selection.getSelectedBounds();
+		selection.destroy();
+		selection = null;
+		this.setVisible(true);
+	}
+	
+	public void cancelEditing() {
+		stopEditing();
+	}
+	
+	public void setBoundingBox(BoundingBox bbox) {
+		this.bbox = bbox;
+	}
+	
+	public BoundingBox getBoundingBox() {
+		if (selection != null)
+			bbox = selection.getSelectedBounds();
+		return bbox;
+	}
 
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		return addDomHandler(handler, MouseOutEvent.getType());
@@ -52,7 +102,7 @@ public class BoundingBoxOverlay extends Composite
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-	
+		
 	public void setZIndex(int idx) {
 		outerBorder.getElement().getStyle().setZIndex(idx);
 	}
