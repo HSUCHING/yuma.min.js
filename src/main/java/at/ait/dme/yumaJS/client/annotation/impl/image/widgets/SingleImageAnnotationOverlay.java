@@ -39,7 +39,7 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 	
 	private AnnotationWidget annotationWidget;
 	
-	public SingleImageAnnotationOverlay(Annotation annotation, Annotatable annotatable,
+	public SingleImageAnnotationOverlay(final Annotation annotation, final Annotatable annotatable,
 			final AbsolutePanel annotationLayer, Labels labels) {
 		
 		this.annotation = annotation;
@@ -66,7 +66,7 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 			}
 		});
 		
-		annotationWidget = new AnnotationWidget(annotation, labels);
+		annotationWidget = new AnnotationWidget(annotation, bboxOverlay, annotatable);
 		
 		annotationWidget.addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -74,17 +74,38 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 					annotationWidget.setVisible(false);
 			}
 		}, MouseOutEvent.getType());
+				
+		/*
+		annotationWidget.addDeleteClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (annotatable.getServerURL() == null) {
+					annotatable.removeAnnotation(annotation);
+				} else {
+					Delete.executeJSONP(annotatable.getServerURL(), annotation.getID(), new AsyncCallback<Void>() {
+						public void onSuccess(Void result) {
+							annotatable.removeAnnotation(annotation);
+						}			
+
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}							
+			}
+		});
+		*/
 		
-		annotationWidget.setVisible(false);
-		
-		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
+		annotationWidget.setVisible(false);		
 		annotationLayer.add(annotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
 	}
 	
 	@Override
-	public void edit(Annotation a, final AnnotationEditHandler handler) {
-		final BoundingBox initialPosition = bboxOverlay.getBoundingBox();
+	public void edit(Annotation a) {
 		
+	}
+	
+	@Override
+	public void edit(Annotation a, final AnnotationEditHandler handler) {
 		bboxOverlay.startEditing(new SelectionChangedHandler() {
 			public void onRangeChanged(Range range) {
 				// No range selection in image annotation
@@ -95,33 +116,14 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 			}
 		});
 		
-		annotationWidget.startEditing(new AnnotationWidget.EditHandler() {
-			public void onSave(String text) {
-				bboxOverlay.stopEditing();
-				annotation.setText(text);
-				annotation.setFragment(annotatable.toFragment(bboxOverlay.getBoundingBox(), null));
-				annotationWidget.setVisible(false);
-				handler.onSave(annotation);
-			}
-
-			public void onCancel() {
-				bboxOverlay.stopEditing();
-				annotationLayer.setWidgetPosition(annotationWidget, initialPosition.getX(), 
-						initialPosition.getY() + initialPosition.getHeight() + 2);
-				annotationWidget.setVisible(false);
-				handler.onCancel();
-			}
-		});
+		annotationWidget.startEditing(handler);
 		annotationWidget.setVisible(true);
 	}
 	
 	@Override
 	public void updateAnnotation(Annotation a) {
-		annotationWidget.setAnnotation(a);
-		BoundingBox bbox = annotatable.toBoundingBox(a.getFragment());
-		
-		annotationLayer.setWidgetPosition(bboxOverlay, bbox.getX(), bbox.getY());
-		bboxOverlay.setBoundingBox(bbox);
+		// annotationWidget.setAnnotation(a);
+		BoundingBox bbox = annotatable.toBoundingBox(a.getFragment());		
 	}
 	
 	@Override
@@ -135,7 +137,7 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 	
 	@Override
 	public void destroy() {
-		bboxOverlay.removeFromParent();
+		bboxOverlay.destroy();
 		annotationWidget.removeFromParent();
 	}
 

@@ -12,6 +12,8 @@ import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
 public abstract class ImageAnnotationOverlay {
+	
+	public abstract void edit(Annotation a);
 
 	public abstract void edit(Annotation a, AnnotationEditHandler handler);
 	

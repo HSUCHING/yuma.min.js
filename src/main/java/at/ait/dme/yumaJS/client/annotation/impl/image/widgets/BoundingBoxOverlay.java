@@ -2,19 +2,17 @@ package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
 import at.ait.dme.yumaJS.client.annotation.widgets.FragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.ResizableBoxSelection;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.SelectionChangedHandler;
 
-import com.google.gwt.event.dom.client.HasMouseOutHandlers;
-import com.google.gwt.event.dom.client.HasMouseOverHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 /**
@@ -23,8 +21,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class BoundingBoxOverlay extends Composite 
-	implements FragmentWidget, HasMouseOverHandlers, HasMouseOutHandlers, Comparable<BoundingBoxOverlay> {
+public class BoundingBoxOverlay implements FragmentWidget, Comparable<BoundingBoxOverlay> {
 
 	/**
 	 * The parent AbsolutePanel
@@ -53,9 +50,10 @@ public class BoundingBoxOverlay extends Composite
 	
 	public BoundingBoxOverlay(AbsolutePanel panel, BoundingBox bbox) {
 		this.panel = panel;
-
+		
 		outerBorder = new FlowPanel();
 		outerBorder.setStyleName("annotation-bbox-outer");
+		panel.add(outerBorder);
 		setBoundingBox(bbox);
 		
 		innerBorder = new FlowPanel();
@@ -64,25 +62,6 @@ public class BoundingBoxOverlay extends Composite
 		innerBorder.setStyleName("annotation-bbox-inner");
 		
 		outerBorder.add(innerBorder);
-		initWidget(outerBorder);
-	}
-		
-	public void startEditing(SelectionChangedHandler handler) {
-		this.setVisible(false);
-		selection =  new ResizableBoxSelection(panel, bbox);
-		selection.setSelectionChangedHandler(handler);
-	} 
-	
-	public void stopEditing() {
-		bbox = selection.getSelectedBounds();
-		selection.destroy();
-		selection = null;
-		this.setVisible(true);
-	}
-	
-	public void setBoundingBox(BoundingBox bbox) {
-		this.bbox = bbox;
-		outerBorder.setPixelSize(bbox.getWidth(), bbox.getHeight());
 	}
 	
 	public BoundingBox getBoundingBox() {
@@ -91,12 +70,39 @@ public class BoundingBoxOverlay extends Composite
 		return bbox;
 	}
 
+	public void setBoundingBox(BoundingBox bbox) {
+		this.bbox = bbox;
+		outerBorder.setPixelSize(bbox.getWidth(), bbox.getHeight());
+		panel.setWidgetPosition(outerBorder, bbox.getX(), bbox.getY());
+	}
+		
+	public Range getRange() {
+		return null;
+	}
+
+	public void setRange(Range range) {
+		// Do nothing
+	}
+		
+	public void startEditing(SelectionChangedHandler handler) {
+		outerBorder.setVisible(false);
+		selection =  new ResizableBoxSelection(panel, bbox);
+		selection.setSelectionChangedHandler(handler);
+	} 
+	
+	public void stopEditing() {
+		setBoundingBox(selection.getSelectedBounds());
+		selection.destroy();
+		selection = null;
+		outerBorder.setVisible(true);
+	}
+		
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
-		return addDomHandler(handler, MouseOutEvent.getType());
+		return outerBorder.addDomHandler(handler, MouseOutEvent.getType());
 	}
 
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
-		return addDomHandler(handler, MouseOverEvent.getType());
+		return outerBorder.addDomHandler(handler, MouseOverEvent.getType());
 	}
 		
 	public void setZIndex(int idx) {
@@ -114,6 +120,10 @@ public class BoundingBoxOverlay extends Composite
 			return 1;
 		
 		return 0;
+	}
+	
+	public void destroy() {
+		outerBorder.removeFromParent();
 	}
 	
 }

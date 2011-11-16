@@ -1,8 +1,8 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
+import java.util.HashMap;
 import java.util.List;
 
-import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;

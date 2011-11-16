@@ -2,7 +2,9 @@ package at.ait.dme.yumaJS.client.annotation.widgets;
 
 import java.util.Date;
 
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style;
@@ -15,7 +17,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -58,16 +59,21 @@ public class AnnotationWidget extends Composite {
 	private boolean isEditing = false;
 	
 	private Annotation annotation;
-
+	
+	private FragmentWidget fragmentWidget;
+	
+	private Annotatable annotatable;
+	
 	private Labels labels;
 	
 	private static final String CSS_HIDDEN = "yuma-button-hidden";
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
-	public AnnotationWidget(Annotation a, Labels labels) {
+	public AnnotationWidget(Annotation a, FragmentWidget fragmentWidget, Annotatable annotatable) {
 		this.annotation = a;
-		this.labels = labels;
-
+		this.fragmentWidget = fragmentWidget;
+		this.annotatable = annotatable;
+		
 		// Construct annotation panel
 		annotationPanel = new FlowPanel();
 		annotationPanel.setStyleName("yuma-annotation-content");
@@ -110,7 +116,8 @@ public class AnnotationWidget extends Composite {
 		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
 		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
 	
-		if (labels == null) {
+		Labels labels = annotatable.getLabels();
+		if (annotatable.getLabels() == null) {
 			btnDelete.setTitle("Delete this Comment");
 			btnEdit.setTitle("Edit this Comment");
 		} else {
@@ -136,7 +143,7 @@ public class AnnotationWidget extends Composite {
 		initWidget(container);
 	}
 	
-	public void setAnnotation(Annotation a) {				
+	private void setAnnotation(Annotation a) {				
 		// Username will be undefined in server-less mode!
 		if (annotation.getUserRealName() != null) {
 			username.setHTML(annotation.getUserRealName());
@@ -163,7 +170,11 @@ public class AnnotationWidget extends Composite {
     	return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
 	}-*/;
 
-	public void startEditing(final EditHandler handler) {
+	public void startEditing() {
+		startEditing(null);
+	}
+	
+	public void startEditing(final AnnotationEditHandler handler) {
 		isEditing = true;
 		
 		// Hide panel and edit/delete buttons
@@ -174,21 +185,39 @@ public class AnnotationWidget extends Composite {
 		final CommentWidget commentField = new CommentWidget(annotation.getText(), labels, true);
 		 
 		commentField.addSaveClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				handler.onSave(commentField.getText());
+			public void onClick(ClickEvent event) {	
+				if (fragmentWidget != null) {
+					fragmentWidget.stopEditing();
+					annotation.setFragment(annotatable
+							.toFragment(fragmentWidget.getBoundingBox(), fragmentWidget.getRange()));
+				}
+				
+				annotation.setText(commentField.getText());
+				setAnnotation(annotation);
+				
+				if (handler != null)
+					handler.onSave(annotation);
+				
 				commentField.removeFromParent();
 				annotationPanel.setVisible(true);
 				buttonPanel.setVisible(true);
+				setVisible(false);
 				isEditing = false;
 			}
 		});
 		
 		commentField.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				handler.onCancel();
+				if (fragmentWidget != null)
+					fragmentWidget.stopEditing();
+				
+				if (handler != null)
+					handler.onCancel();
+
 				commentField.removeFromParent();
 				annotationPanel.setVisible(true);
 				buttonPanel.setVisible(true);
+				setVisible(false);
 				isEditing = false;
 			}
 		});
@@ -199,12 +228,8 @@ public class AnnotationWidget extends Composite {
 		return isEditing;
 	}
 
-	public HandlerRegistration addEditClickHandler(ClickHandler handler) {
-		return btnEdit.addClickHandler(handler);
-	}
-	
-	public HandlerRegistration addDeleteClickHandler(ClickHandler handler) {
-		return btnDelete.addClickHandler(handler);
+	private void save() {
+		
 	}
 	
 	@Override
@@ -240,14 +265,6 @@ public class AnnotationWidget extends Composite {
 			return false;
 		
 		return true;
-	}
-	
-	public interface EditHandler {
-
-		public void onSave(String text);
-		
-		public void onCancel();
-		
 	}
 
 }

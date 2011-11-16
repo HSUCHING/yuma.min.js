@@ -18,18 +18,14 @@ import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
-import at.ait.dme.yumaJS.client.io.Delete;
 
 import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -164,30 +160,6 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 					new CommentListOverlay(a, this, annotationLayer, getLabels()) :
 					new SingleImageAnnotationOverlay(a, this, annotationLayer, getLabels());
 
-			overlay.getAnnotationWidget().addEditClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					editAnnotation(a);
-				}
-			});
-			
-			overlay.getAnnotationWidget().addDeleteClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					if (getServerURL() == null) {
-						removeAnnotation(a);
-					} else {
-						Delete.executeJSONP(getServerURL(), a.getID(), new AsyncCallback<Void>() {
-							public void onSuccess(Void result) {
-								removeAnnotation(a);
-							}			
-
-							public void onFailure(Throwable t) {
-								YUMA.nonFatalError(t.getMessage());
-							}
-						});
-					}							
-				}
-			});
-			
 			overlays.put(a.getID(), overlay);
 			sortOverlaysByArea();
 		} else {
@@ -197,29 +169,6 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 				// ((ReplyEnabledInfoPopup) overlay.getDetailsPopup()).addReply(a);
 			}
 		}
-
-		fireOnAnnotationCreated(a);
-	}
-	
-	@Override
-	public void editAnnotation(Annotation a) {
-		editAnnotation(a, false);
-	}
-		
-	private void editAnnotation(Annotation a, final boolean removeOnCancel) {
-		final ImageAnnotationOverlay overlay = overlays.get(a.getID());
-		if (overlay != null) {
-			overlay.edit(a, new AnnotationEditHandler() {
-				public void onSave(Annotation a) {
-					overlay.updateAnnotation(a);
-				}
-				
-				public void onCancel() {
-					if (removeOnCancel)
-						overlay.destroy();
-				}
-			});
-		}		
 	}
 	
 	@Override
@@ -249,10 +198,21 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 		
 	public void createNewAnnotation() {
-		Annotation empty = emptyAnnotation();
+		Annotation empty = createEmptyAnnotation();
 		empty.setFragment(EMPTY_ANNOTATION);
 		addAnnotation(empty);
-		editAnnotation(empty, true);
+		
+		final ImageAnnotationOverlay overlay = overlays.get(empty.getID());		
+		overlay.edit(empty, new AnnotationEditHandler() {
+			public void onSave(Annotation a) {
+				// Do nothing
+			}
+			
+			public void onCancel() {
+				// If it's a new annotation, we'll delete it after cancel
+				overlay.destroy();
+			}
+		});
 	}
 
 }
