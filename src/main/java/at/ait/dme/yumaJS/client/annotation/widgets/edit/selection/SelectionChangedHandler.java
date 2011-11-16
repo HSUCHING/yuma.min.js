@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.editors.selection;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit.selection;
 
 /**
  * A handler interface for reacting to selection change events.

@@ -1,15 +1,15 @@
-package at.ait.dme.yumaJS.client.annotation.editors;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.ResizableBoxSelection;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.SelectionChangedHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.ResizableBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.SelectionChangedHandler;
 
 /**
  * An {@link Editor} implementation for images and zoomable images,

@@ -1,14 +1,14 @@
-package at.ait.dme.yumaJS.client.annotation.editors;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.RangeSelection;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.RangeSelection;
 
 public class AudioRangeEditor extends Editor {
 	

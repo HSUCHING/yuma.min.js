@@ -15,9 +15,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 

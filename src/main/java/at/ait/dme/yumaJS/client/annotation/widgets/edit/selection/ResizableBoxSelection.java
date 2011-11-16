@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.editors.selection;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit.selection;
 
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
@@ -16,9 +16,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 /**

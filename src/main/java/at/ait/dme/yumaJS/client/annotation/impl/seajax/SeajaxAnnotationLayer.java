@@ -9,11 +9,11 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonMouseHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxEditor;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.core.client.JavaScriptObject;

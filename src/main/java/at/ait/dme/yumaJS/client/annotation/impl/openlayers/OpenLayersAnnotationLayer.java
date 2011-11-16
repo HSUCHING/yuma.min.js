@@ -17,15 +17,15 @@ import com.google.gwt.user.client.ui.RootPanel;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxEditor;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 @Export

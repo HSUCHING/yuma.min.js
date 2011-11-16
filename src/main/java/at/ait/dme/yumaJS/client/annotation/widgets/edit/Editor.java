@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.editors;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
@@ -9,8 +9,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.widgets.CommentField;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
 import at.ait.dme.yumaJS.client.io.Create;
 
 /**

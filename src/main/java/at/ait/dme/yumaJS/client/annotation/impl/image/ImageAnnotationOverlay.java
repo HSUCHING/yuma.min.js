@@ -2,9 +2,9 @@ package at.ait.dme.yumaJS.client.annotation.impl.image;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
 import at.ait.dme.yumaJS.client.annotation.widgets.ReplyEnabledInfoPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
