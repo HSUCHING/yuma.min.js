@@ -16,10 +16,10 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 /**
- * This is the image annotation overlay type that is used when reply functionality is disabled. 
+ * This is the image annotation overlay type that is used when reply functionality is DISABLED. 
  * It consists of a {@link BoundingBoxOverlay} with a single {@link AnnotationWidget} underneath.
  * When in editing mode, the {@link AnnotationWidget} stays clamped to the lower-left corner
- * of the {@link BoundingBoxOverlay} when it is moved or resized.
+ * of the {@link BoundingBoxOverlay}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
