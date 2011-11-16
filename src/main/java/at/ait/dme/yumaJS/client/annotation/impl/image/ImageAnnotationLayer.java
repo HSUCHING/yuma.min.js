@@ -53,8 +53,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	private AbsolutePanel annotationLayer;
 	
 	// { annotationID -> overlay }
-	private HashMap<String, SingleImageAnnotationOverlay> overlays = 
-		new HashMap<String, SingleImageAnnotationOverlay>();
+	private HashMap<String, ImageAnnotationOverlay> overlays = 
+		new HashMap<String, ImageAnnotationOverlay>();
 	
 	private int annotationCtr = 0;
 	
@@ -189,11 +189,11 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			overlays.put(a.getID(), overlay);
 			sortOverlaysByArea();
 		} else {
-			/* Reply - ignore if replies are not enabled!
+			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
-				SingleImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
-				((ReplyEnabledInfoPopup) overlay.getDetailsPopup()).addReply(a);
-			}*/
+				ImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
+				// ((ReplyEnabledInfoPopup) overlay.getDetailsPopup()).addReply(a);
+			}
 		}
 
 		fireOnAnnotationCreated(a);
@@ -205,9 +205,9 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 		
 	private void editAnnotation(Annotation a, final boolean removeOnCancel) {
-		final SingleImageAnnotationOverlay overlay = overlays.get(a.getID());
+		final ImageAnnotationOverlay overlay = overlays.get(a.getID());
 		if (overlay != null) {
-			overlay.startEditing(new AnnotationEditHandler() {
+			overlay.edit(a, new AnnotationEditHandler() {
 				public void onSave(Annotation a) {
 					overlay.setAnnotation(a);
 				}
@@ -222,7 +222,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void removeAnnotation(Annotation a) {
-		SingleImageAnnotationOverlay overlay = overlays.get(a.getID());
+		ImageAnnotationOverlay overlay = overlays.get(a.getID());
 		if (overlay != null) {
 			overlay.destroy();
 			overlays.remove(a.getID());
@@ -232,7 +232,9 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	private void sortOverlaysByArea() {
 		ArrayList<BoundingBoxOverlay> sortedOverlays = new ArrayList<BoundingBoxOverlay>();
 		for (String id : overlays.keySet()) {
-			sortedOverlays.add(overlays.get(id).getBoundingBoxOverlay());
+			for (BoundingBoxOverlay bbox : overlays.get(id).getBoundingBoxOverlays()) {
+				sortedOverlays.add(bbox);	
+			}
 		}
 		Collections.sort(sortedOverlays);
 		

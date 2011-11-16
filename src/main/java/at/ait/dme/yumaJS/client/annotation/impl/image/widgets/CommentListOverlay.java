@@ -1,6 +1,5 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.dev.util.collect.HashMap;
@@ -13,7 +12,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -27,7 +28,7 @@ import at.ait.dme.yumaJS.client.init.Labels;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class CommentListOverlay {
+public class CommentListOverlay extends ImageAnnotationOverlay {
 
 	private Annotation rootAnnotation;
 	
@@ -36,6 +37,8 @@ public class CommentListOverlay {
 	private AbsolutePanel annotationLayer;
 	
 	private BoundingBoxOverlay bboxOverlay;
+	
+	private AnnotationWidget rootAnnotationWidget;
 	
 	private FlowPanel annotationListPanel = new FlowPanel();
 	
@@ -58,16 +61,19 @@ public class CommentListOverlay {
 		
 		bboxOverlay.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
+				/*
 				if (!annotationWidget.contains(
 						event.getRelativeX(annotationLayer.getElement()) + annotationLayer.getAbsoluteLeft(), 
 						event.getRelativeY(annotationLayer.getElement()) + annotationLayer.getAbsoluteTop()))
 					
 					annotationWidget.setVisible(false);
+				*/
 			}
 		});
 		
-		annotationWidget = new AnnotationWidget(annotation, labels);
+		rootAnnotationWidget = new AnnotationWidget(rootAnnotation, labels);
 		
+		/*
 		annotationWidget.addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				if (!annotationWidget.isEditing())
@@ -76,10 +82,26 @@ public class CommentListOverlay {
 		}, MouseOutEvent.getType());
 		
 		annotationWidget.setVisible(false);
-		
+		*/
 		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
-		annotationLayer.add(annotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
-
+		annotationLayer.add(rootAnnotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
 	}
 
+	@Override
+	public void edit(Annotation a, AnnotationEditHandler handler) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<BoundingBoxOverlay> getBoundingBoxOverlays() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public void destroy() {
+		// TODO implement
+	}
+	
 }

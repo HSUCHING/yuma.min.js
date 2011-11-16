@@ -1,7 +1,11 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
+import java.util.Arrays;
+import java.util.List;
+
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
@@ -23,7 +27,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class SingleImageAnnotationOverlay {
+public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 	
 	private Annotation annotation;
 	
@@ -77,7 +81,8 @@ public class SingleImageAnnotationOverlay {
 		annotationLayer.add(annotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
 	}
 	
-	public void startEditing(final AnnotationEditHandler handler) {
+	@Override
+	public void edit(Annotation a, final AnnotationEditHandler handler) {
 		final BoundingBox initialPosition = bboxOverlay.getBoundingBox();
 		
 		bboxOverlay.startEditing(new SelectionChangedHandler() {
@@ -118,14 +123,16 @@ public class SingleImageAnnotationOverlay {
 		bboxOverlay.setBoundingBox(bbox);
 	}
 	
-	public BoundingBoxOverlay getBoundingBoxOverlay() {
-		return bboxOverlay;
+	@Override
+	public List<BoundingBoxOverlay> getBoundingBoxOverlays() {
+		return Arrays.asList(bboxOverlay);
 	}
 	
 	public AnnotationWidget getAnnotationWidget() {
 		return annotationWidget;
 	}
 	
+	@Override
 	public void destroy() {
 		bboxOverlay.removeFromParent();
 		annotationWidget.removeFromParent();
