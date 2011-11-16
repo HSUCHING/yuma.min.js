@@ -13,8 +13,8 @@ import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.AudioRangeEditor;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.dom.client.AudioElement;

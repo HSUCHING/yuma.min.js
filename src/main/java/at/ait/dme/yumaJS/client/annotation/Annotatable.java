@@ -4,8 +4,8 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
 import at.ait.dme.yumaJS.client.YUMA;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 import at.ait.dme.yumaJS.client.io.ListAll;

@@ -2,10 +2,11 @@ package at.ait.dme.yumaJS.client.annotation.widgets;
 
 import java.util.Date;
 
+import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
 import at.ait.dme.yumaJS.client.init.Labels;
+import at.ait.dme.yumaJS.client.io.Delete;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -18,6 +19,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
@@ -108,6 +110,11 @@ public class AnnotationWidget extends Composite {
 		btnDelete.addStyleName(CSS_HIDDEN);
 		btnDelete.getElement().getStyle().setFloat(Float.RIGHT);
 		btnDelete.getElement().getStyle().setCursor(Cursor.POINTER);
+		btnDelete.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				delete();
+			}
+		});
 		
 		btnEdit = new PushButton();
 		btnEdit.setStyleName("yuma-icon-button");
@@ -115,6 +122,11 @@ public class AnnotationWidget extends Composite {
 		btnEdit.addStyleName(CSS_HIDDEN);
 		btnEdit.getElement().getStyle().setFloat(Float.RIGHT);
 		btnEdit.getElement().getStyle().setCursor(Cursor.POINTER);
+		btnEdit.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				edit();
+			}
+		});
 	
 		Labels labels = annotatable.getLabels();
 		if (annotatable.getLabels() == null) {
@@ -170,11 +182,11 @@ public class AnnotationWidget extends Composite {
     	return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
 	}-*/;
 
-	public void startEditing() {
-		startEditing(null);
+	public void edit() {
+		edit(null);
 	}
 	
-	public void startEditing(final AnnotationEditHandler handler) {
+	public void edit(final AnnotationWidgetEditHandler handler) {
 		isEditing = true;
 		
 		// Hide panel and edit/delete buttons
@@ -227,9 +239,21 @@ public class AnnotationWidget extends Composite {
 	public boolean isEditing() {
 		return isEditing;
 	}
+	
+	private void delete() {
+		if (annotatable.getServerURL() == null) {
+			annotatable.removeAnnotation(annotation);
+		} else {
+			Delete.executeJSONP(annotatable.getServerURL(), annotation.getID(), new AsyncCallback<Void>() {
+				public void onSuccess(Void result) {
+					annotatable.removeAnnotation(annotation);
+				}			
 
-	private void save() {
-		
+				public void onFailure(Throwable t) {
+					YUMA.nonFatalError(t.getMessage());
+				}
+			});
+		}							
 	}
 	
 	@Override
@@ -265,6 +289,14 @@ public class AnnotationWidget extends Composite {
 			return false;
 		
 		return true;
+	}
+	
+	public interface AnnotationWidgetEditHandler {
+
+		public void onSave(Annotation annotation);
+		
+		public void onCancel();
+		
 	}
 
 }

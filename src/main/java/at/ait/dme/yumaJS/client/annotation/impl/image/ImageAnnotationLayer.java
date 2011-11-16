@@ -14,9 +14,9 @@ import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.BoundingBoxOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.CommentListOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.SingleImageAnnotationOverlay;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.dom.client.Style.Overflow;
@@ -203,10 +203,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		addAnnotation(empty);
 		
 		final ImageAnnotationOverlay overlay = overlays.get(empty.getID());		
-		overlay.edit(empty, new AnnotationEditHandler() {
-			public void onSave(Annotation a) {
-				// Do nothing
-			}
+		overlay.edit(empty, new AnnotationWidgetEditHandler() {
+			public void onSave(Annotation a) { }
 			
 			public void onCancel() {
 				// If it's a new annotation, we'll delete it after cancel

@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.widgets.edit.selection;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit;
 
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
@@ -133,7 +133,7 @@ public class RangeSelection extends Selection {
 	}
 
 	@Override
-	public void setSelectionChangedHandler(SelectionChangedHandler handler) {
+	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
 		// We don't currently do anything on range selection changes
 	}
 

@@ -1,8 +1,8 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.SelectionChangedHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
 
 public interface FragmentWidget {
 	
@@ -14,7 +14,7 @@ public interface FragmentWidget {
 	
 	public void setRange(Range range);
 	
-	public void startEditing(SelectionChangedHandler hanlder);
+	public void startEditing(SelectionChangeHandler handler);
 	
 	public void stopEditing();
 

@@ -1,4 +1,5 @@
-package at.ait.dme.yumaJS.client.annotation.widgets.edit.selection;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit;
+
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style;
@@ -15,7 +16,7 @@ public abstract class Selection {
 	
 	public abstract Range getSelectedRange();
 	
-	public abstract void setSelectionChangedHandler(SelectionChangedHandler handler);
+	public abstract void setSelectionChangeHandler(SelectionChangeHandler handler);
 	
 	public abstract void destroy();
 	
@@ -52,5 +53,13 @@ public abstract class Selection {
 		document.onselectstart = function(){return true;}
   		document.onmousedown = function(){return true;}
 	}-*/;
+	
+	public interface SelectionChangeHandler {
+
+		public void onBoundsChanged(BoundingBox bbox);
+		
+		public void onRangeChanged(Range range);
+		
+	}
 
 }

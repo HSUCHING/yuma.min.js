@@ -4,7 +4,7 @@ import java.util.List;
 
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.BoundingBoxOverlay;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
 
 /**
  * An abstract base class for image annotation overlays.
@@ -15,12 +15,10 @@ public abstract class ImageAnnotationOverlay {
 	
 	public abstract void edit(Annotation a);
 
-	public abstract void edit(Annotation a, AnnotationEditHandler handler);
+	public abstract void edit(Annotation a, AnnotationWidgetEditHandler handler);
 	
 	public abstract List<BoundingBoxOverlay> getBoundingBoxOverlays();
-	
-	public abstract void updateAnnotation(Annotation annotation);
-	
+		
 	public abstract void destroy();
 	
 }

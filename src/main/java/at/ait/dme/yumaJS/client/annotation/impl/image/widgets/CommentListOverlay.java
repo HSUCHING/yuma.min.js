@@ -14,8 +14,8 @@ import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationEditHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
@@ -88,7 +88,7 @@ public class CommentListOverlay extends ImageAnnotationOverlay {
 	}
 
 	@Override
-	public void edit(Annotation a, AnnotationEditHandler handler) {
+	public void edit(Annotation a, AnnotationWidgetEditHandler handler) {
 		// TODO Auto-generated method stub
 		
 	}

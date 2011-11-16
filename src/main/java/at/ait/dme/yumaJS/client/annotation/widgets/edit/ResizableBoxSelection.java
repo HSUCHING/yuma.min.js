@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.widgets.edit.selection;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit;
 
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.selection.Selection;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection;
 
 /**
  * An sub-class of {@link Selection} that implements a resizable-box selection
@@ -54,7 +54,7 @@ public class ResizableBoxSelection extends Selection {
 	private int dragStartX, dragStartY;
 	
 	// The SelectionChangedHandler (if any)
-	private SelectionChangedHandler selectionChangedHandler = null;
+	private SelectionChangeHandler selectionChangeHandler = null;
 
 	public ResizableBoxSelection(AbsolutePanel parent, BoundingBox initialValue) {
 		this.parent = parent;
@@ -265,8 +265,8 @@ public class ResizableBoxSelection extends Selection {
 	}
 	
 	private void fireSelectionChanged() {
-		if (selectionChangedHandler != null)
-			selectionChangedHandler.onBoundsChanged(getSelectedBounds());
+		if (selectionChangeHandler != null)
+			selectionChangeHandler.onBoundsChanged(getSelectedBounds());
 	}
 	
 	@Override
@@ -284,8 +284,8 @@ public class ResizableBoxSelection extends Selection {
 	}
 	
 	@Override
-	public void setSelectionChangedHandler(SelectionChangedHandler handler) {
-		this.selectionChangedHandler = handler;
+	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
+		this.selectionChangeHandler = handler;
 	}
 
 	@Override

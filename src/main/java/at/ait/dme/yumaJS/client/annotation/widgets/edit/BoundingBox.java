@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.widgets.edit.selection;
+package at.ait.dme.yumaJS.client.annotation.widgets.edit;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
