@@ -1,6 +1,15 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gwt.dev.util.collect.HashMap;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
+import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * This is the image annotation overlay type that is used when reply functionality is ENABLED. 
@@ -13,5 +22,21 @@ import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
 public class CommentListOverlay {
+
+	private Annotation rootAnnotation;
+	
+	private Annotatable annotatable;
+
+	private AbsolutePanel annotationLayer;
+	
+	private BoundingBoxOverlay bboxOverlay;
+	
+	private HashMap<Annotation, AnnotationWidget> annotations = new HashMap<Annotation, AnnotationWidget>();
+	
+	public CommentListOverlay(Annotation rootAnnotation, Annotatable annotatable, AbsolutePanel annotationLayer, Labels labels) {
+		this.rootAnnotation = rootAnnotation;
+		this.annotatable = annotatable;
+		this.annotationLayer = annotationLayer;
+	}
 
 }
