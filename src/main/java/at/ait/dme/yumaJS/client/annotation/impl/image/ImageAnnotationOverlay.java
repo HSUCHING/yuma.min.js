@@ -17,6 +17,8 @@ public abstract class ImageAnnotationOverlay {
 	
 	public abstract List<BoundingBoxOverlay> getBoundingBoxOverlays();
 	
+	public abstract void updateAnnotation(Annotation annotation);
+	
 	public abstract void destroy();
 	
 }

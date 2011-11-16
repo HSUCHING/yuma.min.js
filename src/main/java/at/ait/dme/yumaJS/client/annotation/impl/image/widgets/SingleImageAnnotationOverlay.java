@@ -115,7 +115,8 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 		annotationWidget.setVisible(true);
 	}
 	
-	public void setAnnotation(Annotation a) {
+	@Override
+	public void updateAnnotation(Annotation a) {
 		annotationWidget.setAnnotation(a);
 		BoundingBox bbox = annotatable.toBoundingBox(a.getFragment());
 		

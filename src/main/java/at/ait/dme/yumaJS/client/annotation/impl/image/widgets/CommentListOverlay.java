@@ -94,6 +94,12 @@ public class CommentListOverlay extends ImageAnnotationOverlay {
 	}
 
 	@Override
+	public void updateAnnotation(Annotation annotation) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public List<BoundingBoxOverlay> getBoundingBoxOverlays() {
 		// TODO Auto-generated method stub
 		return null;

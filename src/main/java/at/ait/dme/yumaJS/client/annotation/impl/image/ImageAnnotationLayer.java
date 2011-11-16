@@ -191,7 +191,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		} else {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
-				ImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
+				// ImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
 				// ((ReplyEnabledInfoPopup) overlay.getDetailsPopup()).addReply(a);
 			}
 		}
@@ -209,7 +209,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		if (overlay != null) {
 			overlay.edit(a, new AnnotationEditHandler() {
 				public void onSave(Annotation a) {
-					overlay.setAnnotation(a);
+					overlay.updateAnnotation(a);
 				}
 				
 				public void onCancel() {
