@@ -9,8 +9,7 @@
   whole UI class structure more consistent/readable
 * Image: the annotation layer sometimes seems to be shifted upwards a varying number of pixels. Seems
   to happen more often in Firefox than in any other browser, but I had it in Chrome as well once.
-* Web tests with a tool like Selenium!! (Note: Selenium doesn't work since it doesn't capture mouse 
-  movement/drag'n'drop)
+* GUI testing: http://dojotoolkit.org/reference-guide/util/dohrobot.html may be a possible option
 * Seajax is totally incomplete
   * bboxes are currently encoded in screen coordinates, not image coordinates -> change!
   * When the mouse moves over a DetailPopup (even a hidden one) this currently triggers a 

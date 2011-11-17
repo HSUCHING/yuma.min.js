@@ -55,7 +55,7 @@ html {
 	padding:1px;
 	background-color:#ccc;	
 	color:#000;
-	width:240px;
+	width:246px;
 	border:1px solid #aaa;
 	-moz-box-shadow:2px 2px 2px #222;
 	-webkit-box-shadow:2px 2px 2px #222;
@@ -90,9 +90,9 @@ html {
 .yuma-comment-buttons {
 	border:1px solid transparent;
 	text-align:right;
-	margin-right:2px;
+	margin-top:1px;
 	padding:0px;
-	width:238px;
+	width:244px;
 }
 
 .yuma-comment-buttons .yuma-button {
@@ -171,7 +171,7 @@ html {
 	margin-top:3px;
 }
 
-.yuma-annotation .yuma-button { 
+.yuma-annotation .yuma-icon-button { 
 	width:16px;
 	height:16px;
 	outline:none;

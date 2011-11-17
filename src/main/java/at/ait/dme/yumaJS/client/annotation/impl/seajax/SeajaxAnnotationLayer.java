@@ -97,10 +97,22 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	public String getMediaType() {
 		return MEDIATYPE;
 	}
+
+	/*
+	No5.Seajax.toImageCoordinates = function(viewer, viewerX, viewerY) {
+		   return new Seadragon.Point(viewerX * viewer.source.width, viewerY * viewer.source.height * viewer.source.aspectRatio);
+		}
+
+
+		No5.Seajax.toWorldCoordinates = function(viewer, imageX, imageY) {
+		   return new Seadragon.Point(imageX / viewer.source.width, imageY / viewer.source.height / viewer.source.aspectRatio);
+		}
+	*/
+	
+	
 	
 	@Override
 	public String toFragment(BoundingBox bbox, Range range) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

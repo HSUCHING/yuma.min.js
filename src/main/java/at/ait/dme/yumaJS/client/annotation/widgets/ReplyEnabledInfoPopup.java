@@ -39,7 +39,15 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		replyField = new CommentField(labels, false);
 		replyField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				save();
+				save(Annotation.create(
+						annotatable.getObjectURI(),
+						Document.get().getURL(),
+						Document.get().getTitle(),
+						annotatable.getMediaType(),
+						replyField.getText(),
+						null,
+						rootAnnotation.getID()));
+				replyField.setVisible(false);
 			}
 		});
 		replyField.setVisible(false);
@@ -71,10 +79,11 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		final AnnotationWidget widget = new AnnotationWidget(reply, annotatable.getLabels());
 		widget.addEditClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				widget.makeEditable(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						System.out.println("yo");
-						save();
+				replyField.setVisible(false);
+				widget.makeEditable(new AnnotationWidget.EditHandler() {
+					public void onSave(String text) {
+						reply.setText(text);
+						save(reply);
 					}
 				}, annotatable.getLabels());
 			}
@@ -104,16 +113,7 @@ public class ReplyEnabledInfoPopup extends InfoPopup {
 		replies.add(reply);
 	}
 	
-	private void save() {
-		Annotation a = Annotation.create(
-				annotatable.getObjectURI(),
-				Document.get().getURL(),
-				Document.get().getTitle(),
-				annotatable.getMediaType(),
-				replyField.getText(),
-				null,
-				rootAnnotation.getID());
-		
+	private void save(Annotation a) {			
 		if (annotatable.getServerURL() == null) {
 			// Local-mode: just add the annotation without storing
 			annotatable.addAnnotation(a);
