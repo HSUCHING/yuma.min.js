@@ -49,7 +49,6 @@ html {
 }
 
 .yuma-comment {
-	clear:both;
 	line-height:100%;
 	margin:3px 0px 0px 1px;
 	padding:0px 1px;
@@ -73,6 +72,7 @@ html {
 	font-family:Verdana, Arial;
 	font-size:11px;
 	padding:2px;
+	margin:0px;
 	color:#000;
 	text-shadow:none;
 	-moz-border-radius:0px;
