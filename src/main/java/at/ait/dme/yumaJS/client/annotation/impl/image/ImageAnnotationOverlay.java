@@ -1,9 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
-import java.util.List;
-
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.BoundingBoxOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
 
 /**
@@ -17,7 +14,7 @@ public abstract class ImageAnnotationOverlay implements Comparable<ImageAnnotati
 	
 	public abstract void edit(Annotation a);
 	
-	public abstract List<BoundingBoxOverlay> getBoundingBoxOverlays();
+	public abstract void setZIndex(int idx);
 		
 	public abstract void destroy();
 	

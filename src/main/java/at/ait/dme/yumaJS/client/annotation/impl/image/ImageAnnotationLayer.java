@@ -11,7 +11,6 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.BoundingBoxOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.CommentListOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.SingleImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
@@ -180,19 +179,17 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		}
 	}
 	
-	private void sortOverlaysByArea() {
-		ArrayList<BoundingBoxOverlay> sortedOverlays = new ArrayList<BoundingBoxOverlay>();
+	protected void sortOverlaysByArea() {
+		ArrayList<ImageAnnotationOverlay> sortedOverlays = new ArrayList<ImageAnnotationOverlay>();
 		for (String id : overlays.keySet()) {
-			for (BoundingBoxOverlay bbox : overlays.get(id).getBoundingBoxOverlays()) {
-				sortedOverlays.add(bbox);	
-			}
+			sortedOverlays.add(overlays.get(id));
 		}
 		Collections.sort(sortedOverlays);
 		
 		// Re-assign z-indexes
 		int zIndex = 9010;
-		for (BoundingBoxOverlay bbox : sortedOverlays) {
-			bbox.setZIndex(zIndex);
+		for (ImageAnnotationOverlay overlay : sortedOverlays) {
+			overlay.setZIndex(zIndex);
 			zIndex++;
 		}
 	}

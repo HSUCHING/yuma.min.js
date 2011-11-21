@@ -23,6 +23,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets.SingleOpenLayersAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -41,8 +42,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	
 	private AbsolutePanel editingLayer;
 	
-	private HashMap<Annotation, OpenLayersAnnotationOverlay> annotations = 
-		new HashMap<Annotation, OpenLayersAnnotationOverlay>();
+	private HashMap<Annotation, SingleOpenLayersAnnotationOverlay> annotations = 
+		new HashMap<Annotation, SingleOpenLayersAnnotationOverlay>();
 	
 	public OpenLayersAnnotationLayer(JavaScriptObject openLayersMap, String objectURI, InitParams params) {
 		super(params);
@@ -139,8 +140,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		BoxMarker marker = BoxMarker.create(toOpenLayersBounds(annotation.getFragment()));
 		annotationLayer.addMarker(marker);
 		
-		OpenLayersAnnotationOverlay overlay = 
-			new OpenLayersAnnotationOverlay(this, annotation, marker, getLabels());
+		SingleOpenLayersAnnotationOverlay overlay = 
+			new SingleOpenLayersAnnotationOverlay(this, annotation, marker, getLabels());
 
 		annotations.put(annotation, overlay);
 		sortOverlaysByArea();
@@ -148,7 +149,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	}
 	
 	private void sortOverlaysByArea() {
-		ArrayList<OpenLayersAnnotationOverlay> overlays = new ArrayList<OpenLayersAnnotationOverlay>();
+		ArrayList<SingleOpenLayersAnnotationOverlay> overlays = new ArrayList<SingleOpenLayersAnnotationOverlay>();
 		for (Annotation a : annotations.keySet()) {
 			overlays.add(annotations.get(a));
 		}
@@ -156,7 +157,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		
 		// Re-assign z-indexes
 		int zIndex = 9010;
-		for (OpenLayersAnnotationOverlay overlay : overlays) {
+		for (SingleOpenLayersAnnotationOverlay overlay : overlays) {
 			overlay.setZIndex(zIndex);
 			zIndex++;
 		}
@@ -164,7 +165,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void removeAnnotation(Annotation annotation) {
-		OpenLayersAnnotationOverlay overlay = annotations.get(annotation);
+		SingleOpenLayersAnnotationOverlay overlay = annotations.get(annotation);
 		if (overlay != null) {
 			annotationLayer.removeMarker(overlay.getMarker());
 			overlay.destroy();

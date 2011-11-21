@@ -1,8 +1,5 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
-import java.util.Arrays;
-import java.util.List;
-
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
@@ -109,13 +106,13 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 		annotationWidget.setVisible(true);
 	}
 	
-	@Override
-	public List<BoundingBoxOverlay> getBoundingBoxOverlays() {
-		return Arrays.asList(bboxOverlay);
-	}
-	
 	public AnnotationWidget getAnnotationWidget() {
 		return annotationWidget;
+	}
+
+	@Override
+	public void setZIndex(int idx) {
+		bboxOverlay.setZIndex(idx);
 	}
 	
 	@Override
