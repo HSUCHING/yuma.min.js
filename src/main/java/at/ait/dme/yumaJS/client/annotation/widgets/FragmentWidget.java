@@ -6,6 +6,8 @@ import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChang
 
 public interface FragmentWidget {
 	
+	public void setSelectionChangeHandler(SelectionChangeHandler handler);
+	
 	public BoundingBox getBoundingBox();
 	
 	public void setBoundingBox(BoundingBox bbox);
@@ -14,7 +16,9 @@ public interface FragmentWidget {
 	
 	public void setRange(Range range);
 	
-	public void startEditing(SelectionChangeHandler handler);
+	public void startEditing();
+	
+	public void cancelEditing();
 	
 	public void stopEditing();
 

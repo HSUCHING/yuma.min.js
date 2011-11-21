@@ -60,6 +60,8 @@ public class AnnotationWidget extends Composite {
 		
 	private boolean isEditing = false;
 	
+	private AnnotationWidgetEditHandler handler = null;
+	
 	private Annotation annotation;
 	
 	private FragmentWidget fragmentWidget;
@@ -155,6 +157,10 @@ public class AnnotationWidget extends Composite {
 		initWidget(container);
 	}
 	
+	public void setAnnotationWidgetEditHandler(AnnotationWidgetEditHandler handler) {
+		this.handler = handler;
+	}
+	
 	private void setAnnotation(Annotation a) {				
 		// Username will be undefined in server-less mode!
 		if (annotation.getUserRealName() != null) {
@@ -181,13 +187,12 @@ public class AnnotationWidget extends Composite {
     	var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     	return text.replace(exp,"<a href=\"$1\" target=\"blank\">$1</a>"); 
 	}-*/;
-
-	public void edit() {
-		edit(null);
-	}
 	
-	public void edit(final AnnotationWidgetEditHandler handler) {
+	public void edit() {
 		isEditing = true;
+		
+		if (fragmentWidget != null)
+			fragmentWidget.startEditing();
 		
 		// Hide panel and edit/delete buttons
 		annotationPanel.setVisible(false);
@@ -221,7 +226,7 @@ public class AnnotationWidget extends Composite {
 		commentField.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (fragmentWidget != null)
-					fragmentWidget.stopEditing();
+					fragmentWidget.cancelEditing();
 				
 				if (handler != null)
 					handler.onCancel();

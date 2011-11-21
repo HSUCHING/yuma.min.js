@@ -14,7 +14,7 @@ import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -71,7 +71,7 @@ public class CommentListOverlay extends ImageAnnotationOverlay {
 			}
 		});
 		
-		rootAnnotationWidget = new AnnotationWidget(rootAnnotation, labels);
+		// rootAnnotationWidget = new AnnotationWidget(rootAnnotation, labels);
 		
 		/*
 		annotationWidget.addDomHandler(new MouseOutHandler() {
@@ -83,18 +83,19 @@ public class CommentListOverlay extends ImageAnnotationOverlay {
 		
 		annotationWidget.setVisible(false);
 		*/
-		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
-		annotationLayer.add(rootAnnotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
+		// annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
+		// annotationLayer.add(rootAnnotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
 	}
 
 	@Override
-	public void edit(Annotation a, AnnotationWidgetEditHandler handler) {
+	public void setAnnotationWidgetEditHandler(Annotation a,
+			AnnotationWidgetEditHandler handler) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateAnnotation(Annotation annotation) {
+	public void edit(Annotation a) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -108,6 +109,11 @@ public class CommentListOverlay extends ImageAnnotationOverlay {
 	@Override
 	public void destroy() {
 		// TODO implement
+	}
+
+	public int compareTo(ImageAnnotationOverlay o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

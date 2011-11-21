@@ -11,11 +11,11 @@ import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWi
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public abstract class ImageAnnotationOverlay {
+public abstract class ImageAnnotationOverlay implements Comparable<ImageAnnotationOverlay> {
+	
+	public abstract void setAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler);
 	
 	public abstract void edit(Annotation a);
-
-	public abstract void edit(Annotation a, AnnotationWidgetEditHandler handler);
 	
 	public abstract List<BoundingBoxOverlay> getBoundingBoxOverlays();
 		

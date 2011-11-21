@@ -49,6 +49,11 @@ public class BoundingBoxOverlay implements FragmentWidget, Comparable<BoundingBo
 	 */
 	private Selection selection = null;
 	
+	/**
+	 * The selection change handler
+	 */
+	private SelectionChangeHandler handler = null;
+	
 	public BoundingBoxOverlay(AbsolutePanel panel, BoundingBox bbox) {
 		this.panel = panel;
 		
@@ -65,9 +70,14 @@ public class BoundingBoxOverlay implements FragmentWidget, Comparable<BoundingBo
 		outerBorder.add(innerBorder);
 	}
 	
+	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
+		this.handler = handler;
+	}
+	
 	public BoundingBox getBoundingBox() {
 		if (selection != null)
-			bbox = selection.getSelectedBounds();
+			return selection.getSelectedBounds();
+		
 		return bbox;
 	}
 
@@ -85,11 +95,17 @@ public class BoundingBoxOverlay implements FragmentWidget, Comparable<BoundingBo
 		// Do nothing
 	}
 		
-	public void startEditing(SelectionChangeHandler handler) {
+	public void startEditing() {
 		outerBorder.setVisible(false);
 		selection =  new ResizableBoxSelection(panel, bbox);
 		selection.setSelectionChangeHandler(handler);
 	} 
+	
+	public void cancelEditing() {
+		selection.destroy();
+		selection = null;
+		outerBorder.setVisible(true);
+	}
 	
 	public void stopEditing() {
 		setBoundingBox(selection.getSelectedBounds());

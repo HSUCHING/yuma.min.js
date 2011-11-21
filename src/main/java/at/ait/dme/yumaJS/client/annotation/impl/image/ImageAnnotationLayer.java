@@ -198,19 +198,25 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 		
 	public void createNewAnnotation() {
-		Annotation empty = createEmptyAnnotation();
+		final Annotation empty = createEmptyAnnotation();
 		empty.setFragment(EMPTY_ANNOTATION);
 		addAnnotation(empty);
 		
-		final ImageAnnotationOverlay overlay = overlays.get(empty.getID());		
-		overlay.edit(empty, new AnnotationWidgetEditHandler() {
-			public void onSave(Annotation a) { }
+		final ImageAnnotationOverlay overlay = overlays.get(empty.getID());
+		
+		// It's a new annotation - we'll listen to the first save/cancel
+		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
+			public void onSave(Annotation a) { 
+				// If save, just remove the listener
+				overlay.setAnnotationWidgetEditHandler(empty, null);
+			}
 			
 			public void onCancel() {
-				// If it's a new annotation, we'll delete it after cancel
+				// If cancel, we'll remove the annotation from the GUI
 				overlay.destroy();
 			}
 		});
+		overlay.edit(empty);
 	}
 
 }
