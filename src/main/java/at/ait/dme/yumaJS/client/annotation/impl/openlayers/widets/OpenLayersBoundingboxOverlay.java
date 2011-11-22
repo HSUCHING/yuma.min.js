@@ -13,6 +13,12 @@ import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
 
+/**
+ * An implementation of {@link FragmentWidget} that is based on an OpenLayers
+ * {@link BoxMarker} .
+ * 
+ * @author Rainer Simon <rainer.simon@ait.ac.at>
+ */
 public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	
 	private BoxMarker boxMarker;

@@ -15,6 +15,12 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 
+/**
+ * A sub-class of {@link Selection} that implements range selection (e.g. on a
+ * timeline). 
+ *  
+ * @author Rainer Simon <rainer.simon@ait.ac.at>
+ */
 public class RangeSelection extends Selection {
 
 	private Canvas selectionCanvas;

@@ -31,7 +31,8 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 	
 	private AbsolutePanel annotationLayer;
 	
-	public SingleImageAnnotationOverlay(Annotation a, Annotatable annotatable, final AbsolutePanel annotationLayer) {
+	public SingleImageAnnotationOverlay(Annotation a, Annotatable annotatable, 
+			final AbsolutePanel annotationLayer) {
 		
 		this.annotationLayer = annotationLayer;
 		

@@ -13,6 +13,12 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextArea;
 
+/**
+ * The {@link CommentWidget} is an editable text field. It is used as part of the 
+ * {@link AnnotationWidget} while in editing mode.
+ * 
+ * @author Rainer Simon <rainer.simon@ait.ac.at>
+ */
 public class CommentWidget extends Composite {
 		
 	private FlowPanel container = new FlowPanel();

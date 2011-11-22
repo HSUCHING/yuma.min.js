@@ -21,7 +21,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection;
 
 /**
- * An sub-class of {@link Selection} that implements a resizable-box selection
+ * A sub-class of {@link Selection} that implements a resizable-box selection
  * tool. Used for {@link ImageAnnotationLayer} and {@link SeajaxAnnotationLayer}.
  *  
  * @author Rainer Simon <rainer.simon@ait.ac.at>
