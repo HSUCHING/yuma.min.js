@@ -111,8 +111,10 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	}
 
 	public void stopEditing() {
-		// TODO Auto-generated method stub
-		
+		setBoundingBox(selection.getSelectedBounds());
+		selection.destroy();
+		selection = null;
+		boxMarker.getDiv().getStyle().setVisibility(Visibility.VISIBLE);
 	}
 	
 	public void setEventListener(EventListener listener) {
