@@ -15,7 +15,6 @@ html {
 
 .yuma-bbox-selection-inner {
 	border:1px solid #fff;
-	z-index:99010;
 	background-image:url('1px-transp.png');
 }
 
@@ -118,7 +117,6 @@ html {
 
 .yuma-annotation-list {
 	padding-top:2px;
-	z-index:99010;
 	opacity:0;
 	transition:visibility 0.15s linear 0s, opacity 0.15s linear;
 	-moz-transition:visibility 0.15s linear 0s, opacity 0.15s linear;
@@ -136,6 +134,7 @@ html {
 	clear:both;
 	padding-top:1px;
 	white-space:nowrap;
+	z-index:99011;
 }
 
 .yuma-annotation-content {

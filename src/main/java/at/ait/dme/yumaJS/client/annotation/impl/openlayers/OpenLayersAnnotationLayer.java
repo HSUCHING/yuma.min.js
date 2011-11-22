@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
@@ -24,6 +25,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets.SingleOpenLayersAnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -174,7 +176,26 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	}
 	
 	public void createNewAnnotation() {
-		// new ResizableBoxEditor(this, editingLayer);
+		final Annotation empty = createEmptyAnnotation();
+		
+		empty.setFragment(EMPTY_ANNOTATION);
+		addAnnotation(empty);
+		
+		final ImageAnnotationOverlay overlay = overlays.get(empty.getID());
+		
+		// It's a new annotation - we'll listen to the first save/cancel
+		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
+			public void onSave(Annotation a) { 
+				// If save, just remove the listener
+				overlay.setAnnotationWidgetEditHandler(empty, null);
+			}
+			
+			public void onCancel() {
+				// If cancel, we'll remove the annotation from the GUI
+				overlay.destroy();
+			}
+		});
+		overlay.edit(empty);
 	}
 	
 }
