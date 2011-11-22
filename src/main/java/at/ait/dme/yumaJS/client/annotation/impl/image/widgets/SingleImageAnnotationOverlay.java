@@ -8,7 +8,6 @@ import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWi
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -32,12 +31,11 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 	
 	private AbsolutePanel annotationLayer;
 	
-	public SingleImageAnnotationOverlay(final Annotation annotation, final Annotatable annotatable,
-			final AbsolutePanel annotationLayer, Labels labels) {
+	public SingleImageAnnotationOverlay(Annotation a, Annotatable annotatable, final AbsolutePanel annotationLayer) {
 		
 		this.annotationLayer = annotationLayer;
 		
-		final BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());
+		final BoundingBox bbox = annotatable.toBoundingBox(a.getFragment());
 		
 		bboxOverlay = new BoundingBoxOverlay(annotationLayer, bbox);
 		
@@ -65,7 +63,7 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 			}
 		});
 		
-		annotationWidget = new AnnotationWidget(annotation, bboxOverlay, annotatable);
+		annotationWidget = new AnnotationWidget(a, bboxOverlay, annotatable);
 		
 		annotationWidget.addDomHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {

@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class BoundingBoxOverlay implements FragmentWidget, Comparable<BoundingBoxOverlay> {
+public class BoundingBoxOverlay implements FragmentWidget {
 
 	/**
 	 * The parent AbsolutePanel
@@ -126,7 +126,10 @@ public class BoundingBoxOverlay implements FragmentWidget, Comparable<BoundingBo
 		outerBorder.getElement().getStyle().setZIndex(idx);
 	}
 	
-	public int compareTo(BoundingBoxOverlay other) {
+	public int compareTo(FragmentWidget other) {
+		if (!(other instanceof BoundingBoxOverlay))
+			return 0;
+		
 		int thisArea = outerBorder.getOffsetWidth() * outerBorder.getOffsetHeight();
 		int otherArea = other.outerBorder.getOffsetWidth() * other.outerBorder.getOffsetHeight();
 		

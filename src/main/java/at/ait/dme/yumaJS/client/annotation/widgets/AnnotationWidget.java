@@ -67,9 +67,7 @@ public class AnnotationWidget extends Composite {
 	private FragmentWidget fragmentWidget;
 	
 	private Annotatable annotatable;
-	
-	private Labels labels;
-	
+		
 	private static final String CSS_HIDDEN = "yuma-button-hidden";
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
@@ -199,7 +197,7 @@ public class AnnotationWidget extends Composite {
 		buttonPanel.setVisible(false);
 
 		// Add comment field in place
-		final CommentWidget commentField = new CommentWidget(annotation.getText(), labels, true);
+		final CommentWidget commentField = new CommentWidget(annotation.getText(), annotatable.getLabels(), true);
 		 
 		commentField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {	
