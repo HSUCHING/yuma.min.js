@@ -1,7 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
@@ -10,17 +9,30 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
 
 public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 		
+	private AbsolutePanel panel;
+	
 	private OpenLayersBoundingboxOverlay boxOverlay;
 	
 	private AnnotationWidget annotationWidget;
 	
-	public SingleOpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a,
+	public SingleOpenLayersAnnotationOverlay(Annotatable annotatable, Annotation a,
 			AbsolutePanel panel, BoxMarker marker) {
 		
+		this.panel = panel;
 		this.boxOverlay = new OpenLayersBoundingboxOverlay(panel, marker);
+		
+		this.boxOverlay.setSelectionChangeHandler(new SelectionChangeHandler() {
+			public void onRangeChanged(Range range) { }
+			
+			public void onBoundsChanged(BoundingBox bbox) {
+				refresh();				
+			}
+		});
 
 		/*
 		Event.setEventListener(boxMarkerDiv, new EventListener() {
@@ -43,20 +55,29 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 		
 		annotationWidget = new AnnotationWidget(a, boxOverlay, annotatable);
 		annotationWidget.setVisible(false);
-		RootPanel.get().add(annotationWidget);
+		panel.add(annotationWidget);
 		refresh();
 	}
 	
 	private void refresh() {
 		BoundingBox bbox = boxOverlay.getBoundingBox();
-		RootPanel.get().setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight());
+		panel.setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight() + 2);
 	}
 
 	@Override
-	public void setAnnotationWidgetEditHandler(Annotation a,
-			AnnotationWidgetEditHandler handler) {
-		// TODO Auto-generated method stub
-		
+	public void setAnnotationWidgetEditHandler(Annotation a, final AnnotationWidgetEditHandler handler) {
+		annotationWidget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
+			public void onSave(Annotation annotation) {
+				if (handler != null)
+					handler.onSave(annotation);
+			}
+			
+			public void onCancel() {
+				refresh();
+				if (handler != null)
+					handler.onCancel();
+			}
+		});		
 	}
 	
 	public BoxMarker getMarker() {

@@ -17,7 +17,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
@@ -189,7 +188,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		empty.setFragment(createEmptyFragment());
 		addAnnotation(empty);
 		
-		final ImageAnnotationOverlay overlay = annotations.get(empty);
+		final SingleOpenLayersAnnotationOverlay overlay = annotations.get(empty);
 		
 		// It's a new annotation - we'll listen to the first save/cancel
 		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
@@ -200,6 +199,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			
 			public void onCancel() {
 				// If cancel, we'll remove the annotation from the GUI
+				annotationLayer.removeMarker(overlay.getMarker());
 				overlay.destroy();
 			}
 		});

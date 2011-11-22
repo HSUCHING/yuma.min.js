@@ -105,8 +105,9 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	}
 
 	public void cancelEditing() {
-		// TODO Auto-generated method stub
-		
+		selection.destroy();
+		selection = null;
+		boxMarker.getDiv().getStyle().setVisibility(Visibility.VISIBLE);
 	}
 
 	public void stopEditing() {
