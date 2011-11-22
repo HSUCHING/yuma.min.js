@@ -130,8 +130,9 @@ public class BoundingBoxOverlay implements FragmentWidget {
 		if (!(other instanceof BoundingBoxOverlay))
 			return 0;
 		
+		BoundingBoxOverlay overlay = (BoundingBoxOverlay) other;
 		int thisArea = outerBorder.getOffsetWidth() * outerBorder.getOffsetHeight();
-		int otherArea = other.outerBorder.getOffsetWidth() * other.outerBorder.getOffsetHeight();
+		int otherArea = overlay.outerBorder.getOffsetWidth() * overlay.outerBorder.getOffsetHeight();
 		
 		if (thisArea > otherArea)
 			return -1;
