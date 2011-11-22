@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
 
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
@@ -16,8 +17,10 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 	
 	private AnnotationWidget annotationWidget;
 	
-	public SingleOpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a, BoxMarker marker) {
-		this.boxOverlay = new OpenLayersBoundingboxOverlay(marker);
+	public SingleOpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a,
+			AbsolutePanel panel, BoxMarker marker) {
+		
+		this.boxOverlay = new OpenLayersBoundingboxOverlay(panel, marker);
 
 		/*
 		Event.setEventListener(boxMarkerDiv, new EventListener() {
@@ -62,8 +65,8 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 
 	@Override
 	public void edit(Annotation a) {
-		// TODO Auto-generated method stub
-		
+		annotationWidget.edit();
+		annotationWidget.setVisible(true);		
 	}
 	
 	public void destroy() {

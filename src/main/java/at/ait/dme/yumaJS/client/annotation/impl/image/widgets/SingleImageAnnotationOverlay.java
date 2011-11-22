@@ -100,7 +100,7 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 	}
 	
 	@Override
-	public void edit(final Annotation a) {
+	public void edit(Annotation a) {
 		annotationWidget.edit();
 		annotationWidget.setVisible(true);
 	}

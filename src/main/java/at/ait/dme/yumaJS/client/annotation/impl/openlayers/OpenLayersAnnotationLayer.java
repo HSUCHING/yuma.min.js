@@ -147,7 +147,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		annotationLayer.addMarker(marker);
 		
 		SingleOpenLayersAnnotationOverlay overlay = 
-			new SingleOpenLayersAnnotationOverlay(this, annotation, marker);
+			new SingleOpenLayersAnnotationOverlay(this, annotation, editingLayer, marker);
 
 		annotations.put(annotation, overlay);
 		sortOverlaysByArea();

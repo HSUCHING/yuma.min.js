@@ -1,16 +1,20 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
 
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.widgets.FragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
 
 /**
@@ -20,12 +24,29 @@ import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChang
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
 public class OpenLayersBoundingboxOverlay implements FragmentWidget {
+
+	/**
+	 * The parent AbsolutePanel
+	 */
+	private AbsolutePanel panel;
 	
+	/**
+	 * The OpenLayers BoxMarker
+	 */
 	private BoxMarker boxMarker;
 	
+	/**
+	 * The selection or <code>null</code> if not in editing mode
+	 */
+	private Selection selection = null;
+	
+	/**
+	 * The selection change handler
+	 */
 	private SelectionChangeHandler handler = null;
 	
-	public OpenLayersBoundingboxOverlay(BoxMarker boxMarker) {
+	public OpenLayersBoundingboxOverlay(AbsolutePanel panel, BoxMarker boxMarker) {
+		this.panel = panel;
 		this.boxMarker = boxMarker;
 		
 		Element boxMarkerDiv = boxMarker.getDiv();
@@ -73,8 +94,10 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	}
 
 	public void startEditing() {
-		// TODO Auto-generated method stub
-		
+		// TODO BoundingBox is now null!
+		boxMarker.getDiv().getStyle().setVisibility(Visibility.HIDDEN);
+		selection =  new ResizableBoxSelection(panel, null);
+		selection.setSelectionChangeHandler(handler);
 	}
 
 	public void cancelEditing() {
