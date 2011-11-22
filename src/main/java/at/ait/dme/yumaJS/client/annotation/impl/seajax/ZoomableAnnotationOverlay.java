@@ -13,7 +13,6 @@ import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonAnimationHan
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonPoint;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonRect;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
-import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 

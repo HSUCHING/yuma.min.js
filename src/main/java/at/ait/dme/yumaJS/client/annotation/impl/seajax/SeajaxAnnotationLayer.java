@@ -13,7 +13,6 @@ import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonMouseHandler
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.core.client.JavaScriptObject;
@@ -151,7 +150,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, annotationLayer);
+		// new ResizableBoxEditor(this, annotationLayer);
 	}
 	
 }
