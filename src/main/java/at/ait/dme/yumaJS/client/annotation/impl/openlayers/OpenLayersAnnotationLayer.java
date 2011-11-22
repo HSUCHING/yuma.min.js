@@ -33,6 +33,10 @@ import at.ait.dme.yumaJS.client.init.InitParams;
 @Export
 @ExportPackage("YUMA")
 public class OpenLayersAnnotationLayer extends Annotatable implements Exportable {
+	
+	private static final int DEFAULT_FRAGMENT_LEFT = 30;
+	private static final int DEFAULT_FRAGMENT_TOP = 30;
+	private static final int DEFAULT_SIZE = 60;
 
 	private static final String MEDIATYPE = "MAP";
 	
@@ -175,13 +179,17 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		} 
 	}
 	
+	private String createEmptyFragment() {
+		return toFragment(BoundingBox.create(DEFAULT_FRAGMENT_LEFT, DEFAULT_FRAGMENT_TOP, 
+				DEFAULT_SIZE, DEFAULT_SIZE), null);
+	}
+	
 	public void createNewAnnotation() {
 		final Annotation empty = createEmptyAnnotation();
-		
-		empty.setFragment(EMPTY_ANNOTATION);
+		empty.setFragment(createEmptyFragment());
 		addAnnotation(empty);
 		
-		final ImageAnnotationOverlay overlay = overlays.get(empty.getID());
+		final ImageAnnotationOverlay overlay = annotations.get(empty);
 		
 		// It's a new annotation - we'll listen to the first save/cancel
 		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
