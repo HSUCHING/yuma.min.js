@@ -141,7 +141,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		annotationLayer.addMarker(marker);
 		
 		SingleOpenLayersAnnotationOverlay overlay = 
-			new SingleOpenLayersAnnotationOverlay(this, annotation, marker, getLabels());
+			new SingleOpenLayersAnnotationOverlay(this, annotation, marker);
 
 		annotations.put(annotation, overlay);
 		sortOverlaysByArea();
@@ -175,12 +175,6 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	
 	public void createNewAnnotation() {
 		// new ResizableBoxEditor(this, editingLayer);
-	}
-
-	@Override
-	public void editAnnotation(Annotation annotation) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

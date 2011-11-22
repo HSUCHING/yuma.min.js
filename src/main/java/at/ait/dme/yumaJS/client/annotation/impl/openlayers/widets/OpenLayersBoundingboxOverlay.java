@@ -39,6 +39,10 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 		DOM.sinkEvents(boxMarkerDiv, 
 				Event.ONMOUSEOVER | Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);		
 	}
+	
+	public BoxMarker getBoxMarker() {
+		return boxMarker;
+	}
 
 	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
 		this.handler = handler;

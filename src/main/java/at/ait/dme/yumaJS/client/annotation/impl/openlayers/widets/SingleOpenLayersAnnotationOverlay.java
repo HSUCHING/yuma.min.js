@@ -1,50 +1,26 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
-import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.SingleImageAnnotationOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 		
-	private BoxMarker boxMarker;
+	private OpenLayersBoundingboxOverlay boxOverlay;
 	
 	private AnnotationWidget annotationWidget;
 	
-	public SingleOpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a, BoxMarker marker, Labels labels) {
-		this.boxMarker = marker;
-		
-		Element boxMarkerDiv = marker.getDiv();
-		
-		Style markerStyle = boxMarkerDiv.getStyle();
-		markerStyle.clearBorderColor();
-		markerStyle.clearBorderWidth();
-		markerStyle.clearBorderStyle();
-		boxMarker.getDiv().setClassName("annotation-bbox-outer");
-		
-		FlowPanel innerBorder = new FlowPanel();
-		innerBorder.setWidth("100%");
-		innerBorder.setHeight("100%");
-		innerBorder.setStyleName("annotation-bbox-inner");
-		boxMarker.getDiv().appendChild(innerBorder.getElement());
-		
-		DOM.sinkEvents(boxMarkerDiv, 
-				Event.ONMOUSEOVER | Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);
-		
+	public SingleOpenLayersAnnotationOverlay(Annotatable annotatable,  Annotation a, BoxMarker marker) {
+		this.boxOverlay = new OpenLayersBoundingboxOverlay(marker);
+
+		/*
 		Event.setEventListener(boxMarkerDiv, new EventListener() {
 			public void onBrowserEvent(Event event) {
 				if (event.getTypeInt() == Event.ONMOUSEOUT) {
@@ -61,18 +37,17 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 				}
 			}
 		});
+		*/
 		
-		annotationWidget = new AnnotationWidget(annotatable, a, labels);
+		annotationWidget = new AnnotationWidget(a, boxOverlay, annotatable);
 		annotationWidget.setVisible(false);
 		RootPanel.get().add(annotationWidget);
 		refresh();
 	}
 	
 	private void refresh() {
-		Element boxMarkerDiv = boxMarker.getDiv();
-		RootPanel.get().setWidgetPosition(annotationWidget, 
-				boxMarkerDiv.getAbsoluteLeft(), 
-				boxMarkerDiv.getAbsoluteTop() +  boxMarkerDiv.getOffsetHeight());
+		BoundingBox bbox = boxOverlay.getBoundingBox();
+		RootPanel.get().setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight());
 	}
 
 	@Override
@@ -80,6 +55,10 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 			AnnotationWidgetEditHandler handler) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public BoxMarker getMarker() {
+		return boxOverlay.getBoxMarker();
 	}
 
 	@Override
@@ -94,7 +73,7 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 
 	@Override
 	public void setZIndex(int idx) {
-		boxMarker.getDiv().getStyle().setZIndex(idx);
+		boxOverlay.setZIndex(idx);
 	}
 
 	public int compareTo(ImageAnnotationOverlay other) {
@@ -102,16 +81,9 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 			return 0;
 		
 		SingleOpenLayersAnnotationOverlay overlay = (SingleOpenLayersAnnotationOverlay) other;
-		int thisArea = boxMarker.getDiv().getOffsetWidth() * boxMarker.getDiv().getOffsetHeight();
-		int otherArea = overlay.boxMarker.getDiv().getOffsetWidth() * overlay.boxMarker.getDiv().getOffsetHeight();
 		
-		if (thisArea > otherArea)
-			return -1;
-		
-		if (thisArea < otherArea)
-			return 1;
-		
-		return 0;
+		// Delegate to bbox overlay
+		return boxOverlay.compareTo(overlay.boxOverlay);
 	}
 
 }
