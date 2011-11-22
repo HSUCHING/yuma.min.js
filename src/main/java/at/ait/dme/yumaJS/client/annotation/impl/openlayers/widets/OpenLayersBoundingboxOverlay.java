@@ -67,22 +67,26 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 				Event.ONMOUSEOVER | Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);		
 	}
 	
+	public BoundingBox getBoundingBox() {
+		if (selection != null)
+			return selection.getSelectedBounds();
+		
+		Element div = boxMarker.getDiv();
+		return BoundingBox.create(div.getAbsoluteLeft(), div.getAbsoluteTop(),
+				div.getClientWidth(), div.getClientHeight());
+	}
+
+	public void setBoundingBox(BoundingBox bbox) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public BoxMarker getBoxMarker() {
 		return boxMarker;
 	}
 
 	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
 		this.handler = handler;
-	}
-
-	public BoundingBox getBoundingBox() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setBoundingBox(BoundingBox bbox) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public Range getRange() {
@@ -94,9 +98,9 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	}
 
 	public void startEditing() {
-		// TODO BoundingBox is now null!
 		boxMarker.getDiv().getStyle().setVisibility(Visibility.HIDDEN);
-		selection =  new ResizableBoxSelection(panel, null);
+		BoundingBox bbox = getBoundingBox();
+		selection =  new ResizableBoxSelection(panel, bbox);
 		selection.setSelectionChangeHandler(handler);
 	}
 
