@@ -1,8 +1,5 @@
 package at.ait.dme.yumaJS.client.annotation.impl.html5media;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.Scheduler;
@@ -11,11 +8,9 @@ import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.InfoPopup;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -29,9 +24,11 @@ public class AnnotationTrack extends Composite {
 	
 	private ProgressBar progressBar;
 	
+	/*
 	private Map<Annotation, InfoPopup> annotations = new HashMap<Annotation, InfoPopup>();
 	
 	private InfoPopup currentPopup = null;
+	*/
 	
 	public AnnotationTrack(final ProgressBar progressBar, InitParams params) throws InadequateBrowserException {
 		this.progressBar = progressBar;
@@ -78,6 +75,7 @@ public class AnnotationTrack extends Composite {
 		if (a == null) {
 			clearCurrentPopup();
 		} else {
+			/*
 			if (currentPopup == null || !currentPopup.isVisible()) {
 				if (a != null)
 					showPopup(
@@ -85,20 +83,26 @@ public class AnnotationTrack extends Composite {
 							canvasElement.getAbsoluteLeft() + progressBar.toOffsetX(time), 
 							canvasElement.getAbsoluteTop() + canvasElement.getOffsetHeight());
 			}
+			*/
 		}
 	}
 	
 	public void clearCurrentPopup() {
+		/*
 		if (currentPopup != null) {
 			currentPopup.removeFromParent();
 			currentPopup = null;
 		}
+		*/
 	}
 	
+	/*
 	public InfoPopup getCurrentPopup() {
 		return currentPopup;
 	}
+	*/
 	
+	/*
 	private void showPopup(InfoPopup popup, int x, int y) {
 		if (currentPopup != null && currentPopup != popup) {
 			clearCurrentPopup();
@@ -111,28 +115,35 @@ public class AnnotationTrack extends Composite {
 		
 		currentPopup.setVisible(true);
 	}
+	*/
 	
 	public void addAnnotation(Annotatable annotatable, Annotation a, Labels labels) {
+		/*
 		InfoPopup popup = new InfoPopup(annotatable, a, labels);
 		annotations.put(a, popup);
+		*/
 		refresh();
 	}
 	
 	public void removeAnnotation(Annotation a) {
+		/*
 		annotations.get(a).removeFromParent();
 		annotations.remove(a);
+		*/
 		refresh();
 	}
 	
 	private Annotation getAnnotation(double time) {
 		// TODO make this more efficient!
 		// TODO make this handle 'smallest first' overlap scenarios
+		/*
 		for (Annotation a : annotations.keySet()) {
 			Range r = toRange(a.getFragment());
 			if (time >= r.getFrom() && time <= r.getTo()) {
 				return a;
 			}
 		}
+		*/
 		
 		return null;
 	}
@@ -145,6 +156,7 @@ public class AnnotationTrack extends Composite {
 		context.clearRect(0, 0, canvasElement.getWidth(), canvasElement.getHeight());
 		context.setFillStyle("#ffa500");
 		
+		/*
 		for (Annotation a : annotations.keySet()) {
 			Range r = toRange(a.getFragment());
 			int start = progressBar.toOffsetX(r.getFrom());
@@ -156,6 +168,7 @@ public class AnnotationTrack extends Composite {
 			context.setGlobalAlpha(0.4);
 			context.fillRect(start, 0, end - start, canvasElement.getHeight());
 		}
+		*/
 	}
 
 }

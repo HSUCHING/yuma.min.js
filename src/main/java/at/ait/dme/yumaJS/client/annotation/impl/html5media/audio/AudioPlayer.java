@@ -112,18 +112,21 @@ public class AudioPlayer extends Annotatable implements Exportable {
 					width - 65 - CLOCK_WIDTH, PLAYER_HEIGHT);
 			progressBar.setStyleName("yuma-audio-progressbar");
 			
+			/*
 			final AudioPlayer self = this;
 			btnAnnotate.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					try {
 						new AudioRangeEditor(self, progressBar,
 								progressBar.toOffsetX(audio.getAudioElement().getCurrentTime()));
+						
 					} catch (InadequateBrowserException e) {
 						// Should never happen
 						throw new RuntimeException(e);
 					}
 				}
 			});
+			*/
 			
 			annotationTrack = new AnnotationTrack(progressBar, initParams);
 			annotationTrack.setStyleName("yuma-audio-annotationtrack");
@@ -144,12 +147,14 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			
 			progressBar.addDomHandler(new MouseOutHandler() {
 				public void onMouseOut(MouseOutEvent event) {
+					/*
 					InfoPopup popup = annotationTrack.getCurrentPopup();
 					if (popup != null) {
 						if (!popup.contains(event.getClientX(), event.getClientY())) {
 							annotationTrack.clearCurrentPopup();	
 						}
 					}
+					*/
 				}
 			}, MouseOutEvent.getType());
 			playerPanel.add(progressBar, 60, 5);
