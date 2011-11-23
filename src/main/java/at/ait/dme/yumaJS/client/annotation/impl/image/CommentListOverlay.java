@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
@@ -27,7 +27,7 @@ import at.ait.dme.yumaJS.client.init.Labels;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class CommentListOverlay implements AnnotationOverlay {
+public class CommentListOverlay implements CompoundOverlay {
 
 	private Annotation rootAnnotation;
 	
@@ -105,7 +105,7 @@ public class CommentListOverlay implements AnnotationOverlay {
 		// TODO implement
 	}
 
-	public int compareTo(AnnotationOverlay o) {
+	public int compareTo(CompoundOverlay o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

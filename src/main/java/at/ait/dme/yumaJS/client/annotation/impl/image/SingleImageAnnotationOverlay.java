@@ -3,7 +3,7 @@ package at.ait.dme.yumaJS.client.annotation.impl.image;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class SingleImageAnnotationOverlay implements AnnotationOverlay {
+public class SingleImageAnnotationOverlay implements CompoundOverlay {
 		
 	private ImageFragmentWidget bboxOverlay;
 	
@@ -116,7 +116,7 @@ public class SingleImageAnnotationOverlay implements AnnotationOverlay {
 		annotationWidget.removeFromParent();
 	}
 
-	public int compareTo(AnnotationOverlay other) {
+	public int compareTo(CompoundOverlay other) {
 		if (!(other instanceof SingleImageAnnotationOverlay))
 			return 0;
 		

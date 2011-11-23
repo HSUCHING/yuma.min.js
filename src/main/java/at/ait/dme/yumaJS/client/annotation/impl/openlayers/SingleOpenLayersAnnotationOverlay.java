@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
+package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -8,19 +8,18 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
-import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 
-public class SingleOpenLayersAnnotationOverlay implements AnnotationOverlay {
+public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 		
 	private AbsolutePanel panel;
 	
-	private OpenLayersBoundingboxOverlay boxOverlay;
+	private OpenLayersFragmentWidget boxOverlay;
 	
 	private AnnotationWidget annotationWidget;
 	
@@ -28,7 +27,7 @@ public class SingleOpenLayersAnnotationOverlay implements AnnotationOverlay {
 			AbsolutePanel panel, BoxMarker marker) {
 		
 		this.panel = panel;
-		this.boxOverlay = new OpenLayersBoundingboxOverlay(panel, marker, annotatable);
+		this.boxOverlay = new OpenLayersFragmentWidget(panel, marker, annotatable);
 		
 		this.boxOverlay.setSelectionChangeHandler(new SelectionChangeHandler() {
 			public void onRangeChanged(Range range) { }
@@ -99,7 +98,7 @@ public class SingleOpenLayersAnnotationOverlay implements AnnotationOverlay {
 		boxOverlay.setZIndex(idx);
 	}
 
-	public int compareTo(AnnotationOverlay other) {
+	public int compareTo(CompoundOverlay other) {
 		if (!(other instanceof SingleOpenLayersAnnotationOverlay))
 			return 0;
 		

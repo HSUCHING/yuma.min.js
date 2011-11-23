@@ -3,7 +3,7 @@ package at.ait.dme.yumaJS.client.annotation.gui;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 
-public interface AnnotationOverlay extends Comparable<AnnotationOverlay> {
+public interface CompoundOverlay extends Comparable<CompoundOverlay> {
 	
 	public void setAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler);
 	

@@ -26,7 +26,6 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
-import at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets.SingleOpenLayersAnnotationOverlay;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 @Export

@@ -11,7 +11,7 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
@@ -48,8 +48,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	private AbsolutePanel annotationLayer;
 	
 	// { annotationID -> overlay }
-	private HashMap<String, AnnotationOverlay> overlays = 
-		new HashMap<String, AnnotationOverlay>();
+	private HashMap<String, CompoundOverlay> overlays = 
+		new HashMap<String, CompoundOverlay>();
 	
 	private int annotationCtr = 0;
 	
@@ -154,7 +154,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			
 		if (a.getIsReplyTo() == null) {
 			// Root annotation - add new overlay
-			final AnnotationOverlay overlay = (getRepliesEnabled()) ? 
+			final CompoundOverlay overlay = (getRepliesEnabled()) ? 
 					new CommentListOverlay(a, this, annotationLayer, getLabels()) :
 					new SingleImageAnnotationOverlay(a, this, annotationLayer);
 
@@ -171,7 +171,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void removeAnnotation(Annotation a) {
-		AnnotationOverlay overlay = overlays.get(a.getID());
+		CompoundOverlay overlay = overlays.get(a.getID());
 		if (overlay != null) {
 			overlay.destroy();
 			overlays.remove(a.getID());
@@ -179,7 +179,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	protected void sortOverlaysByArea() {
-		ArrayList<AnnotationOverlay> sortedOverlays = new ArrayList<AnnotationOverlay>();
+		ArrayList<CompoundOverlay> sortedOverlays = new ArrayList<CompoundOverlay>();
 		for (String id : overlays.keySet()) {
 			sortedOverlays.add(overlays.get(id));
 		}
@@ -187,7 +187,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		
 		// Re-assign z-indexes
 		int zIndex = 9010;
-		for (AnnotationOverlay overlay : sortedOverlays) {
+		for (CompoundOverlay overlay : sortedOverlays) {
 			overlay.setZIndex(zIndex);
 			zIndex++;
 		}
@@ -198,7 +198,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		empty.setFragment(EMPTY_ANNOTATION);
 		addAnnotation(empty);
 		
-		final AnnotationOverlay overlay = overlays.get(empty.getID());
+		final CompoundOverlay overlay = overlays.get(empty.getID());
 		
 		// It's a new annotation - we'll listen to the first save/cancel
 		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {

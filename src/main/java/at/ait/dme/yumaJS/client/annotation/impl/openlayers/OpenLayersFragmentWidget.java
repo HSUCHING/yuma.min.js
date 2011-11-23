@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
+package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
@@ -16,7 +16,6 @@ import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBoxSelection;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
-import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 
@@ -26,7 +25,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class OpenLayersBoundingboxOverlay implements FragmentWidget {
+public class OpenLayersFragmentWidget implements FragmentWidget {
 
 	/**
 	 * The parent AbsolutePanel
@@ -53,7 +52,7 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	 */
 	private SelectionChangeHandler handler = null;
 	
-	public OpenLayersBoundingboxOverlay(AbsolutePanel panel, BoxMarker boxMarker,
+	public OpenLayersFragmentWidget(AbsolutePanel panel, BoxMarker boxMarker,
 			OpenLayersAnnotationLayer annotatable) {
 		
 		this.panel = panel;
