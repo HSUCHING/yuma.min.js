@@ -7,7 +7,7 @@ import com.google.gwt.user.client.Event;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.impl.image.widgets.BoundingBoxOverlay;
+import at.ait.dme.yumaJS.client.annotation.impl.image.ImageFragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonPoint;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonRect;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
@@ -15,7 +15,7 @@ import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * An overlay that represents an annotation on a {@link SeajaxAnnotationLayer} by attaching a 
- * {@link BoundingBoxOverlay} to a Seadragon rectangle overlay and combining it with a movable
+ * {@link ImageFragmentWidget} to a Seadragon rectangle overlay and combining it with a movable
  * {@link SimpleDetailsPopup}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>

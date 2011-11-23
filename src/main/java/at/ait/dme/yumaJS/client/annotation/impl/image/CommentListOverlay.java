@@ -1,7 +1,6 @@
-package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
+package at.ait.dme.yumaJS.client.annotation.impl.image;
 
 import java.util.HashMap;
-import java.util.List;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -20,15 +19,15 @@ import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * This is the image annotation overlay type that is used when reply functionality is ENABLED. 
- * It consists of a single {@link BoundingBoxOverlay} with a list of {@link AnnotationWidget}s
+ * It consists of a single {@link ImageFragmentWidget} with a list of {@link AnnotationWidget}s
  * underneath. Note: this overlay type will show the fragment of the first annotation in the 
  * reply thread. If there are replies in the thread that contain a fragment, it will be ignored
  * by this overlay type. In editing mode, the entire list of {@link AnnotationWidget}s stays 
- * clamped to the lower-left corner of the first annotation's {@link BoundingBoxOverlay}.
+ * clamped to the lower-left corner of the first annotation's {@link ImageFragmentWidget}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class CommentListOverlay extends AnnotationOverlay {
+public class CommentListOverlay implements AnnotationOverlay {
 
 	private Annotation rootAnnotation;
 	
@@ -36,7 +35,7 @@ public class CommentListOverlay extends AnnotationOverlay {
 
 	private AbsolutePanel annotationLayer;
 	
-	private BoundingBoxOverlay bboxOverlay;
+	private ImageFragmentWidget bboxOverlay;
 	
 	private AnnotationWidget rootAnnotationWidget;
 	
@@ -51,7 +50,7 @@ public class CommentListOverlay extends AnnotationOverlay {
 		
 		final BoundingBox bbox = annotatable.toBoundingBox(rootAnnotation.getFragment());
 		
-		bboxOverlay = new BoundingBoxOverlay(annotationLayer, bbox);
+		bboxOverlay = new ImageFragmentWidget(annotationLayer, bbox);
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
@@ -87,25 +86,21 @@ public class CommentListOverlay extends AnnotationOverlay {
 		// annotationLayer.add(rootAnnotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
 	}
 
-	@Override
 	public void setAnnotationWidgetEditHandler(Annotation a,
 			AnnotationWidgetEditHandler handler) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void edit(Annotation a) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	@Override
 	public void setZIndex(int idx) {
 		// TODO Auto-generated method stub	
 	}
 	
-	@Override
 	public void destroy() {
 		// TODO implement
 	}

@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
+package at.ait.dme.yumaJS.client.annotation.impl.image;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
@@ -17,15 +17,15 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 
 /**
  * This is the image annotation overlay type that is used when reply functionality is DISABLED. 
- * It consists of a {@link BoundingBoxOverlay} with a single {@link AnnotationWidget} underneath.
+ * It consists of a {@link ImageFragmentWidget} with a single {@link AnnotationWidget} underneath.
  * When in editing mode, the {@link AnnotationWidget} stays clamped to the lower-left corner
- * of the {@link BoundingBoxOverlay}.
+ * of the {@link ImageFragmentWidget}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class SingleImageAnnotationOverlay extends AnnotationOverlay {
+public class SingleImageAnnotationOverlay implements AnnotationOverlay {
 		
-	private BoundingBoxOverlay bboxOverlay;
+	private ImageFragmentWidget bboxOverlay;
 	
 	private AnnotationWidget annotationWidget;
 	
@@ -38,7 +38,7 @@ public class SingleImageAnnotationOverlay extends AnnotationOverlay {
 		
 		final BoundingBox bbox = annotatable.toBoundingBox(a.getFragment());
 		
-		bboxOverlay = new BoundingBoxOverlay(annotationLayer, bbox);
+		bboxOverlay = new ImageFragmentWidget(annotationLayer, bbox);
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
@@ -83,7 +83,6 @@ public class SingleImageAnnotationOverlay extends AnnotationOverlay {
 		annotationLayer.add(annotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);		
 	}
 
-	@Override
 	public void setAnnotationWidgetEditHandler(Annotation a, final AnnotationWidgetEditHandler handler) {
 		annotationWidget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
 			public void onSave(Annotation annotation) {
@@ -99,7 +98,6 @@ public class SingleImageAnnotationOverlay extends AnnotationOverlay {
 		});
 	}
 	
-	@Override
 	public void edit(Annotation a) {
 		annotationWidget.edit();
 		annotationWidget.setVisible(true);
@@ -109,12 +107,10 @@ public class SingleImageAnnotationOverlay extends AnnotationOverlay {
 		return annotationWidget;
 	}
 
-	@Override
 	public void setZIndex(int idx) {
 		bboxOverlay.setZIndex(idx);
 	}
 	
-	@Override
 	public void destroy() {
 		bboxOverlay.destroy();
 		annotationWidget.removeFromParent();

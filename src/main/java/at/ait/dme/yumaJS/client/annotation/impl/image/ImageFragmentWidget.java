@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
+package at.ait.dme.yumaJS.client.annotation.impl.image;
 
 import at.ait.dme.yumaJS.client.annotation.gui.FragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class BoundingBoxOverlay implements FragmentWidget {
+public class ImageFragmentWidget implements FragmentWidget {
 
 	/**
 	 * The parent AbsolutePanel
@@ -54,7 +54,7 @@ public class BoundingBoxOverlay implements FragmentWidget {
 	 */
 	private SelectionChangeHandler handler = null;
 	
-	public BoundingBoxOverlay(AbsolutePanel panel, BoundingBox bbox) {
+	public ImageFragmentWidget(AbsolutePanel panel, BoundingBox bbox) {
 		this.panel = panel;
 		
 		outerBorder = new FlowPanel();
@@ -127,10 +127,10 @@ public class BoundingBoxOverlay implements FragmentWidget {
 	}
 	
 	public int compareTo(FragmentWidget other) {
-		if (!(other instanceof BoundingBoxOverlay))
+		if (!(other instanceof ImageFragmentWidget))
 			return 0;
 		
-		BoundingBoxOverlay overlay = (BoundingBoxOverlay) other;
+		ImageFragmentWidget overlay = (ImageFragmentWidget) other;
 		int thisArea = outerBorder.getOffsetWidth() * outerBorder.getOffsetHeight();
 		int otherArea = overlay.outerBorder.getOffsetWidth() * overlay.outerBorder.getOffsetHeight();
 		

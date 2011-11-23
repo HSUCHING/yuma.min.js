@@ -16,7 +16,7 @@ import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHan
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 
-public class SingleOpenLayersAnnotationOverlay extends AnnotationOverlay {
+public class SingleOpenLayersAnnotationOverlay implements AnnotationOverlay {
 		
 	private AbsolutePanel panel;
 	
@@ -67,7 +67,6 @@ public class SingleOpenLayersAnnotationOverlay extends AnnotationOverlay {
 		panel.setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight() + 2);
 	}
 
-	@Override
 	public void setAnnotationWidgetEditHandler(Annotation a, final AnnotationWidgetEditHandler handler) {
 		annotationWidget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
 			public void onSave(Annotation annotation) {
@@ -87,7 +86,6 @@ public class SingleOpenLayersAnnotationOverlay extends AnnotationOverlay {
 		return boxOverlay.getBoxMarker();
 	}
 
-	@Override
 	public void edit(Annotation a) {
 		annotationWidget.edit();
 		annotationWidget.setVisible(true);		
@@ -97,7 +95,6 @@ public class SingleOpenLayersAnnotationOverlay extends AnnotationOverlay {
 		annotationWidget.removeFromParent();
 	}
 
-	@Override
 	public void setZIndex(int idx) {
 		boxOverlay.setZIndex(idx);
 	}
