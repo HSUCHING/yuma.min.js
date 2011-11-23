@@ -122,7 +122,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 				pxBottomLeft.getY() - pxTopRight.getY());
 	}
 	
-	private Bounds toOpenLayersBounds(String fragment) {
+	public Bounds toOpenLayersBounds(String fragment) {
 		String[] bbox = fragment.substring(5).split(",");
 		if (bbox.length != 4)
 			return null;

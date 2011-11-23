@@ -1,10 +1,14 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
-import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
@@ -20,11 +24,11 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 	
 	private AnnotationWidget annotationWidget;
 	
-	public SingleOpenLayersAnnotationOverlay(Annotatable annotatable, Annotation a,
+	public SingleOpenLayersAnnotationOverlay(OpenLayersAnnotationLayer annotatable, Annotation a,
 			AbsolutePanel panel, BoxMarker marker) {
 		
 		this.panel = panel;
-		this.boxOverlay = new OpenLayersBoundingboxOverlay(panel, marker);
+		this.boxOverlay = new OpenLayersBoundingboxOverlay(panel, marker, annotatable);
 		
 		this.boxOverlay.setSelectionChangeHandler(new SelectionChangeHandler() {
 			public void onRangeChanged(Range range) { }
@@ -34,8 +38,7 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 			}
 		});
 
-		/*
-		Event.setEventListener(boxMarkerDiv, new EventListener() {
+		this.boxOverlay.setEventListener(new EventListener() {
 			public void onBrowserEvent(Event event) {
 				if (event.getTypeInt() == Event.ONMOUSEOUT) {
 					if (!annotationWidget.contains(event.getClientX(), event.getClientY()))
@@ -47,11 +50,11 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 						}
 					});
 				} else {
+					annotationWidget.setVisible(true);
 					refresh();
 				}
 			}
 		});
-		*/
 		
 		annotationWidget = new AnnotationWidget(a, boxOverlay, annotatable);
 		annotationWidget.setVisible(false);

@@ -1,6 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers.widets;
 
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -9,6 +10,8 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.widgets.FragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
@@ -36,6 +39,11 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	private BoxMarker boxMarker;
 	
 	/**
+	 * The annotatable
+	 */
+	private OpenLayersAnnotationLayer annotatable;
+	
+	/**
 	 * The selection or <code>null</code> if not in editing mode
 	 */
 	private Selection selection = null;
@@ -45,9 +53,12 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	 */
 	private SelectionChangeHandler handler = null;
 	
-	public OpenLayersBoundingboxOverlay(AbsolutePanel panel, BoxMarker boxMarker) {
+	public OpenLayersBoundingboxOverlay(AbsolutePanel panel, BoxMarker boxMarker,
+			OpenLayersAnnotationLayer annotatable) {
+		
 		this.panel = panel;
 		this.boxMarker = boxMarker;
+		this.annotatable = annotatable;
 		
 		Element boxMarkerDiv = boxMarker.getDiv();
 		
@@ -70,15 +81,24 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	public BoundingBox getBoundingBox() {
 		if (selection != null)
 			return selection.getSelectedBounds();
+
 		
 		Element div = boxMarker.getDiv();
-		return BoundingBox.create(div.getAbsoluteLeft(), div.getAbsoluteTop(),
+		return BoundingBox.create(
+				div.getOffsetLeft(), div.getOffsetTop(),
 				div.getClientWidth(), div.getClientHeight());
 	}
 
 	public void setBoundingBox(BoundingBox bbox) {
-		// TODO Auto-generated method stub
+		String fragment = annotatable.toFragment(bbox, null);
+		Bounds bounds = annotatable.toOpenLayersBounds(fragment);
+		boxMarker.setBounds(bounds);
 		
+		Style style = boxMarker.getDiv().getStyle();
+		style.setLeft(bbox.getX(), Unit.PX);
+		style.setTop(bbox.getY(), Unit.PX);
+		style.setWidth(bbox.getWidth(), Unit.PX);
+		style.setHeight(bbox.getHeight(), Unit.PX);
 	}
 	
 	public BoxMarker getBoxMarker() {

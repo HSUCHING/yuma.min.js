@@ -15,4 +15,12 @@ public class BoxMarker extends JavaScriptObject {
 		return this.div;
 	}-*/;
 	
+	public final native Bounds getBounds() /*-{
+		return this.bounds;
+	}-*/;
+	
+	public final native void setBounds(Bounds bounds) /*-{
+		this.bounds = bounds;
+	}-*/;
+	
 }
