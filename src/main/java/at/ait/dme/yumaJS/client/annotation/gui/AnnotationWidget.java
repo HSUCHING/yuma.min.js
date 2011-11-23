@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.widgets;
+package at.ait.dme.yumaJS.client.annotation.gui;
 
 import java.util.Date;
 

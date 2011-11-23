@@ -11,8 +11,8 @@ import com.google.gwt.user.client.ui.Composite;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 

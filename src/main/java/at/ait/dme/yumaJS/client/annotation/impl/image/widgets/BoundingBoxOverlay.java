@@ -1,12 +1,12 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
-import at.ait.dme.yumaJS.client.annotation.widgets.FragmentWidget;
+import at.ait.dme.yumaJS.client.annotation.gui.FragmentWidget;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxSelection;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -97,7 +97,7 @@ public class BoundingBoxOverlay implements FragmentWidget {
 		
 	public void startEditing() {
 		outerBorder.setVisible(false);
-		selection =  new ResizableBoxSelection(panel, bbox);
+		selection =  new BoundingBoxSelection(panel, bbox);
 		selection.setSelectionChangeHandler(handler);
 	} 
 	

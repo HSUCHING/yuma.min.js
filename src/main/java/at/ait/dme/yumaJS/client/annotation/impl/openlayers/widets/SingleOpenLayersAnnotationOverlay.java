@@ -7,16 +7,16 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
-import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
 
-public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
+public class SingleOpenLayersAnnotationOverlay extends AnnotationOverlay {
 		
 	private AbsolutePanel panel;
 	
@@ -102,7 +102,7 @@ public class SingleOpenLayersAnnotationOverlay extends ImageAnnotationOverlay {
 		boxOverlay.setZIndex(idx);
 	}
 
-	public int compareTo(ImageAnnotationOverlay other) {
+	public int compareTo(AnnotationOverlay other) {
 		if (!(other instanceof SingleOpenLayersAnnotationOverlay))
 			return 0;
 		

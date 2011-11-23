@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.widgets.edit;
+package at.ait.dme.yumaJS.client.annotation.gui.edit;
 
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;

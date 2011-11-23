@@ -7,12 +7,12 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.AnnotationTrack;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.dom.client.AudioElement;

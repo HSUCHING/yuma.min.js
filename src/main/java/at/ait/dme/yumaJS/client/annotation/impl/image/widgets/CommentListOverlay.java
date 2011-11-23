@@ -12,10 +12,10 @@ import com.google.gwt.user.client.ui.FlowPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
-import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
@@ -28,7 +28,7 @@ import at.ait.dme.yumaJS.client.init.Labels;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class CommentListOverlay extends ImageAnnotationOverlay {
+public class CommentListOverlay extends AnnotationOverlay {
 
 	private Annotation rootAnnotation;
 	
@@ -110,7 +110,7 @@ public class CommentListOverlay extends ImageAnnotationOverlay {
 		// TODO implement
 	}
 
-	public int compareTo(ImageAnnotationOverlay o) {
+	public int compareTo(AnnotationOverlay o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

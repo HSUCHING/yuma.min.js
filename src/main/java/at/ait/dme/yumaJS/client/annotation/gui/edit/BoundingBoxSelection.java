@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.widgets.edit;
+package at.ait.dme.yumaJS.client.annotation.gui.edit;
 
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
@@ -16,9 +16,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection;
 
 /**
  * A sub-class of {@link Selection} that implements a resizable-box selection
@@ -26,7 +26,7 @@ import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection;
  *  
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class ResizableBoxSelection extends Selection {
+public class BoundingBoxSelection extends Selection {
 	
 	private static final double DRAG_START_BUFFER_FACTOR = 0.5;
 	
@@ -56,7 +56,7 @@ public class ResizableBoxSelection extends Selection {
 	// The SelectionChangedHandler (if any)
 	private SelectionChangeHandler selectionChangeHandler = null;
 
-	public ResizableBoxSelection(AbsolutePanel parent, BoundingBox initialValue) {
+	public BoundingBoxSelection(AbsolutePanel parent, BoundingBox initialValue) {
 		this.parent = parent;
 		
 		if (initialValue == null)

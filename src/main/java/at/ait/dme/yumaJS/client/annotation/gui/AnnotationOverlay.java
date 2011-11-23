@@ -1,14 +1,14 @@
-package at.ait.dme.yumaJS.client.annotation.impl.image;
+package at.ait.dme.yumaJS.client.annotation.gui;
 
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 
 /**
  * An abstract base class for image annotation overlays.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public abstract class ImageAnnotationOverlay implements Comparable<ImageAnnotationOverlay> {
+public abstract class AnnotationOverlay implements Comparable<AnnotationOverlay> {
 	
 	public abstract void setAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler);
 	

@@ -10,15 +10,15 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 
+import at.ait.dme.yumaJS.client.annotation.gui.FragmentWidget;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
-import at.ait.dme.yumaJS.client.annotation.widgets.FragmentWidget;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.ResizableBoxSelection;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
 
 /**
  * An implementation of {@link FragmentWidget} that is based on an OpenLayers
@@ -120,7 +120,7 @@ public class OpenLayersBoundingboxOverlay implements FragmentWidget {
 	public void startEditing() {
 		boxMarker.getDiv().getStyle().setVisibility(Visibility.HIDDEN);
 		BoundingBox bbox = getBoundingBox();
-		selection =  new ResizableBoxSelection(panel, bbox);
+		selection =  new BoundingBoxSelection(panel, bbox);
 		selection.setSelectionChangeHandler(handler);
 	}
 

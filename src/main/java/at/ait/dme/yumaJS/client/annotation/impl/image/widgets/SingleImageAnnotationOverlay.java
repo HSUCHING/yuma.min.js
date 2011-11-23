@@ -2,12 +2,12 @@ package at.ait.dme.yumaJS.client.annotation.impl.image.widgets;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationOverlay;
-import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.widgets.AnnotationWidget.AnnotationWidgetEditHandler;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.widgets.edit.Selection.SelectionChangeHandler;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationOverlay;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
+public class SingleImageAnnotationOverlay extends AnnotationOverlay {
 		
 	private BoundingBoxOverlay bboxOverlay;
 	
@@ -120,7 +120,7 @@ public class SingleImageAnnotationOverlay extends ImageAnnotationOverlay {
 		annotationWidget.removeFromParent();
 	}
 
-	public int compareTo(ImageAnnotationOverlay other) {
+	public int compareTo(AnnotationOverlay other) {
 		if (!(other instanceof SingleImageAnnotationOverlay))
 			return 0;
 		
