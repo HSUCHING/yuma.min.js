@@ -112,7 +112,7 @@ Java and require a Servlet container like [Apache Tomcat](http://tomcat.apache.o
 yuma.min.js is a __purely client-side application__. It __does not__ make any use of GWT's server-side
 parts or the [RPC mechanism](http://code.google.com/intl/de-DE/webtoolkit/doc/latest/tutorial/RPC.html).
 To us, the reason for choosing GWT was productivity: the speed advantage we gain from using a
-statically-typed, language with good tool support simply outweighed the initial 'setup penalty'
+statically-typed language with good tool support simply outweighed the initial 'setup penalty'
 that GWT suffers over traditional JavaScript. The fact that GWT automagically creates highly cross-browser
 compatible JavaScript is nice, too.  
 
