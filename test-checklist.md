@@ -16,6 +16,8 @@ Repeat tests 4 times: (i) with replies disabled + serverless mode, (ii) with rep
    * Edit the annotation: change text AND bounding box size/location -> Click OK and confirm it works as intended
 4. Create a second annotation that covers the first. Make sure the first remains clickable. 
    
+Compile the project and repeat all tests outside of hosted mode.
+
 # OpenLayers Annotation
 
 Repeat all the steps for image annotation (4 times for different replies/server-mode configurations)
