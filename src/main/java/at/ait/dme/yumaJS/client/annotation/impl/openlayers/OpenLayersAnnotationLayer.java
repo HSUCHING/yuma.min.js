@@ -84,6 +84,10 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		return MEDIATYPE;
 	}
 	
+	/**
+	 * Converts from viewport pixel coordinates to a fragment. The fragment
+	 * is expressed in map coordinates. 
+	 */
 	@Override
 	public String toFragment(BoundingBox bbox, Range range) {
 		Pixel pxBottomLeft = Pixel.create(bbox.getX(), bbox.getY() + bbox.getHeight());
@@ -105,6 +109,9 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		return null;
 	}
 
+	/**
+	 * Converts from a fragment (expressed in map coordinates) to viewport coordinates.
+	 */
 	@Override
 	public BoundingBox toBoundingBox(String fragment) {
 		Bounds bounds = toOpenLayersBounds(fragment);
@@ -121,6 +128,11 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 				pxBottomLeft.getY() - pxTopRight.getY());
 	}
 	
+	/**
+	 * Resolves a fragment string (expressed in map coordinates) to map coordinates.
+	 * @param fragment the fragment String
+	 * @return the map coordinate bounds
+	 */
 	public Bounds toOpenLayersBounds(String fragment) {
 		String[] bbox = fragment.substring(5).split(",");
 		if (bbox.length != 4)

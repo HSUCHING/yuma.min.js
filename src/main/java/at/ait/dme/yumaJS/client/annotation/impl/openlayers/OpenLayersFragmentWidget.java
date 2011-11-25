@@ -80,11 +80,11 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 	public BoundingBox getBoundingBox() {
 		if (selection != null)
 			return selection.getSelectedBounds();
-
-		
+	
 		Element div = boxMarker.getDiv();
 		return BoundingBox.create(
-				div.getOffsetLeft(), div.getOffsetTop(),
+				div.getAbsoluteLeft() - panel.getAbsoluteLeft(),
+				div.getAbsoluteTop() - panel.getAbsoluteTop(),
 				div.getClientWidth(), div.getClientHeight());
 	}
 
