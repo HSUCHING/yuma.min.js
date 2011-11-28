@@ -17,5 +17,9 @@ public class BoxesLayer extends JavaScriptObject {
 	public final native void removeMarker(BoxMarker marker) /*-{
 		this.removeMarker(marker);
 	}-*/;
+	
+	public final native void redraw() /*-{
+		this.redraw();
+	}-*/;
 
 }

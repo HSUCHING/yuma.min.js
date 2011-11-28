@@ -21,7 +21,6 @@ import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidget
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
-import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
@@ -153,11 +152,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void addAnnotation(Annotation annotation) {
-		BoxMarker marker = BoxMarker.create(toOpenLayersBounds(annotation.getFragment()));
-		annotationLayer.addMarker(marker);
-		
 		SingleOpenLayersAnnotationOverlay overlay = 
-			new SingleOpenLayersAnnotationOverlay(this, annotation, editingLayer, marker);
+			new SingleOpenLayersAnnotationOverlay(annotation, annotationLayer, editingLayer, this);
 
 		annotations.put(annotation, overlay);
 		sortOverlaysByArea();
@@ -195,6 +191,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	}
 	
 	public void createNewAnnotation() {
+		annotationLayer.redraw();
+		
 		final Annotation empty = createEmptyAnnotation();
 		empty.setFragment(createEmptyFragment());
 		addAnnotation(empty);

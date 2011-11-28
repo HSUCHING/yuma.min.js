@@ -1,7 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -18,6 +17,7 @@ import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 
 /**
  * An implementation of {@link FragmentWidget} that is based on an OpenLayers
@@ -28,19 +28,24 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 public class OpenLayersFragmentWidget implements FragmentWidget {
 
 	/**
-	 * The parent AbsolutePanel
+	 * The annotation map layer
 	 */
-	private AbsolutePanel panel;
+	private BoxesLayer annotationLayer;
+	
+	/**
+	 * The editing layer
+	 */
+	private AbsolutePanel editingLayer;
+			
+	/**
+	 * The annotatable
+	 */
+	private OpenLayersAnnotationLayer annotatable;
 	
 	/**
 	 * The OpenLayers BoxMarker
 	 */
 	private BoxMarker boxMarker;
-	
-	/**
-	 * The annotatable
-	 */
-	private OpenLayersAnnotationLayer annotatable;
 	
 	/**
 	 * The selection or <code>null</code> if not in editing mode
@@ -52,12 +57,15 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 	 */
 	private SelectionChangeHandler handler = null;
 	
-	public OpenLayersFragmentWidget(AbsolutePanel panel, BoxMarker boxMarker,
+	public OpenLayersFragmentWidget(Bounds bounds, BoxesLayer annotationLayer, AbsolutePanel editingLayer, 
 			OpenLayersAnnotationLayer annotatable) {
 		
-		this.panel = panel;
-		this.boxMarker = boxMarker;
+		this.annotationLayer = annotationLayer;
+		this.editingLayer = editingLayer;
 		this.annotatable = annotatable;
+
+		this.boxMarker = BoxMarker.create(bounds);
+		annotationLayer.addMarker(boxMarker);
 		
 		Element boxMarkerDiv = boxMarker.getDiv();
 		
@@ -83,8 +91,8 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 	
 		Element div = boxMarker.getDiv();
 		return BoundingBox.create(
-				div.getAbsoluteLeft() - panel.getAbsoluteLeft(),
-				div.getAbsoluteTop() - panel.getAbsoluteTop(),
+				div.getAbsoluteLeft() - editingLayer.getAbsoluteLeft(),
+				div.getAbsoluteTop() - editingLayer.getAbsoluteTop(),
 				div.getClientWidth(), div.getClientHeight());
 	}
 
@@ -92,12 +100,7 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 		String fragment = annotatable.toFragment(bbox, null);
 		Bounds bounds = annotatable.toOpenLayersBounds(fragment);
 		boxMarker.setBounds(bounds);
-		
-		Style style = boxMarker.getDiv().getStyle();
-		style.setLeft(bbox.getX(), Unit.PX);
-		style.setTop(bbox.getY(), Unit.PX);
-		style.setWidth(bbox.getWidth(), Unit.PX);
-		style.setHeight(bbox.getHeight(), Unit.PX);
+		annotationLayer.redraw();
 	}
 	
 	public BoxMarker getBoxMarker() {
@@ -119,7 +122,7 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 	public void startEditing() {
 		boxMarker.getDiv().getStyle().setVisibility(Visibility.HIDDEN);
 		BoundingBox bbox = getBoundingBox();
-		selection =  new BoundingBoxSelection(panel, bbox);
+		selection =  new BoundingBoxSelection(editingLayer, bbox);
 		selection.setSelectionChangeHandler(handler);
 	}
 

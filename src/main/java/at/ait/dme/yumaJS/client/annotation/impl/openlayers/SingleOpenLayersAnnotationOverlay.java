@@ -14,20 +14,24 @@ import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 
 public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
-		
-	private AbsolutePanel panel;
+
+	private AbsolutePanel editingLayer;
 	
 	private OpenLayersFragmentWidget boxOverlay;
 	
 	private AnnotationWidget annotationWidget;
 	
-	public SingleOpenLayersAnnotationOverlay(OpenLayersAnnotationLayer annotatable, Annotation a,
-			AbsolutePanel panel, BoxMarker marker) {
+	public SingleOpenLayersAnnotationOverlay(Annotation a, BoxesLayer annotationLayer,
+			AbsolutePanel editingLayer, OpenLayersAnnotationLayer annotatable) {
 		
-		this.panel = panel;
-		this.boxOverlay = new OpenLayersFragmentWidget(panel, marker, annotatable);
+		this.editingLayer = editingLayer;
+		
+		this.boxOverlay = new OpenLayersFragmentWidget(
+				annotatable.toOpenLayersBounds(a.getFragment()),
+				annotationLayer, editingLayer, annotatable);
 		
 		this.boxOverlay.setSelectionChangeHandler(new SelectionChangeHandler() {
 			public void onRangeChanged(Range range) { }
@@ -57,13 +61,13 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 		
 		annotationWidget = new AnnotationWidget(a, boxOverlay, annotatable);
 		annotationWidget.setVisible(false);
-		panel.add(annotationWidget);
+		editingLayer.add(annotationWidget);
 		refresh();
 	}
 	
 	private void refresh() {
 		BoundingBox bbox = boxOverlay.getBoundingBox();
-		panel.setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight() + 2);
+		editingLayer.setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight() + 2);
 	}
 
 	public void setAnnotationWidgetEditHandler(Annotation a, final AnnotationWidgetEditHandler handler) {
