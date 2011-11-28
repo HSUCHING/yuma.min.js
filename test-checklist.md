@@ -20,4 +20,4 @@ Compile the project and repeat all tests outside of hosted mode.
 
 # OpenLayers Annotation
 
-Repeat all the steps for image annotation (4 times for different replies/server-mode configurations)
+Repeat all the steps for image annotation (4 times for different replies/server-mode configurations) 
