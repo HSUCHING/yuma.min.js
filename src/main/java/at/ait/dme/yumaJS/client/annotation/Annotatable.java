@@ -100,6 +100,8 @@ public abstract class Annotatable implements Exportable {
 	
 	protected abstract void onWindowResize(int width, int height);
 	
+	public abstract void redraw();
+	
 	public abstract void addAnnotation(Annotation annotation);
 	
 	public abstract void removeAnnotation(Annotation annotation);

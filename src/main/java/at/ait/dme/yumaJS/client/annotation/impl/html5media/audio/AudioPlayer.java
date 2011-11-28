@@ -203,6 +203,12 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	protected void onWindowResize(int width, int height) {
 		// No action necessary for audio		
 	}
+
+	@Override
+	public void redraw() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	@Override
 	public void addAnnotation(Annotation a) {

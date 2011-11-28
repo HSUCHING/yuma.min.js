@@ -156,18 +156,19 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			new SingleOpenLayersAnnotationOverlay(annotation, annotationLayer, editingLayer, this);
 
 		annotations.put(annotation, overlay);
-		sortOverlaysByArea();
+		redraw();
 		fireOnAnnotationCreated(annotation);
 	}
 	
-	private void sortOverlaysByArea() {
+	@Override
+	public void redraw() {
+		// Redraw not necessary - just re-assign z-indexes
 		ArrayList<SingleOpenLayersAnnotationOverlay> overlays = new ArrayList<SingleOpenLayersAnnotationOverlay>();
 		for (Annotation a : annotations.keySet()) {
 			overlays.add(annotations.get(a));
 		}
 		Collections.sort(overlays);
 		
-		// Re-assign z-indexes
 		int zIndex = 9010;
 		for (SingleOpenLayersAnnotationOverlay overlay : overlays) {
 			overlay.setZIndex(zIndex);

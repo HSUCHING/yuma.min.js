@@ -210,6 +210,8 @@ public class AnnotationWidget extends Composite {
 				annotation.setText(commentField.getText());
 				setAnnotation(annotation);
 				
+				annotatable.redraw();
+				
 				if (handler != null)
 					handler.onSave(annotation);
 				

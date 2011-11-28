@@ -147,8 +147,20 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 		boxMarker.getDiv().getStyle().setZIndex(idx);
 	}
 
-	public int compareTo(FragmentWidget o) {
-		// TODO Auto-generated method stub
+	public int compareTo(FragmentWidget other) {
+		if (!(other instanceof OpenLayersFragmentWidget))
+			return 0;
+		
+		OpenLayersFragmentWidget overlay = (OpenLayersFragmentWidget) other;
+		int thisArea = boxMarker.getDiv().getOffsetWidth() * boxMarker.getDiv().getOffsetHeight();
+		int otherArea = overlay.boxMarker.getDiv().getOffsetWidth() * overlay.boxMarker.getDiv().getOffsetHeight();
+		
+		if (thisArea > otherArea)
+			return -1;
+
+		if (thisArea < otherArea)
+			return 1;
+		
 		return 0;
 	}
 

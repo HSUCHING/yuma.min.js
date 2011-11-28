@@ -159,7 +159,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 					new SingleImageAnnotationOverlay(a, this, annotationLayer);
 
 			overlays.put(a.getID(), overlay);
-			sortOverlaysByArea();
+			redraw();
 		} else {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
@@ -178,14 +178,15 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		}
 	}
 	
-	protected void sortOverlaysByArea() {
+	@Override
+	public void redraw() {
+		// Redraw not necessary - just re-assign z-indexes
 		ArrayList<CompoundOverlay> sortedOverlays = new ArrayList<CompoundOverlay>();
 		for (String id : overlays.keySet()) {
 			sortedOverlays.add(overlays.get(id));
 		}
 		Collections.sort(sortedOverlays);
-		
-		// Re-assign z-indexes
+
 		int zIndex = 9010;
 		for (CompoundOverlay overlay : sortedOverlays) {
 			overlay.setZIndex(zIndex);
