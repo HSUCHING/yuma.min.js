@@ -1,21 +1,18 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
-import java.util.HashMap;
-
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.FlowPanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.gui.AnnotationListWidget;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
 import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * This is the image annotation overlay type that is used when reply functionality is ENABLED. 
@@ -28,33 +25,24 @@ import at.ait.dme.yumaJS.client.init.Labels;
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
 public class CommentListOverlay implements CompoundOverlay {
-
-	private Annotation rootAnnotation;
-	
-	private Annotatable annotatable;
-
-	private AbsolutePanel annotationLayer;
 	
 	private ImageFragmentWidget bboxOverlay;
 	
-	private AnnotationWidget rootAnnotationWidget;
+	private AnnotationListWidget annotationListWidget;
 	
-	private FlowPanel annotationListPanel = new FlowPanel();
+	private AbsolutePanel annotationLayer;
 	
-	private HashMap<Annotation, AnnotationWidget> annotations = new HashMap<Annotation, AnnotationWidget>();
-	
-	public CommentListOverlay(Annotation rootAnnotation, Annotatable annotatable, AbsolutePanel annotationLayer, Labels labels) {
-		this.rootAnnotation = rootAnnotation;
-		this.annotatable = annotatable;
+	public CommentListOverlay(Annotation rootAnnotation, Annotatable annotatable, 
+			final AbsolutePanel annotationLayer) {
+
 		this.annotationLayer = annotationLayer;
-		
-		final BoundingBox bbox = annotatable.toBoundingBox(rootAnnotation.getFragment());
-		
+
+		final BoundingBox bbox = annotatable.toBoundingBox(rootAnnotation.getFragment());		
 		bboxOverlay = new ImageFragmentWidget(annotationLayer, bbox);
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
-				annotationListPanel.setVisible(true);
+				annotationListWidget.setVisible(true);
 			}
 		});
 		
@@ -70,20 +58,8 @@ public class CommentListOverlay implements CompoundOverlay {
 			}
 		});
 		
-		// rootAnnotationWidget = new AnnotationWidget(rootAnnotation, labels);
-		
-		/*
-		annotationWidget.addDomHandler(new MouseOutHandler() {
-			public void onMouseOut(MouseOutEvent event) {
-				if (!annotationWidget.isEditing())
-					annotationWidget.setVisible(false);
-			}
-		}, MouseOutEvent.getType());
-		
-		annotationWidget.setVisible(false);
-		*/
-		// annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
-		// annotationLayer.add(rootAnnotationWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);
+		this.annotationListWidget = new AnnotationListWidget(rootAnnotation, bboxOverlay, annotatable);
+		annotationLayer.add(annotationListWidget);		
 	}
 
 	public void setAnnotationWidgetEditHandler(Annotation a,

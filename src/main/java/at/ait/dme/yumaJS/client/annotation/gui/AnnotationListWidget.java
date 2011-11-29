@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.gui;
 
+import java.util.HashMap;
+
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 
@@ -22,6 +24,8 @@ public class AnnotationListWidget extends Composite {
 
 	private CommentWidget commentWidget;
 	
+	private HashMap<Annotation, AnnotationWidget> widgets = new HashMap<Annotation, AnnotationWidget>();
+	
 	/**
 	 * Creates a new {@link AnnotationListWidget} with a single annotation and a reference to 
 	 * a {@link FragmentWidget}.
@@ -32,7 +36,12 @@ public class AnnotationListWidget extends Composite {
 	public AnnotationListWidget(final Annotation a, FragmentWidget fragmentWidget, final Annotatable annotatable) {
 		container = new FlowPanel();
 		container.setStyleName("yuma-annotation-list");		
-		container.add(new AnnotationWidget(a, fragmentWidget, annotatable));	
+		
+		AnnotationWidget rootAnnotationWidget = 
+				new AnnotationWidget(a, fragmentWidget, annotatable);
+		widgets.put(a, rootAnnotationWidget);
+		
+		container.add(rootAnnotationWidget);	
 		
 		commentWidget = new CommentWidget(annotatable.getLabels(), false);
 		commentWidget.addSaveClickHandler(new ClickHandler() {
@@ -52,11 +61,17 @@ public class AnnotationListWidget extends Composite {
 		});
 		
 		container.add(commentWidget);
-		setVisible(false);
+		initWidget(container);
 	}
 	
 	public void addToList(Annotation a) {
 		
+	}
+	
+	public void edit(Annotation a) {
+		AnnotationWidget widget = widgets.get(a);
+		if (widget != null)
+			widget.edit();
 	}
 
 }

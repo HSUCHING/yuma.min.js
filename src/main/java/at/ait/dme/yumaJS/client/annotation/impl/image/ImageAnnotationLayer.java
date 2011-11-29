@@ -153,9 +153,9 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			a.setID(Integer.toString(annotationCtr++));
 			
 		if (a.getIsReplyTo() == null) {
-			// Root annotation - add new overlay
+			// Add new overlay
 			final CompoundOverlay overlay = (getRepliesEnabled()) ? 
-					new CommentListOverlay(a, this, annotationLayer, getLabels()) :
+					new CommentListOverlay(a, this, annotationLayer) :
 					new SingleImageAnnotationOverlay(a, this, annotationLayer);
 
 			overlays.put(a.getID(), overlay);
