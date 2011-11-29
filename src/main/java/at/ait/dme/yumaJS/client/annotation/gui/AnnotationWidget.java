@@ -6,8 +6,10 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.init.Labels;
+import at.ait.dme.yumaJS.client.io.Create;
 import at.ait.dme.yumaJS.client.io.Delete;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Float;
@@ -72,7 +74,6 @@ public class AnnotationWidget extends Composite {
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
 	public AnnotationWidget(Annotation a, FragmentWidget fragmentWidget, Annotatable annotatable) {
-		this.annotation = a;
 		this.fragmentWidget = fragmentWidget;
 		this.annotatable = annotatable;
 		
@@ -159,7 +160,9 @@ public class AnnotationWidget extends Composite {
 		this.handler = handler;
 	}
 	
-	private void setAnnotation(Annotation a) {				
+	private void setAnnotation(Annotation a) {			
+		annotation = a;
+		
 		// Username will be undefined in server-less mode!
 		if (annotation.getUserRealName() != null) {
 			username.setHTML(annotation.getUserRealName());
@@ -208,10 +211,24 @@ public class AnnotationWidget extends Composite {
 				}
 				
 				annotation.setText(commentField.getText());
-				setAnnotation(annotation);
 				
-				annotatable.redraw();
 				
+				if (annotatable.getServerURL() == null) {
+					setAnnotation(annotation);					
+					annotatable.redraw();
+				} else {
+					Create.executeJSONP(annotatable.getServerURL(), annotation, new AsyncCallback<JavaScriptObject>() {
+						public void onSuccess(JavaScriptObject result) {
+							annotatable.removeAnnotation(annotation);
+							annotatable.addAnnotation((Annotation) result);
+						}			
+
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}	
+								
 				if (handler != null)
 					handler.onSave(annotation);
 				

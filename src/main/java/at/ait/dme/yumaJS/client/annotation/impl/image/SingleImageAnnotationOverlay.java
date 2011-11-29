@@ -42,6 +42,7 @@ public class SingleImageAnnotationOverlay implements CompoundOverlay {
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
+				refresh();
 				annotationWidget.setVisible(true);
 			}
 		});
