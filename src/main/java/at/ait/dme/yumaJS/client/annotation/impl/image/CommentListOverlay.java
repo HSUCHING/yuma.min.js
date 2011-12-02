@@ -13,6 +13,8 @@ import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
 import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
 import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 
 /**
  * This is the image annotation overlay type that is used when reply functionality is ENABLED. 
@@ -58,23 +60,36 @@ public class CommentListOverlay implements CompoundOverlay {
 			}
 		});
 		
+		bboxOverlay.setSelectionChangeHandler(new SelectionChangeHandler() {
+			public void onRangeChanged(Range range) { }
+			
+			public void onBoundsChanged(BoundingBox bbox) {
+				refresh();				
+			}
+		});
+		
 		this.annotationListWidget = new AnnotationListWidget(rootAnnotation, bboxOverlay, annotatable);
 		annotationLayer.add(annotationListWidget);		
+		refresh();
+	}
+	
+	private void refresh() {
+		BoundingBox bbox = bboxOverlay.getBoundingBox();
+		annotationLayer.add(annotationListWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);		
 	}
 
 	public void setAnnotationWidgetEditHandler(Annotation a,
 			AnnotationWidgetEditHandler handler) {
-		// TODO Auto-generated method stub
 		
+		annotationListWidget.setAnnotationWidgetEditHandler(a, handler);
 	}
 
 	public void edit(Annotation a) {
-		// TODO Auto-generated method stub
-		
+		annotationListWidget.edit(a);
 	}
 	
 	public void setZIndex(int idx) {
-		// TODO Auto-generated method stub	
+		bboxOverlay.setZIndex(idx);
 	}
 	
 	public void destroy() {
