@@ -48,6 +48,11 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 	private BoxMarker boxMarker;
 	
 	/**
+	 * The inner border DIV
+	 */
+	private FlowPanel innerBorder;
+	
+	/**
 	 * The selection or <code>null</code> if not in editing mode
 	 */
 	private Selection selection = null;
@@ -75,7 +80,7 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 		markerStyle.clearBorderStyle();
 		boxMarker.getDiv().setClassName("annotation-bbox-outer");
 		
-		FlowPanel innerBorder = new FlowPanel();
+		innerBorder = new FlowPanel();
 		innerBorder.setWidth("100%");
 		innerBorder.setHeight("100%");
 		innerBorder.setStyleName("annotation-bbox-inner");
@@ -93,7 +98,8 @@ public class OpenLayersFragmentWidget implements FragmentWidget {
 		return BoundingBox.create(
 				div.getAbsoluteLeft() - editingLayer.getAbsoluteLeft(),
 				div.getAbsoluteTop() - editingLayer.getAbsoluteTop(),
-				div.getClientWidth(), div.getClientHeight());
+				innerBorder.getElement().getClientWidth(), 
+				innerBorder.getElement().getClientHeight());
 	}
 
 	public void setBoundingBox(BoundingBox bbox) {
