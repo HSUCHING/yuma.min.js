@@ -191,6 +191,7 @@ public class AnnotationWidget extends Composite {
 	
 	public void edit() {
 		isEditing = true;
+		setVisible(true);
 		
 		if (fragmentWidget != null)
 			fragmentWidget.startEditing();
@@ -280,7 +281,6 @@ public class AnnotationWidget extends Composite {
 	
 	@Override
 	public void setVisible(boolean visible) {
-		container.setVisible(true);
 		Style style = container.getElement().getStyle();
 		if (visible) {
 			style.setVisibility(Visibility.VISIBLE);
