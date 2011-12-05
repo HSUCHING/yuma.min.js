@@ -45,8 +45,11 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	
 	private AbsolutePanel editingLayer;
 	
-	private HashMap<Annotation, SingleOpenLayersAnnotationOverlay> annotations = 
-		new HashMap<Annotation, SingleOpenLayersAnnotationOverlay>();
+	// { annotationID -> overlay }
+	private HashMap<String, SingleOpenLayersAnnotationOverlay> overlays = 
+		new HashMap<String, SingleOpenLayersAnnotationOverlay>();
+	
+	private int annotationCtr = 0;
 	
 	public OpenLayersAnnotationLayer(JavaScriptObject openLayersMap, String objectURI, InitParams params) {
 		super(params);
@@ -152,10 +155,13 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void addAnnotation(Annotation annotation) {
+		if (annotation.getID() == null && getServerURL() == null)
+			annotation.setID(Integer.toString(annotationCtr++));
+		
 		SingleOpenLayersAnnotationOverlay overlay = 
 			new SingleOpenLayersAnnotationOverlay(annotation, annotationLayer, editingLayer, this);
 
-		annotations.put(annotation, overlay);
+		overlays.put(annotation.getID(), overlay);
 		redraw();
 		fireOnAnnotationCreated(annotation);
 	}
@@ -163,14 +169,14 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	@Override
 	public void redraw() {
 		// Redraw not necessary - just re-assign z-indexes
-		ArrayList<SingleOpenLayersAnnotationOverlay> overlays = new ArrayList<SingleOpenLayersAnnotationOverlay>();
-		for (Annotation a : annotations.keySet()) {
-			overlays.add(annotations.get(a));
+		ArrayList<SingleOpenLayersAnnotationOverlay> sortedOverlays = new ArrayList<SingleOpenLayersAnnotationOverlay>();
+		for (String id : overlays.keySet()) {
+			sortedOverlays.add(overlays.get(id));
 		}
-		Collections.sort(overlays);
+		Collections.sort(sortedOverlays);
 		
 		int zIndex = 9010;
-		for (SingleOpenLayersAnnotationOverlay overlay : overlays) {
+		for (SingleOpenLayersAnnotationOverlay overlay : sortedOverlays) {
 			overlay.setZIndex(zIndex);
 			zIndex++;
 		}
@@ -178,11 +184,11 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void removeAnnotation(Annotation annotation) {
-		SingleOpenLayersAnnotationOverlay overlay = annotations.get(annotation);
+		SingleOpenLayersAnnotationOverlay overlay = overlays.get(annotation.getID());
 		if (overlay != null) {
 			annotationLayer.removeMarker(overlay.getMarker());
 			overlay.destroy();
-			annotations.remove(annotation);
+			overlays.remove(annotation);
 		} 
 	}
 	
@@ -198,7 +204,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		empty.setFragment(createEmptyFragment());
 		addAnnotation(empty);
 		
-		final SingleOpenLayersAnnotationOverlay overlay = annotations.get(empty);
+		final SingleOpenLayersAnnotationOverlay overlay = overlays.get(empty.getID());
 		
 		// It's a new annotation - we'll listen to the first save/cancel
 		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
@@ -209,8 +215,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			
 			public void onCancel() {
 				// If cancel, we'll remove the annotation from the GUI
-				annotationLayer.removeMarker(overlay.getMarker());
-				overlay.destroy();
+				removeAnnotation(empty);
 			}
 		});
 		overlay.edit(empty);
