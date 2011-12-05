@@ -205,6 +205,7 @@ public class AnnotationWidget extends Composite {
 		 
 		commentField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {	
+				setVisible(false);
 				if (fragmentWidget != null) {
 					fragmentWidget.stopEditing();
 					annotation.setFragment(annotatable
@@ -213,13 +214,16 @@ public class AnnotationWidget extends Composite {
 				
 				annotation.setText(commentField.getText());
 				
-				
 				if (annotatable.getServerURL() == null) {
 					setAnnotation(annotation);					
 					annotatable.redraw();
 				} else {
 					Create.executeJSONP(annotatable.getServerURL(), annotation, new AsyncCallback<JavaScriptObject>() {
 						public void onSuccess(JavaScriptObject result) {
+							// In server mode, the annotation storage server may change
+							// the annotation's ID. Therefore it's easiest to just remove
+							// the old annotation from the annotatable and add the new one
+							// so that the Annotatable doesn't get out of sync
 							annotatable.removeAnnotation(annotation);
 							annotatable.addAnnotation((Annotation) result);
 						}			
@@ -236,13 +240,13 @@ public class AnnotationWidget extends Composite {
 				commentField.removeFromParent();
 				annotationPanel.setVisible(true);
 				buttonPanel.setVisible(true);
-				setVisible(false);
 				isEditing = false;
 			}
 		});
 		
 		commentField.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				setVisible(false);
 				if (fragmentWidget != null)
 					fragmentWidget.cancelEditing();
 				
@@ -252,7 +256,6 @@ public class AnnotationWidget extends Composite {
 				commentField.removeFromParent();
 				annotationPanel.setVisible(true);
 				buttonPanel.setVisible(true);
-				setVisible(false);
 				isEditing = false;
 			}
 		});

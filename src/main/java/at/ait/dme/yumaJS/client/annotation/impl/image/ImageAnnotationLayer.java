@@ -149,8 +149,15 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void addAnnotation(final Annotation a) {
+		// Note: it is NOT possible to use the annotation itself as a key
+		// in the HashMap, because their hashCodes change in the async event
+		// handlers. That's why we use annotation's unique IDs to track them.
+		// In order to track new annotations (which don't have IDs assigned yet)
+		// and annotations in server-less mode, we'll assign a temporary ID here.
+		// Don't really like this solution but it seems to be the only viable one.
+		// (I'm open for suggestions, though!)
 		if (a.getID() == null && getServerURL() == null)
-			a.setID(Integer.toString(annotationCtr++));
+			a.setID("unassigned-" + Integer.toString(annotationCtr++));
 			
 		if (a.getIsReplyTo() == null) {
 			// Add new overlay
