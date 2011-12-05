@@ -16,7 +16,7 @@ public class TestOpenLayersHosted implements EntryPoint {
 		final OpenLayersAnnotationLayer annotationLayer = 
 			new OpenLayersAnnotationLayer(
 					getMap(), 
-					"http://upload.wikimedia.org/wikipedia/commons/e/ec/Waldseemuller_map.jpg",
+					"http://test.jpg",
 					createInitParams());
 		
 		PushButton annotate = new PushButton("Add Note");
@@ -35,7 +35,7 @@ public class TestOpenLayersHosted implements EntryPoint {
 	
 	private native InitParams createInitParams() /*-{
 		return {
-			// serverURL:"http://localhost:8081/yuma4j-server"
+			serverURL:"http://dme.ait.ac.at/yuma4j-server"
 		};
 	}-*/;
 	
