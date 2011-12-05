@@ -2,6 +2,8 @@ package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -60,6 +62,13 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 		});
 		
 		annotationWidget = new AnnotationWidget(a, boxOverlay, annotatable);
+		annotationWidget.addDomHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				if (!annotationWidget.isEditing())
+					annotationWidget.setVisible(false);
+			}
+		}, MouseOutEvent.getType());
+		
 		annotationWidget.setVisible(false);
 		editingLayer.add(annotationWidget);
 		refresh();
