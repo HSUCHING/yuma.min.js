@@ -101,7 +101,6 @@ public class SingleImageAnnotationOverlay implements CompoundOverlay {
 	
 	public void edit(Annotation a) {
 		annotationWidget.edit();
-		annotationWidget.setVisible(true);
 	}
 	
 	public AnnotationWidget getAnnotationWidget() {

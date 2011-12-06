@@ -99,8 +99,7 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 	}
 
 	public void edit(Annotation a) {
-		annotationWidget.edit();
-		annotationWidget.setVisible(true);		
+		annotationWidget.edit();	
 	}
 	
 	public void destroy() {

@@ -205,7 +205,6 @@ public class AnnotationWidget extends Composite {
 		 
 		commentField.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {	
-				setVisible(false);
 				if (fragmentWidget != null) {
 					fragmentWidget.stopEditing();
 					annotation.setFragment(annotatable
@@ -214,9 +213,11 @@ public class AnnotationWidget extends Composite {
 				
 				annotation.setText(commentField.getText());
 				
+				annotatable.removeAnnotation(annotation);
 				if (annotatable.getServerURL() == null) {
-					setAnnotation(annotation);					
-					annotatable.redraw();
+					annotatable.addAnnotation(annotation);
+					// setAnnotation(annotation);					
+					// annotatable.redraw();
 				} else {
 					Create.executeJSONP(annotatable.getServerURL(), annotation, new AsyncCallback<JavaScriptObject>() {
 						public void onSuccess(JavaScriptObject result) {
@@ -224,7 +225,7 @@ public class AnnotationWidget extends Composite {
 							// the annotation's ID. Therefore it's easiest to just remove
 							// the old annotation from the annotatable and add the new one
 							// so that the Annotatable doesn't get out of sync
-							annotatable.removeAnnotation(annotation);
+							
 							annotatable.addAnnotation((Annotation) result);
 						}			
 
@@ -246,7 +247,7 @@ public class AnnotationWidget extends Composite {
 		
 		commentField.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				setVisible(false);
+				setVisible(false, true);
 				if (fragmentWidget != null)
 					fragmentWidget.cancelEditing();
 				
@@ -284,16 +285,24 @@ public class AnnotationWidget extends Composite {
 	
 	@Override
 	public void setVisible(boolean visible) {
+		setVisible(visible, false);
+	}
+	
+	public void setVisible(boolean visible, boolean recursive) {
 		Style style = container.getElement().getStyle();
 		if (visible) {
+			annotationPanel.setVisible(true);
 			style.setVisibility(Visibility.VISIBLE);
 			style.setOpacity(1);
 		} else {
 			style.setVisibility(Visibility.HIDDEN);
 			style.setOpacity(0);
 		}
+		
+		if (recursive) {
+			annotationPanel.setVisible(visible);
+		}
 	}
-
 	
 	public boolean contains(int x, int y) {
 		int left = container.getAbsoluteLeft();
