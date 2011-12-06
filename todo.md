@@ -1,9 +1,7 @@
 # TODOs
 
-* AJAX load indicators needed inside the edit form when saving/updating/deleting
-* JavaDoc
+* AJAX load indicators needed during AJAX save/update/delete 
 * Consistent naming of CSS classes throughout the project
-* The whole project could benefit from a thorough code review
 * GUI components/functionality for OpenID login
 * Architecture/class model needs to be documented in a graphic/UML diagram -> some revisions are needed to make the
   whole UI class structure more consistent/readable
