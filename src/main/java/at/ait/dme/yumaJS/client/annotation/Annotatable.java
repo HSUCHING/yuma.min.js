@@ -20,7 +20,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * An abstract base class with cross-cutting functionality for
- * all media annotation implementations.
+ * all annotatable media implementations.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
