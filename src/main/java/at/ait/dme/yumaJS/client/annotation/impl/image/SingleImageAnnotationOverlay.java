@@ -2,12 +2,12 @@ package at.ait.dme.yumaJS.client.annotation.impl.image;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
+import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget;
+import at.ait.dme.yumaJS.client.annotation.ui.CompoundOverlay;
+import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;

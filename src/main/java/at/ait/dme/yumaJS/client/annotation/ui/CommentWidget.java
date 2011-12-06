@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.gui;
+package at.ait.dme.yumaJS.client.annotation.ui;
 
 import at.ait.dme.yumaJS.client.init.Labels;
 

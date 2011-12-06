@@ -9,15 +9,15 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 
-import at.ait.dme.yumaJS.client.annotation.gui.FragmentWidget;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBoxSelection;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
+import at.ait.dme.yumaJS.client.annotation.ui.FragmentWidget;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 
 /**
  * An implementation of {@link FragmentWidget} that is based on an OpenLayers

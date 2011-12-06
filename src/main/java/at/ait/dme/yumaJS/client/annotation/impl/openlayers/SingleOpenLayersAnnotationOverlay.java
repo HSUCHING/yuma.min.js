@@ -9,14 +9,14 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget;
-import at.ait.dme.yumaJS.client.annotation.gui.CompoundOverlay;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
+import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget;
+import at.ait.dme.yumaJS.client.annotation.ui.CompoundOverlay;
+import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 
 public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 

@@ -1,7 +1,7 @@
-package at.ait.dme.yumaJS.client.annotation.gui;
+package at.ait.dme.yumaJS.client.annotation.ui;
 
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.gui.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
 
 /**
  * {@link CompoundOverlay} is a common interface for GUI overlays 

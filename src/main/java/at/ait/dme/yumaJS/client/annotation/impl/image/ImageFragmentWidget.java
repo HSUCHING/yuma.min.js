@@ -1,11 +1,11 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
-import at.ait.dme.yumaJS.client.annotation.gui.FragmentWidget;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBoxSelection;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
+import at.ait.dme.yumaJS.client.annotation.ui.FragmentWidget;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 
 
 import com.google.gwt.event.dom.client.MouseOutEvent;

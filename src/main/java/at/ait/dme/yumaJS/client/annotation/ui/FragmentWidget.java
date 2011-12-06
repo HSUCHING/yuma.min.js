@@ -1,8 +1,8 @@
-package at.ait.dme.yumaJS.client.annotation.gui;
+package at.ait.dme.yumaJS.client.annotation.ui;
 
-import at.ait.dme.yumaJS.client.annotation.gui.edit.BoundingBox;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Range;
-import at.ait.dme.yumaJS.client.annotation.gui.edit.Selection.SelectionChangeHandler;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 
 /**
  * An interface for GUI elements that embody a fragment (as part of an annotation).
