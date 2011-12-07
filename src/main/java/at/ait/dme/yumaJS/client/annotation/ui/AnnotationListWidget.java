@@ -98,5 +98,26 @@ public class AnnotationListWidget extends Composite {
 		if (widget != null)
 			widget.edit();
 	}
+	
+	public boolean contains(int x, int y) {
+		int left = container.getAbsoluteLeft();
+		int top = container.getAbsoluteTop();
+		int w = container.getOffsetWidth();
+		int h = container.getOffsetHeight();
+		
+		if (x < left)
+			return false;
+		
+		if (x > left + w)
+			return false;
+		
+		if (y < top)
+			return false;
+		
+		if (y > top + h)
+			return false;
+		
+		return true;
+	}
 
 }

@@ -50,13 +50,11 @@ public class CommentListOverlay implements CompoundOverlay {
 		
 		bboxOverlay.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				/*
-				if (!annotationWidget.contains(
+				if (!annotationListWidget.contains(
 						event.getRelativeX(annotationLayer.getElement()) + annotationLayer.getAbsoluteLeft(), 
 						event.getRelativeY(annotationLayer.getElement()) + annotationLayer.getAbsoluteTop()))
 					
-					annotationWidget.setVisible(false);
-				*/
+					annotationListWidget.setVisible(false);
 			}
 		});
 		
@@ -93,7 +91,8 @@ public class CommentListOverlay implements CompoundOverlay {
 	}
 	
 	public void destroy() {
-		// TODO implement
+		bboxOverlay.destroy();
+		annotationListWidget.removeFromParent();
 	}
 
 	public int compareTo(CompoundOverlay o) {

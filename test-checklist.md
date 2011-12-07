@@ -4,10 +4,9 @@ This is the checklist for performing GUI integration tests. We REALLY need to au
 The [doh robot] (http://dojotoolkit.org/reference-guide/util/dohrobot.html) seems to be a suitable
 candidate, as it captures mouse movement as well. (Critical - but not supported by e.g. Selenium).
 
-# Image Annotation
+# Image Annotation - no replies
 
-Repeat tests 4 times: (i) with replies disabled + serverless mode, (ii) with replies disabled + annotation server,
-(iii) with replies enabled + serverless mode, (iv) with replies enabled + annotation server.
+Repeat tests 2 times: (i) in serverless mode and (ii) with annotation server.
 
 1. Create an annotation and click CANCEL. Confirm the annotation is removed from the GUI.
 2. Create an annotation and click OK. Delete the annotation again, and confirm it works as intended.
@@ -18,6 +17,10 @@ Repeat tests 4 times: (i) with replies disabled + serverless mode, (ii) with rep
    
 Compile the project and repeat all tests outside of hosted mode.
 
-# OpenLayers Annotation
+# Image Annotation - replies
 
-Repeat all the steps for image annotation (4 times for different replies/server-mode configurations) 
+1. Create an annotation and click CANCEL. Confirm the annotation is removed from the GUI.
+
+# OpenLayers Annotation - no replies
+
+Repeat the same steps as for image annotation - no replies
