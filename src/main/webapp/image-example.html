@@ -8,7 +8,11 @@
 	<script>
 	var annotationLayer;
 	window.onYUMAready = function() {
-		annotationLayer = new YUMA.ImageAnnotationLayer('sample-image', { serverURL: "http://dme.ait.ac.at/yuma4j-server" });
+		annotationLayer = new YUMA.ImageAnnotationLayer('sample-image', 
+				{
+					enableReplies:true
+					// serverURL: "http://dme.ait.ac.at/yuma4j-server" 
+				});
 	}
 	</script>
   </head>

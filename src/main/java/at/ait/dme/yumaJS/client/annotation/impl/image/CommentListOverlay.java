@@ -44,17 +44,22 @@ public class CommentListOverlay implements CompoundOverlay {
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
-				refresh();
-				annotationListWidget.setVisible(true);
+				if (!annotationListWidget.isEditing()) {
+					refresh();
+					annotationListWidget.setVisible(true);
+				}
 			}
 		});
 		
 		bboxOverlay.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				if (!annotationListWidget.contains(
+				boolean contains = annotationListWidget.contains(
 						event.getRelativeX(annotationLayer.getElement()) + annotationLayer.getAbsoluteLeft(), 
-						event.getRelativeY(annotationLayer.getElement()) + annotationLayer.getAbsoluteTop()))
-					
+						event.getRelativeY(annotationLayer.getElement()) + annotationLayer.getAbsoluteTop());
+				
+				boolean editing = annotationListWidget.isEditing();
+				
+				if (!contains && !editing)
 					annotationListWidget.setVisible(false);
 			}
 		});

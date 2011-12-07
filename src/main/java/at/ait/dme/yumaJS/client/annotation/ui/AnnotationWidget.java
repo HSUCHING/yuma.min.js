@@ -60,8 +60,8 @@ public class AnnotationWidget extends Composite {
 	private InlineHTML timestamp;
 	
 	private PushButton btnEdit, btnDelete;
-		
-	private boolean isEditing = false;
+	
+	private CommentWidget commentWidget = null;
 	
 	private ArrayList<AnnotationWidgetEditHandler> handlers = new ArrayList<AnnotationWidgetEditHandler>();
 	
@@ -198,7 +198,6 @@ public class AnnotationWidget extends Composite {
 	}-*/;
 	
 	public void edit() {
-		isEditing = true;
 		setVisible(true);
 		
 		for (AnnotationWidgetEditHandler h : handlers) {
@@ -213,9 +212,9 @@ public class AnnotationWidget extends Composite {
 		buttonPanel.setVisible(false);
 
 		// Add comment field in place
-		final CommentWidget commentField = new CommentWidget(annotation.getText(), annotatable.getLabels(), true);
+		commentWidget = new CommentWidget(annotation.getText(), annotatable.getLabels(), true);
 		 
-		commentField.addSaveClickHandler(new ClickHandler() {
+		commentWidget.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {	
 				if (fragmentWidget != null) {
 					fragmentWidget.stopEditing();
@@ -223,7 +222,7 @@ public class AnnotationWidget extends Composite {
 							.toFragment(fragmentWidget.getBoundingBox(), fragmentWidget.getRange()));
 				}
 	
-				annotation.setText(commentField.getText());
+				annotation.setText(commentWidget.getText());
 					
 				if (annotatable.getServerURL() == null) {
 					annotatable.updateAnnotation(annotation.getID(), annotation);
@@ -243,12 +242,11 @@ public class AnnotationWidget extends Composite {
 					h.onSave(annotation);		
 				}
 				
-				commentField.removeFromParent();
-				isEditing = false;
+				commentWidget.removeFromParent();
 			}
 		});
 		
-		commentField.addCancelClickHandler(new ClickHandler() {
+		commentWidget.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (fragmentWidget != null)
 					fragmentWidget.cancelEditing();
@@ -257,15 +255,17 @@ public class AnnotationWidget extends Composite {
 					h.onCancel();		
 				}
 
-				commentField.removeFromParent();
-				isEditing = false;
+				commentWidget.removeFromParent();
 			}
 		});
-		container.insert(commentField, container.getWidgetIndex(annotationPanel));			
+		container.insert(commentWidget, container.getWidgetIndex(annotationPanel));			
 	}
 		
-	public boolean isEditing() {
-		return isEditing;
+	public boolean isEditing() {		
+		if (commentWidget == null)
+			return false;
+		
+		return commentWidget.isAttached();
 	}
 	
 	private void delete() {
@@ -318,6 +318,11 @@ public class AnnotationWidget extends Composite {
 			return false;
 		
 		return true;
+	}
+	
+	// TODO remove
+	public String toString() {
+		return annotation.getText();
 	}
 	
 	public interface AnnotationWidgetEditHandler {

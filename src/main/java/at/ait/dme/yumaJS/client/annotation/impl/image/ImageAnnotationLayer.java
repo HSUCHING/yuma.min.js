@@ -190,11 +190,18 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	@Override
 	public void updateAnnotation(String id, Annotation updated) {
 		CompoundOverlay overlay = overlays.get(id);
+
 		if (overlay != null) {
+			// No-reply mode, or reply mode + root annotation
 			overlay.updateAnnotation(id, updated);
 			overlays.remove(id);
 			overlays.put(updated.getID(), overlay);
 			redraw();
+		} else if (getRepliesEnabled() && (updated.getIsReplyTo() != null)) { 
+			// Reply mode + reply annotation
+			overlay = overlays.get(updated.getIsReplyTo());
+			if (overlay != null) 
+				overlay.updateAnnotation(id, updated);
 		}
 	}
 	

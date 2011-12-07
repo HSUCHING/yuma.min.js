@@ -47,7 +47,7 @@ public class AnnotationListWidget extends Composite {
 		
 		container.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
-				if (!widgets.get(a.getID()).isEditing())
+				if (!isEditing())
 					commentWidget.setVisible(true);
 			}
 		}, MouseOverEvent.getType());
@@ -61,7 +61,9 @@ public class AnnotationListWidget extends Composite {
 						Document.get().getTitle(), 
 						annotatable.getMediaType(), 
 						commentWidget.getText(), 
-						null));
+						null,
+						a.getID()));
+				commentWidget.setFocus(false);
 				setVisible(false);
 			}
 		});
@@ -79,19 +81,21 @@ public class AnnotationListWidget extends Composite {
 	}
 	
 	private void addToList(Annotation a, FragmentWidget f) {
+		if (a.getID() == null)
+			a.setID("unassigned-replyto-" + a.getIsReplyTo() + "-" + widgets.size());
+		
 		AnnotationWidget widget = new AnnotationWidget(a, f, annotatable); 
 		widget.addAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
 			public void onStartEditing() { 
-				System.out.println("YEAH");
 				commentWidget.setVisible(false);
 			}
 			
 			public void onSave(Annotation annotation) {
-				// Do nothing
+				setVisible(false);
 			}
 			
-			public void onCancel() {
-				// Do nothing
+			public void onCancel() { 
+				setVisible(false);
 			}
 		});
 		
@@ -139,8 +143,10 @@ public class AnnotationListWidget extends Composite {
 	public boolean isEditing() {
 		boolean isEditing = false;
 		for (AnnotationWidget widget : widgets.values()) {
-			if (widget.isEditing())
+			if (widget.isEditing()) {
 				isEditing = true;
+				break;
+			}
 		}
 		
 		return isEditing || commentWidget.hasFocus();

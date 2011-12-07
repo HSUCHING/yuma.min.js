@@ -12,8 +12,10 @@ refresh the page after each test, to confirm whether client and server remain in
 1. Create an annotation and click CANCEL. Confirm the annotation is removed from the GUI.
 2. Create an annotation and click OK. Delete the annotation again, and confirm it works as intended.
 3. Create an annotation (and click OK to save it). DO NOT use default bounding box size and location!
-   * Edit the annotation: change text AND bounding box size/location -> Click CANCEL and confirm it works as intended
-   * Edit the annotation: change text AND bounding box size/location -> Click OK and confirm it works as intended
+   a) Edit the annotation: change text AND bounding box size/location. Click CANCEL and confirm it 
+      works as intended.
+   b) Edit the annotation: change text AND bounding box size/location. Click OK and confirm it
+      works as intended.
 4. Create a second annotation that covers the first. Make sure the first remains clickable. 
    
 Compile the project and repeat all tests outside of hosted mode.
@@ -27,11 +29,19 @@ edited, pan and zoom the map to ensure the bounding boxes stay correctly aligned
 
 1. Create an annotation and click CANCEL. Confirm the annotation is removed from the GUI.
 2. Create an annotation and click OK. DO NOT use default bounding box size and location!
-   Confirm the mouseover behavior works as intended.
-3. Edit the annotation (change text AND move/change bounding box). Click CANCEL and confirm 
-   it works as intended (including mouseover behavior).
-4. Edit the annotation (change text AND move/change bounding box). Click OK and confirm 
-   it works as intended (including mouseover behavior).
-5. Delete the annotation again and confirm it works as intended.
+   a) Confirm the mouseover behavior works as intended.
+   b) Edit the annotation (change text AND move/change bounding box). Click CANCEL and confirm 
+      it works as intended (including mouseover behavior).
+   c) Edit the annotation (change text AND move/change bounding box). Click OK and confirm 
+      it works as intended (including mouseover behavior).
+   d) Delete the annotation again and confirm it works as intended.
+3. Create another annotation.
+   a) Add two replies to the annotation and confirm the mouseover behavior works as intended.
+   b) Edit the top-most annotation: change text AND bounding box. Click CANCEL and confirm it works as
+      intended.
+   c) Edit the top-most annotation: change text AND bounding box. Click OK and confirm it works as
+      intended.
+   d) Repeat steps 3b and 3c for the middle annotation.
+   e) Delete the middle annotation and confirm it works as expected. 
 
 
