@@ -186,7 +186,17 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	@Override
-	public void redraw() {
+	public void updateAnnotation(String id, Annotation updated) {
+		CompoundOverlay overlay = overlays.get(id);
+		if (overlay != null) {
+			overlay.updateAnnotation(id, updated);
+			overlays.remove(id);
+			overlays.put(updated.getID(), overlay);
+			redraw();
+		}
+	}
+	
+	private void redraw() {
 		// Redraw not necessary - just re-assign z-indexes
 		ArrayList<CompoundOverlay> sortedOverlays = new ArrayList<CompoundOverlay>();
 		for (String id : overlays.keySet()) {

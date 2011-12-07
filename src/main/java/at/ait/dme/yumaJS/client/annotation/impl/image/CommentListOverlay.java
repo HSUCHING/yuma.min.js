@@ -91,6 +91,11 @@ public class CommentListOverlay implements CompoundOverlay {
 		annotationListWidget.setAnnotationWidgetEditHandler(a, handler);
 	}
 
+	public void updateAnnotation(String id, Annotation updated) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public void edit(Annotation a) {
 		annotationListWidget.edit(a);
 	}

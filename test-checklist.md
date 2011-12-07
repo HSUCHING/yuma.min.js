@@ -6,7 +6,8 @@ candidate, as it captures mouse movement as well. (Critical - but not supported 
 
 # Image Annotation - no replies
 
-Repeat tests 2 times: (i) in serverless mode and (ii) with annotation server.
+Repeat tests 2 times: (i) in serverless mode and (ii) with annotation server. In server mode,
+refresh the page after each test, to confirm whether client and server remain in sync. 
 
 1. Create an annotation and click CANCEL. Confirm the annotation is removed from the GUI.
 2. Create an annotation and click OK. Delete the annotation again, and confirm it works as intended.
@@ -16,6 +17,11 @@ Repeat tests 2 times: (i) in serverless mode and (ii) with annotation server.
 4. Create a second annotation that covers the first. Make sure the first remains clickable. 
    
 Compile the project and repeat all tests outside of hosted mode.
+
+# OpenLayers Annotation - no replies
+
+Repeat the same steps as for image annotation - no replies. Each time an annotation was created or
+edited, pan and zoom the map to ensure the bounding boxes stay correctly aligned in OpenLayers.
 
 # Image Annotation - replies
 
@@ -28,6 +34,4 @@ Compile the project and repeat all tests outside of hosted mode.
    it works as intended (including mouseover behavior).
 5. Delete the annotation again and confirm it works as intended.
 
-# OpenLayers Annotation - no replies
 
-Repeat the same steps as for image annotation - no replies

@@ -133,12 +133,6 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	@Override
-	public void redraw() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
 	public void addAnnotation(Annotation a) {
 		ZoomableAnnotationOverlay overlay = 
 			new ZoomableAnnotationOverlay(a, this, viewer, getLabels());		
@@ -153,6 +147,12 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 			overlay.destroy();
 			annotations.remove(a);
 		}
+	}
+	
+	@Override
+	public void updateAnnotation(String id, Annotation updated) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void createNewAnnotation() {

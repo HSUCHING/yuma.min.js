@@ -15,6 +15,8 @@ public interface CompoundOverlay extends Comparable<CompoundOverlay> {
 	
 	public void setAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler);
 	
+	public void updateAnnotation(String id, Annotation updated);
+	
 	public void edit(Annotation a);
 	
 	public void setZIndex(int idx);

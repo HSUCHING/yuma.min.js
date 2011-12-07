@@ -101,6 +101,10 @@ public class SingleImageAnnotationOverlay implements CompoundOverlay {
 		});
 	}
 	
+	public void updateAnnotation(String id, Annotation updated) {
+		annotationWidget.setAnnotation(updated);
+	}
+	
 	public void edit(Annotation a) {
 		annotationWidget.edit();
 	}

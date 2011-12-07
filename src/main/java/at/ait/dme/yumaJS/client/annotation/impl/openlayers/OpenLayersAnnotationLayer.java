@@ -22,6 +22,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
+import at.ait.dme.yumaJS.client.annotation.ui.CompoundOverlay;
 import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
@@ -46,8 +47,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	private AbsolutePanel editingLayer;
 	
 	// { annotationID -> overlay }
-	private HashMap<String, SingleOpenLayersAnnotationOverlay> overlays = 
-		new HashMap<String, SingleOpenLayersAnnotationOverlay>();
+	private HashMap<String, CompoundOverlay> overlays = 
+		new HashMap<String, CompoundOverlay>();
 	
 	private int annotationCtr = 0;
 	
@@ -173,17 +174,16 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		fireOnAnnotationCreated(annotation);
 	}
 	
-	@Override
-	public void redraw() {
+	private void redraw() {
 		// Redraw not necessary - just re-assign z-indexes
-		ArrayList<SingleOpenLayersAnnotationOverlay> sortedOverlays = new ArrayList<SingleOpenLayersAnnotationOverlay>();
+		ArrayList<CompoundOverlay> sortedOverlays = new ArrayList<CompoundOverlay>();
 		for (String id : overlays.keySet()) {
 			sortedOverlays.add(overlays.get(id));
 		}
 		Collections.sort(sortedOverlays);
 		
 		int zIndex = 9010;
-		for (SingleOpenLayersAnnotationOverlay overlay : sortedOverlays) {
+		for (CompoundOverlay overlay : sortedOverlays) {
 			overlay.setZIndex(zIndex);
 			zIndex++;
 		}
@@ -191,12 +191,23 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void removeAnnotation(Annotation annotation) {
-		SingleOpenLayersAnnotationOverlay overlay = overlays.get(annotation.getID());
+		CompoundOverlay overlay = overlays.get(annotation.getID());
 		if (overlay != null) {
-			annotationLayer.removeMarker(overlay.getMarker());
+			annotationLayer.removeMarker(((SingleOpenLayersAnnotationOverlay) overlay).getMarker());
 			overlay.destroy();
 			overlays.remove(annotation);
 		} 
+	}
+	
+	@Override
+	public void updateAnnotation(String id, Annotation updated) {
+		CompoundOverlay overlay = overlays.get(id);
+		if (overlay != null) {
+			overlay.updateAnnotation(id, updated);
+			overlays.remove(id);
+			overlays.put(updated.getID(), overlay);
+			redraw();
+		}
 	}
 	
 	private String createEmptyFragment() {
@@ -211,7 +222,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		empty.setFragment(createEmptyFragment());
 		addAnnotation(empty);
 		
-		final SingleOpenLayersAnnotationOverlay overlay = overlays.get(empty.getID());
+		final CompoundOverlay overlay = overlays.get(empty.getID());
 		
 		// It's a new annotation - we'll listen to the first save/cancel
 		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {

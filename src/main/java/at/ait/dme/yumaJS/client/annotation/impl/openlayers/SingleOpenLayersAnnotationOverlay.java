@@ -96,6 +96,10 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 		});		
 	}
 	
+	public void updateAnnotation(String id, Annotation updated) {
+		annotationWidget.setAnnotation(updated);
+	}
+	
 	public BoxMarker getMarker() {
 		return boxOverlay.getBoxMarker();
 	}

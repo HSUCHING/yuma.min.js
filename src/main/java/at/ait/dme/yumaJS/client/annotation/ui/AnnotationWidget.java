@@ -160,14 +160,16 @@ public class AnnotationWidget extends Composite {
 		this.handler = handler;
 	}
 	
-	private void setAnnotation(Annotation a) {			
+	public void setAnnotation(Annotation a) {			
 		annotation = a;
 		
 		// Username will be undefined in server-less mode!
 		if (annotation.getUserRealName() != null) {
 			username.setHTML(annotation.getUserRealName());
+			username.setVisible(true);
 		} else if (annotation.getUsername() != null) {
 			username.setHTML(annotation.getUsername());
+			username.setVisible(true);
 		} else {
 			username.setVisible(false);
 		}
@@ -179,6 +181,7 @@ public class AnnotationWidget extends Composite {
 		long modified = annotation.getModified();
 		if (modified > 0) {
 			timestamp.setHTML(DateTimeFormat.getFormat(DATE_FORMAT).format(new Date(modified)));
+			timestamp.setVisible(true);
 		} else {
 			timestamp.setVisible(false);
 		}
@@ -215,15 +218,13 @@ public class AnnotationWidget extends Composite {
 				}
 	
 				annotation.setText(commentField.getText());
-				
-				annotatable.removeAnnotation(annotation);
-	
+					
 				if (annotatable.getServerURL() == null) {
-					annotatable.addAnnotation(annotation);
+					annotatable.updateAnnotation(annotation.getID(), annotation);
 				} else {
 					Create.executeJSONP(annotatable.getServerURL(), annotation, new AsyncCallback<JavaScriptObject>() {
 						public void onSuccess(JavaScriptObject result) {
-							annotatable.addAnnotation((Annotation) result);
+							annotatable.updateAnnotation(annotation.getID(), (Annotation) result);
 						}			
 
 						public void onFailure(Throwable t) {
