@@ -47,8 +47,7 @@ public class AnnotationListWidget extends Composite {
 		
 		container.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
-				if (!isEditing())
-					commentWidget.setVisible(true);
+				showCommentWidget();
 			}
 		}, MouseOverEvent.getType());
 	
@@ -74,6 +73,11 @@ public class AnnotationListWidget extends Composite {
 		addToList(a, fragmentWidget);
 		
 		initWidget(container);
+	}
+	
+	public void showCommentWidget() {
+		if (!isEditing())
+			commentWidget.setVisible(true);
 	}
 	
 	private void addToList(Annotation a) {

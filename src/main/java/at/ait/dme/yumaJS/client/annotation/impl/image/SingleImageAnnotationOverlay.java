@@ -38,7 +38,7 @@ public class SingleImageAnnotationOverlay implements CompoundOverlay {
 		
 		final BoundingBox bbox = annotatable.toBoundingBox(a.getFragment());
 		
-		bboxOverlay = new ImageFragmentWidget(annotationLayer, bbox);
+		bboxOverlay = new ImageFragmentWidget(annotatable, annotationLayer, bbox);
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {

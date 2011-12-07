@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -40,7 +42,7 @@ public class CommentListOverlay implements CompoundOverlay {
 		this.annotationLayer = annotationLayer;
 
 		final BoundingBox bbox = annotatable.toBoundingBox(rootAnnotation.getFragment());		
-		bboxOverlay = new ImageFragmentWidget(annotationLayer, bbox);
+		bboxOverlay = new ImageFragmentWidget(annotatable, annotationLayer, bbox);
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
@@ -61,6 +63,12 @@ public class CommentListOverlay implements CompoundOverlay {
 				
 				if (!contains && !editing)
 					annotationListWidget.setVisible(false);
+			}
+		});
+		
+		bboxOverlay.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				annotationListWidget.showCommentWidget();
 			}
 		});
 		

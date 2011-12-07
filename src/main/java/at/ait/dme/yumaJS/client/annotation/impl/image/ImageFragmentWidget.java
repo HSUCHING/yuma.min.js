@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.ui.FragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBoxSelection;
@@ -8,6 +9,8 @@ import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -54,7 +57,7 @@ public class ImageFragmentWidget implements FragmentWidget {
 	 */
 	private SelectionChangeHandler handler = null;
 	
-	public ImageFragmentWidget(AbsolutePanel panel, BoundingBox bbox) {
+	public ImageFragmentWidget(Annotatable annotatable, AbsolutePanel panel, BoundingBox bbox) {
 		this.panel = panel;
 		
 		outerBorder = new FlowPanel();
@@ -66,6 +69,9 @@ public class ImageFragmentWidget implements FragmentWidget {
 		innerBorder.setWidth("100%");
 		innerBorder.setHeight("100%");
 		innerBorder.setStyleName("annotation-bbox-inner");
+		
+		if (annotatable.getRepliesEnabled())
+			innerBorder.setTitle("Click or move the mouse over the annotation to comment!");
 		
 		outerBorder.add(innerBorder);
 	}
@@ -120,6 +126,10 @@ public class ImageFragmentWidget implements FragmentWidget {
 
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		return outerBorder.addDomHandler(handler, MouseOverEvent.getType());
+	}
+	
+	public HandlerRegistration addClickHandler(ClickHandler handler) {
+		return innerBorder.addDomHandler(handler, ClickEvent.getType());
 	}
 		
 	public void setZIndex(int idx) {
