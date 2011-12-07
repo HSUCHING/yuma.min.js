@@ -13,7 +13,9 @@ import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetE
  */
 public interface CompoundOverlay extends Comparable<CompoundOverlay> {
 	
-	public void setAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler);
+	public void addAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler);
+	
+	public void removeAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler);
 	
 	public void updateAnnotation(String id, Annotation updated);
 	

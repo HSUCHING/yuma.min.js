@@ -9,6 +9,8 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -225,12 +227,17 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		final CompoundOverlay overlay = overlays.get(empty.getID());
 		
 		// It's a new annotation - we'll listen to the first save/cancel
-		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
+		overlay.addAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
 			public void onStartEditing() { }
 			
 			public void onSave(Annotation a) { 
-				// If save, just remove the listener
-				overlay.setAnnotationWidgetEditHandler(empty, null);
+				// If save, just remove the handler
+				final AnnotationWidgetEditHandler self = this;
+				Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+					public void execute() {
+						overlay.removeAnnotationWidgetEditHandler(empty, self);	
+					}
+				});
 			}
 			
 			public void onCancel() {

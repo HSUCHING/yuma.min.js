@@ -28,7 +28,7 @@ public class AnnotationListWidget extends Composite {
 
 	private CommentWidget commentWidget;
 	
-	private HashMap<Annotation, AnnotationWidget> widgets = new HashMap<Annotation, AnnotationWidget>();
+	private HashMap<String, AnnotationWidget> widgets = new HashMap<String, AnnotationWidget>();
 	
 	private Annotatable annotatable;
 	
@@ -47,7 +47,7 @@ public class AnnotationListWidget extends Composite {
 		
 		container.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
-				if (!widgets.get(a).isEditing())
+				if (!widgets.get(a.getID()).isEditing())
 					commentWidget.setVisible(true);
 			}
 		}, MouseOverEvent.getType());
@@ -80,8 +80,9 @@ public class AnnotationListWidget extends Composite {
 	
 	private void addToList(Annotation a, FragmentWidget f) {
 		AnnotationWidget widget = new AnnotationWidget(a, f, annotatable); 
-		widget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
+		widget.addAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
 			public void onStartEditing() { 
+				System.out.println("YEAH");
 				commentWidget.setVisible(false);
 			}
 			
@@ -94,7 +95,7 @@ public class AnnotationListWidget extends Composite {
 			}
 		});
 		
-		widgets.put(a, widget);
+		widgets.put(a.getID(), widget);
 		container.insert(widget, container.getWidgetCount() - 1);
 		commentWidget.clear();
 	}
@@ -110,12 +111,25 @@ public class AnnotationListWidget extends Composite {
 		commentWidget.setVisible(false);
 	}
 	
-	public void setAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler) {
-		widgets.get(a).setAnnotationWidgetEditHandler(handler);
+	public void addAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler) {
+		widgets.get(a.getID()).addAnnotationWidgetEditHandler(handler);
+	}
+	
+	public void removeAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler) {
+		widgets.get(a.getID()).removeAnnotationWidgetEditHandler(handler);
+	}
+	
+	public void setAnnotation(String id, Annotation updated) {
+		AnnotationWidget widget = widgets.get(id);
+		if (widget != null) {
+			widget.setAnnotation(updated);
+			widgets.remove(id);
+			widgets.put(updated.getID(), widget);
+		}
 	}
 	
 	public void edit(Annotation a) {
-		AnnotationWidget widget = widgets.get(a);
+		AnnotationWidget widget = widgets.get(a.getID());
 		if (widget != null) {
 			widget.edit();
 			commentWidget.setVisible(false);

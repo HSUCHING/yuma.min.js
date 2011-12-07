@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.ui;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import at.ait.dme.yumaJS.client.YUMA;
@@ -62,7 +63,7 @@ public class AnnotationWidget extends Composite {
 		
 	private boolean isEditing = false;
 	
-	private AnnotationWidgetEditHandler handler = null;
+	private ArrayList<AnnotationWidgetEditHandler> handlers = new ArrayList<AnnotationWidgetEditHandler>();
 	
 	private Annotation annotation;
 	
@@ -156,11 +157,15 @@ public class AnnotationWidget extends Composite {
 		initWidget(container);
 	}
 	
-	public void setAnnotationWidgetEditHandler(AnnotationWidgetEditHandler handler) {
-		this.handler = handler;
+	public void addAnnotationWidgetEditHandler(AnnotationWidgetEditHandler handler) {
+		handlers.add(handler);
 	}
 	
-	public void setAnnotation(Annotation a) {			
+	public void removeAnnotationWidgetEditHandler(AnnotationWidgetEditHandler handler) {
+		handlers.remove(handler);
+	}
+	
+	public void setAnnotation(Annotation a) {	
 		annotation = a;
 		
 		// Username will be undefined in server-less mode!
@@ -196,8 +201,9 @@ public class AnnotationWidget extends Composite {
 		isEditing = true;
 		setVisible(true);
 		
-		if (handler != null)
-			handler.onStartEditing();
+		for (AnnotationWidgetEditHandler h : handlers) {
+			h.onStartEditing();			
+		}
 		
 		if (fragmentWidget != null)
 			fragmentWidget.startEditing();
@@ -232,9 +238,10 @@ public class AnnotationWidget extends Composite {
 						}
 					});
 				}	
-								
-				if (handler != null)
-					handler.onSave(annotation);
+					
+				for (AnnotationWidgetEditHandler h : handlers) {
+					h.onSave(annotation);		
+				}
 				
 				commentField.removeFromParent();
 				isEditing = false;
@@ -246,8 +253,9 @@ public class AnnotationWidget extends Composite {
 				if (fragmentWidget != null)
 					fragmentWidget.cancelEditing();
 				
-				if (handler != null)
-					handler.onCancel();
+				for (AnnotationWidgetEditHandler h : handlers) {
+					h.onCancel();		
+				}
 
 				commentField.removeFromParent();
 				isEditing = false;

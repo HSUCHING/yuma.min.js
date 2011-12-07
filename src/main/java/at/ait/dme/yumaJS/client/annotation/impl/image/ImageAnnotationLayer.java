@@ -17,6 +17,8 @@ import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -219,12 +221,17 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		final CompoundOverlay overlay = overlays.get(empty.getID());
 		
 		// It's a new annotation - we'll listen to the first save/cancel
-		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
+		overlay.addAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
 			public void onStartEditing() { }
 			
 			public void onSave(Annotation a) { 
-				// If save, just remove the listener
-				overlay.setAnnotationWidgetEditHandler(empty, null);
+				// If save, just remove the handler
+				final AnnotationWidgetEditHandler self = this;
+				Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+					public void execute() {
+						overlay.removeAnnotationWidgetEditHandler(empty, self);	
+					}
+				});
 			}
 			
 			public void onCancel() {

@@ -79,6 +79,7 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 		editingLayer.setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight() + 2);
 	}
 
+	/*
 	public void setAnnotationWidgetEditHandler(Annotation a, final AnnotationWidgetEditHandler handler) {
 		annotationWidget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
 			public void onStartEditing() { }
@@ -94,6 +95,15 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 					handler.onCancel();
 			}
 		});		
+	}
+	*/
+	
+	public void addAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler) {
+		annotationWidget.addAnnotationWidgetEditHandler(handler);
+	}
+
+	public void removeAnnotationWidgetEditHandler(Annotation a,	AnnotationWidgetEditHandler handler) {
+		annotationWidget.removeAnnotationWidgetEditHandler(handler);
 	}
 	
 	public void updateAnnotation(String id, Annotation updated) {

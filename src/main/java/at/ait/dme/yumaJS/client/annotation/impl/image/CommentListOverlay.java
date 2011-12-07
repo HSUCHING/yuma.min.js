@@ -84,16 +84,21 @@ public class CommentListOverlay implements CompoundOverlay {
 		BoundingBox bbox = bboxOverlay.getBoundingBox();
 		annotationLayer.add(annotationListWidget, bbox.getX(), bbox.getY() + bbox.getHeight() + 2);		
 	}
-
-	public void setAnnotationWidgetEditHandler(Annotation a,
+	
+	public void addAnnotationWidgetEditHandler(Annotation a,
 			AnnotationWidgetEditHandler handler) {
 		
-		annotationListWidget.setAnnotationWidgetEditHandler(a, handler);
+		annotationListWidget.addAnnotationWidgetEditHandler(a, handler);
+	}
+
+	public void removeAnnotationWidgetEditHandler(Annotation a,
+			AnnotationWidgetEditHandler handler) {
+		
+		annotationListWidget.removeAnnotationWidgetEditHandler(a, handler);
 	}
 
 	public void updateAnnotation(String id, Annotation updated) {
-		// TODO Auto-generated method stub
-		
+		annotationListWidget.setAnnotation(id, updated);
 	}
 	
 	public void edit(Annotation a) {
