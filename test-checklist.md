@@ -27,6 +27,8 @@ edited, pan and zoom the map to ensure the bounding boxes stay correctly aligned
 
 # Image Annotation - replies
 
+Repeat the tests 2 times: (i) in serverless mode and (ii) with annotation server.
+
 1. Create an annotation and click CANCEL. Confirm the annotation is removed from the GUI.
 2. Create an annotation and click OK. DO NOT use default bounding box size and location!
    a) Confirm the mouseover behavior works as intended.
