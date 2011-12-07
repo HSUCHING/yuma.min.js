@@ -81,6 +81,8 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 
 	public void setAnnotationWidgetEditHandler(Annotation a, final AnnotationWidgetEditHandler handler) {
 		annotationWidget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
+			public void onStartEditing() { }
+			
 			public void onSave(Annotation annotation) {
 				if (handler != null)
 					handler.onSave(annotation);

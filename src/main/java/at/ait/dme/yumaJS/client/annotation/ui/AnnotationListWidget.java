@@ -43,20 +43,15 @@ public class AnnotationListWidget extends Composite {
 		this.annotatable = annotatable;
 		
 		container = new FlowPanel();
-		container.setStyleName("yuma-annotation-list");		
+		container.setStyleName("yuma-annotation-list");	
+		
 		container.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				if (!widgets.get(a).isEditing())
 					commentWidget.setVisible(true);
 			}
 		}, MouseOverEvent.getType());
-		
-		AnnotationWidget rootAnnotationWidget = 
-				new AnnotationWidget(a, fragmentWidget, annotatable);
-		widgets.put(a, rootAnnotationWidget);
-		
-		container.add(rootAnnotationWidget);	
-		
+	
 		commentWidget = new CommentWidget(annotatable.getLabels(), false);
 		commentWidget.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -67,26 +62,52 @@ public class AnnotationListWidget extends Composite {
 						annotatable.getMediaType(), 
 						commentWidget.getText(), 
 						null));
-				commentWidget.setVisible(false);
+				setVisible(false);
 			}
 		});
 		
-		container.add(commentWidget);
 		commentWidget.setVisible(false);
+		container.add(commentWidget);
+		
+		addToList(a, fragmentWidget);
+		
 		initWidget(container);
+	}
+	
+	private void addToList(Annotation a) {
+		addToList(a, null);
+	}
+	
+	private void addToList(Annotation a, FragmentWidget f) {
+		AnnotationWidget widget = new AnnotationWidget(a, f, annotatable); 
+		widget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
+			public void onStartEditing() { 
+				commentWidget.setVisible(false);
+			}
+			
+			public void onSave(Annotation annotation) {
+				// Do nothing
+			}
+			
+			public void onCancel() {
+				// Do nothing
+			}
+		});
+		
+		widgets.put(a, widget);
+		container.insert(widget, container.getWidgetCount() - 1);
+		commentWidget.clear();
 	}
 	
 	@Override
 	public void setVisible(boolean visible) {
+		container.setVisible(visible);
 		for (AnnotationWidget widget : widgets.values()) {
 			widget.setVisible(visible);
 		}
-	}
-	
-	private void addToList(Annotation a) {
-		AnnotationWidget widget = new AnnotationWidget(a, null, annotatable); 
-		widgets.put(a, widget);
-		container.insert(widget, container.getWidgetCount() - 1);
+		
+		// Always keep the commentWidget hidden initally
+		commentWidget.setVisible(false);
 	}
 	
 	public void setAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler) {
@@ -95,8 +116,20 @@ public class AnnotationListWidget extends Composite {
 	
 	public void edit(Annotation a) {
 		AnnotationWidget widget = widgets.get(a);
-		if (widget != null)
+		if (widget != null) {
 			widget.edit();
+			commentWidget.setVisible(false);
+		}
+	}
+	
+	public boolean isEditing() {
+		boolean isEditing = false;
+		for (AnnotationWidget widget : widgets.values()) {
+			if (widget.isEditing())
+				isEditing = true;
+		}
+		
+		return isEditing || commentWidget.hasFocus();
 	}
 	
 	public boolean contains(int x, int y) {

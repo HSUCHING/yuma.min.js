@@ -99,6 +99,11 @@ public class CommentWidget extends Composite {
 		textArea.setFocus(focused);
 	}
 	
+	public void clear() {
+		textArea.setText(null);
+		textArea.setFocus(false);
+	}
+	
 	public HandlerRegistration addSaveClickHandler(ClickHandler handler) {
 		return btnSave.addClickHandler(handler);
 	}

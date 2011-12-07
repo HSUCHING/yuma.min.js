@@ -20,6 +20,13 @@ Compile the project and repeat all tests outside of hosted mode.
 # Image Annotation - replies
 
 1. Create an annotation and click CANCEL. Confirm the annotation is removed from the GUI.
+2. Create an annotation and click OK. DO NOT use default bounding box size and location!
+   Confirm the mouseover behavior works as intended.
+3. Edit the annotation (change text AND move/change bounding box). Click CANCEL and confirm 
+   it works as intended (including mouseover behavior).
+4. Edit the annotation (change text AND move/change bounding box). Click OK and confirm 
+   it works as intended (including mouseover behavior).
+5. Delete the annotation again and confirm it works as intended.
 
 # OpenLayers Annotation - no replies
 

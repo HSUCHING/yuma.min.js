@@ -215,6 +215,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		
 		// It's a new annotation - we'll listen to the first save/cancel
 		overlay.setAnnotationWidgetEditHandler(empty, new AnnotationWidgetEditHandler() {
+			public void onStartEditing() { }
+			
 			public void onSave(Annotation a) { 
 				// If save, just remove the listener
 				overlay.setAnnotationWidgetEditHandler(empty, null);

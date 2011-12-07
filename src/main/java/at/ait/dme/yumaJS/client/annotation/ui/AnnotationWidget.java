@@ -193,6 +193,9 @@ public class AnnotationWidget extends Composite {
 		isEditing = true;
 		setVisible(true);
 		
+		if (handler != null)
+			handler.onStartEditing();
+		
 		if (fragmentWidget != null)
 			fragmentWidget.startEditing();
 		
@@ -281,6 +284,7 @@ public class AnnotationWidget extends Composite {
 			style.setVisibility(Visibility.VISIBLE);
 			style.setOpacity(1);
 		} else {
+			buttonPanel.setVisible(false);
 			style.setVisibility(Visibility.HIDDEN);
 			style.setOpacity(0);
 		}
@@ -308,6 +312,8 @@ public class AnnotationWidget extends Composite {
 	}
 	
 	public interface AnnotationWidgetEditHandler {
+		
+		public void onStartEditing();
 
 		public void onSave(Annotation annotation);
 		

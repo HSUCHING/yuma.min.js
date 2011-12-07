@@ -44,6 +44,7 @@ public class CommentListOverlay implements CompoundOverlay {
 		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
+				refresh();
 				annotationListWidget.setVisible(true);
 			}
 		});
@@ -66,7 +67,15 @@ public class CommentListOverlay implements CompoundOverlay {
 			}
 		});
 		
-		this.annotationListWidget = new AnnotationListWidget(rootAnnotation, bboxOverlay, annotatable);
+		annotationListWidget = new AnnotationListWidget(rootAnnotation, bboxOverlay, annotatable);
+		
+		annotationListWidget.addDomHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				if (!annotationListWidget.isEditing())
+					annotationListWidget.setVisible(false);
+			}
+		}, MouseOutEvent.getType());
+		
 		annotationLayer.add(annotationListWidget);		
 		refresh();
 	}
