@@ -182,8 +182,13 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	public void removeAnnotation(Annotation a) {
 		CompoundOverlay overlay = overlays.get(a.getID());
 		if (overlay != null) {
+			// No-reply mode, or reply mode + root annotation
 			overlay.destroy();
 			overlays.remove(a.getID());
+		} else if (getRepliesEnabled() && (a.getIsReplyTo() != null)) {
+			overlay = overlays.get(a.getIsReplyTo());
+			if (overlay != null)
+				overlay.removeAnnotation(a.getID()); 
 		}
 	}
 	

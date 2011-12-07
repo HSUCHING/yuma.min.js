@@ -106,6 +106,10 @@ public class CommentListOverlay implements CompoundOverlay {
 		annotationListWidget.setAnnotation(id, updated);
 	}
 	
+	public void removeAnnotation(String id) {
+		annotationListWidget.removeFromList(id);
+	}
+	
 	public void edit(Annotation a) {
 		annotationListWidget.edit(a);
 	}

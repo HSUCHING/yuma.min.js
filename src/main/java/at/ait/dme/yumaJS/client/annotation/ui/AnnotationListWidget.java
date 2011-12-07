@@ -104,6 +104,14 @@ public class AnnotationListWidget extends Composite {
 		commentWidget.clear();
 	}
 	
+	public void removeFromList(String id) {
+		AnnotationWidget widget = widgets.get(id);
+		if (widget != null) {
+			container.remove(widget);
+			widgets.remove(id);
+		}
+	}
+	
 	@Override
 	public void setVisible(boolean visible) {
 		container.setVisible(visible);

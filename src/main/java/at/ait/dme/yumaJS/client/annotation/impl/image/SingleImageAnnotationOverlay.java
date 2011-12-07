@@ -96,6 +96,11 @@ public class SingleImageAnnotationOverlay implements CompoundOverlay {
 		annotationWidget.setAnnotation(updated);
 	}
 	
+	public void removeAnnotation(String id) {
+		// Not supported by this CompoundOverlayType
+		// use destroy() instead!
+	}
+	
 	public void edit(Annotation a) {
 		annotationWidget.edit();
 	}

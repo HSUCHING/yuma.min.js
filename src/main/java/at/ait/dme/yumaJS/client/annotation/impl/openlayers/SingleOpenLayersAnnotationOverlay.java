@@ -78,25 +78,6 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 		BoundingBox bbox = boxOverlay.getBoundingBox();
 		editingLayer.setWidgetPosition(annotationWidget, bbox.getX(), bbox.getY() +  bbox.getHeight() + 2);
 	}
-
-	/*
-	public void setAnnotationWidgetEditHandler(Annotation a, final AnnotationWidgetEditHandler handler) {
-		annotationWidget.setAnnotationWidgetEditHandler(new AnnotationWidgetEditHandler() {
-			public void onStartEditing() { }
-			
-			public void onSave(Annotation annotation) {
-				if (handler != null)
-					handler.onSave(annotation);
-			}
-			
-			public void onCancel() {
-				refresh();
-				if (handler != null)
-					handler.onCancel();
-			}
-		});		
-	}
-	*/
 	
 	public void addAnnotationWidgetEditHandler(Annotation a, AnnotationWidgetEditHandler handler) {
 		annotationWidget.addAnnotationWidgetEditHandler(handler);
@@ -108,6 +89,11 @@ public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
 	
 	public void updateAnnotation(String id, Annotation updated) {
 		annotationWidget.setAnnotation(updated);
+	}
+	
+	public void removeAnnotation(String id) {
+		// Not supported by this CompoundOverlayType
+		// use destroy() instead!
 	}
 	
 	public BoxMarker getMarker() {
