@@ -88,6 +88,7 @@ public class AnnotationListWidget extends Composite {
 		
 		commentWidget.setVisible(false);
 		container.add(commentWidget);
+		container.setVisible(false);
 		
 		addToList(a, fragmentWidget);
 		
@@ -131,7 +132,7 @@ public class AnnotationListWidget extends Composite {
 		commentWidget.clear();
 		container.remove(commentWidget);
 		
-		container.add(widget); //  container.getWidgetCount() - 1);
+		container.add(widget);
 		container.add(commentWidget);
 	}
 	
