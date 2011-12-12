@@ -164,7 +164,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		if (a.getIsReplyTo() == null) {
 			// Add new overlay
 			final CompoundOverlay overlay = (getRepliesEnabled()) ? 
-					new CommentListOverlay(a, this, annotationLayer) :
+					new CommentListImageOverlay(a, this, annotationLayer) :
 					new SingleImageAnnotationOverlay(a, this, annotationLayer);
 
 			overlays.put(a.getID(), overlay);
@@ -172,7 +172,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		} else {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
-				CommentListOverlay overlay = (CommentListOverlay) overlays.get(a.getIsReplyTo());
+				CommentListImageOverlay overlay = (CommentListImageOverlay) overlays.get(a.getIsReplyTo());
 				if (overlay != null)
 					overlay.addToList(a);
 			}

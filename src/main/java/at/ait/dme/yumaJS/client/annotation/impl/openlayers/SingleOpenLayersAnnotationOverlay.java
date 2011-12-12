@@ -18,7 +18,7 @@ import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 
-public class SingleOpenLayersAnnotationOverlay implements CompoundOverlay {
+public class SingleOpenLayersAnnotationOverlay implements OpenLayersCompoundOverlay {
 
 	private AbsolutePanel editingLayer;
 	

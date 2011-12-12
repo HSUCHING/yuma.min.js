@@ -117,6 +117,10 @@ html {
 	background:#999;
 }
 
+.yuma-annotation-list {
+	z-index:99010;
+}
+
 .yuma-annotation {
 	clear:both;
 	padding-top:1px;

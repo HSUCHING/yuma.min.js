@@ -49,8 +49,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	private AbsolutePanel editingLayer;
 	
 	// { annotationID -> overlay }
-	private HashMap<String, CompoundOverlay> overlays = 
-		new HashMap<String, CompoundOverlay>();
+	private HashMap<String, OpenLayersCompoundOverlay> overlays = 
+		new HashMap<String, OpenLayersCompoundOverlay>();
 	
 	private int annotationCtr = 0;
 	
@@ -168,12 +168,59 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		if (annotation.getID() == null)
 			annotation.setID("unassigned-" + Integer.toString(annotationCtr++));
 		
-		SingleOpenLayersAnnotationOverlay overlay = 
-			new SingleOpenLayersAnnotationOverlay(annotation, annotationLayer, editingLayer, this);
+		if (annotation.getIsReplyTo() == null) {
+			// Add new overlay
+			final OpenLayersCompoundOverlay overlay = (getRepliesEnabled()) ? 
+					new CommentListOpenLayersOverlay(annotation, annotationLayer, editingLayer, this) :
+					new SingleOpenLayersAnnotationOverlay(annotation, annotationLayer, editingLayer, this);
 
-		overlays.put(annotation.getID(), overlay);
-		redraw();
-		fireOnAnnotationCreated(annotation);
+			overlays.put(annotation.getID(), overlay);
+			redraw();
+		} else {
+			// Reply - ignore if replies are not enabled!
+			if (getInitParams().isRepliesEnabled()) {
+				CommentListOpenLayersOverlay overlay = (CommentListOpenLayersOverlay) overlays.get(annotation.getIsReplyTo());
+				if (overlay != null)
+					overlay.addToList(annotation);
+			}
+		}
+	}
+
+	@Override
+	public void removeAnnotation(Annotation annotation) {
+		OpenLayersCompoundOverlay overlay = overlays.get(annotation.getID());
+		if (overlay != null) {
+			// No-reply mode, or reply mode + root annotation
+			annotationLayer.removeMarker(overlay.getMarker());
+			overlay.destroy();
+			overlays.remove(annotation.getID());
+		} else if (getRepliesEnabled() && (annotation.getIsReplyTo() != null)) {
+			overlay = overlays.get(annotation.getIsReplyTo());
+			if (overlay != null)
+				overlay.removeAnnotation(annotation.getID());
+		}
+	}
+	
+	@Override
+	public void updateAnnotation(String id, Annotation updated) {
+		OpenLayersCompoundOverlay overlay = overlays.get(id);
+		
+		if (overlay != null) {
+			// No-reply mode, or reply mode + root annotation
+			overlay.updateAnnotation(id, updated);
+			overlays.remove(id);
+			overlays.put(updated.getID(), overlay);
+			redraw();
+		} else if (getRepliesEnabled() && (updated.getIsReplyTo() != null)) { 
+			// Reply mode + reply annotation
+			overlay = overlays.get(updated.getIsReplyTo());
+			if (overlay != null) {
+				overlay.updateAnnotation(id, updated);
+				overlays.remove(id);
+				overlays.put(updated.getID(), overlay);
+				redraw();
+			}
+		}
 	}
 	
 	private void redraw() {
@@ -188,27 +235,6 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		for (CompoundOverlay overlay : sortedOverlays) {
 			overlay.setZIndex(zIndex);
 			zIndex++;
-		}
-	}
-
-	@Override
-	public void removeAnnotation(Annotation annotation) {
-		CompoundOverlay overlay = overlays.get(annotation.getID());
-		if (overlay != null) {
-			annotationLayer.removeMarker(((SingleOpenLayersAnnotationOverlay) overlay).getMarker());
-			overlay.destroy();
-			overlays.remove(annotation);
-		} 
-	}
-	
-	@Override
-	public void updateAnnotation(String id, Annotation updated) {
-		CompoundOverlay overlay = overlays.get(id);
-		if (overlay != null) {
-			overlay.updateAnnotation(id, updated);
-			overlays.remove(id);
-			overlays.put(updated.getID(), overlay);
-			redraw();
 		}
 	}
 	

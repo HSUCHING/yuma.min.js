@@ -28,7 +28,7 @@ import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHand
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class CommentListOverlay implements CompoundOverlay {
+public class CommentListImageOverlay implements CompoundOverlay {
 	
 	private ImageFragmentWidget bboxOverlay;
 	
@@ -36,7 +36,7 @@ public class CommentListOverlay implements CompoundOverlay {
 	
 	private AbsolutePanel annotationLayer;
 	
-	public CommentListOverlay(Annotation rootAnnotation, Annotatable annotatable, 
+	public CommentListImageOverlay(Annotation rootAnnotation, Annotatable annotatable, 
 			final AbsolutePanel annotationLayer) {
 
 		this.annotationLayer = annotationLayer;
@@ -136,10 +136,10 @@ public class CommentListOverlay implements CompoundOverlay {
 	}
 
 	public int compareTo(CompoundOverlay other) {
-		if (!(other instanceof CommentListOverlay))
+		if (!(other instanceof CommentListImageOverlay))
 			return 0;
 		
-		CommentListOverlay overlay = (CommentListOverlay) other;
+		CommentListImageOverlay overlay = (CommentListImageOverlay) other;
 		
 		// Delegate to bbox overlay
 		return bboxOverlay.compareTo(overlay.bboxOverlay);
