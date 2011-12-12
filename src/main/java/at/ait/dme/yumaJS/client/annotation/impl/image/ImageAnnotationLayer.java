@@ -158,7 +158,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		// and annotations in server-less mode, we'll assign a temporary ID here.
 		// Don't really like this solution but it seems to be the only viable one.
 		// (I'm open for suggestions, though!)
-		if (a.getID() == null && getServerURL() == null)
+		if (a.getID() == null)
 			a.setID("unassigned-" + Integer.toString(annotationCtr++));
 			
 		if (a.getIsReplyTo() == null) {
@@ -172,8 +172,9 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		} else {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
-				// ImageAnnotationOverlay overlay = overlays.get(a.getIsReplyTo());
-				// ((ReplyEnabledInfoPopup) overlay.getDetailsPopup()).addReply(a);
+				CommentListOverlay overlay = (CommentListOverlay) overlays.get(a.getIsReplyTo());
+				if (overlay != null)
+					overlay.addToList(a);
 			}
 		}
 	}
@@ -195,7 +196,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	@Override
 	public void updateAnnotation(String id, Annotation updated) {
 		CompoundOverlay overlay = overlays.get(id);
-
+		
 		if (overlay != null) {
 			// No-reply mode, or reply mode + root annotation
 			overlay.updateAnnotation(id, updated);
@@ -205,8 +206,12 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		} else if (getRepliesEnabled() && (updated.getIsReplyTo() != null)) { 
 			// Reply mode + reply annotation
 			overlay = overlays.get(updated.getIsReplyTo());
-			if (overlay != null) 
+			if (overlay != null) {
 				overlay.updateAnnotation(id, updated);
+				overlays.remove(id);
+				overlays.put(updated.getID(), overlay);
+				redraw();
+			}
 		}
 	}
 	

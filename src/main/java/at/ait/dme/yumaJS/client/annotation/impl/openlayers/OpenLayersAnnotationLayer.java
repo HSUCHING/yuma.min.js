@@ -165,7 +165,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		// and annotations in server-less mode, we'll assign a temporary ID here.
 		// Don't really like this solution but it seems to be the only viable one.
 		// (I'm open for suggestions, though!)
-		if (annotation.getID() == null && getServerURL() == null)
+		if (annotation.getID() == null)
 			annotation.setID("unassigned-" + Integer.toString(annotationCtr++));
 		
 		SingleOpenLayersAnnotationOverlay overlay = 

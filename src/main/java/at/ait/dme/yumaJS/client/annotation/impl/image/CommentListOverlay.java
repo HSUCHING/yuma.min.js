@@ -103,6 +103,10 @@ public class CommentListOverlay implements CompoundOverlay {
 		
 		annotationListWidget.addAnnotationWidgetEditHandler(a, handler);
 	}
+	
+	public void addToList(Annotation a) {
+		annotationListWidget.addToList(a);
+	}
 
 	public void removeAnnotationWidgetEditHandler(Annotation a,
 			AnnotationWidgetEditHandler handler) {
@@ -131,9 +135,14 @@ public class CommentListOverlay implements CompoundOverlay {
 		annotationListWidget.removeFromParent();
 	}
 
-	public int compareTo(CompoundOverlay o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(CompoundOverlay other) {
+		if (!(other instanceof CommentListOverlay))
+			return 0;
+		
+		CommentListOverlay overlay = (CommentListOverlay) other;
+		
+		// Delegate to bbox overlay
+		return bboxOverlay.compareTo(overlay.bboxOverlay);
 	}
 	
 }

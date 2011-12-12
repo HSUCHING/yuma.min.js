@@ -2,15 +2,19 @@ package at.ait.dme.yumaJS.client.annotation.ui;
 
 import java.util.HashMap;
 
+import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
+import at.ait.dme.yumaJS.client.io.Create;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
@@ -54,16 +58,31 @@ public class AnnotationListWidget extends Composite {
 		commentWidget = new CommentWidget(annotatable.getLabels(), false);
 		commentWidget.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				addToList(Annotation.create(
+				Annotation reply = Annotation.create(
 						annotatable.getObjectURI(), 
 						Document.get().getURL(), 
 						Document.get().getTitle(), 
 						annotatable.getMediaType(), 
 						commentWidget.getText(), 
 						null,
-						a.getID()));
+						getRootAnnotation().getID());
+		
+				if (annotatable.getServerURL() == null) {
+					addToList(reply);
+				} else {
+					Create.executeJSONP(annotatable.getServerURL(), reply, new AsyncCallback<JavaScriptObject>() {
+						public void onSuccess(JavaScriptObject result) {
+							addToList((Annotation) result);
+						}			
+
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}				
+				
+				setVisible(false);				
 				commentWidget.setFocus(false);
-				setVisible(false);
 			}
 		});
 		
@@ -75,12 +94,16 @@ public class AnnotationListWidget extends Composite {
 		initWidget(container);
 	}
 	
+	private Annotation getRootAnnotation() {
+		return ((AnnotationWidget) container.getWidget(0)).getAnnotation();
+	}
+	
 	public void showCommentWidget() {
 		if (!isEditing())
 			commentWidget.setVisible(true);
 	}
 	
-	private void addToList(Annotation a) {
+	public void addToList(Annotation a) {
 		addToList(a, null);
 	}
 	
@@ -104,8 +127,12 @@ public class AnnotationListWidget extends Composite {
 		});
 		
 		widgets.put(a.getID(), widget);
-		container.insert(widget, container.getWidgetCount() - 1);
+		
 		commentWidget.clear();
+		container.remove(commentWidget);
+		
+		container.add(widget); //  container.getWidgetCount() - 1);
+		container.add(commentWidget);
 	}
 	
 	public void removeFromList(String id) {

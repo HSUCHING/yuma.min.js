@@ -191,6 +191,10 @@ public class AnnotationWidget extends Composite {
 			timestamp.setVisible(false);
 		}
 	}
+	
+	public Annotation getAnnotation() {
+		return annotation;
+	}
 
 	private native String toHTML(String text) /*-{
     	var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
@@ -213,7 +217,7 @@ public class AnnotationWidget extends Composite {
 
 		// Add comment field in place
 		commentWidget = new CommentWidget(annotation.getText(), annotatable.getLabels(), true);
-		 
+		
 		commentWidget.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {	
 				if (fragmentWidget != null) {

@@ -12,7 +12,7 @@ public class Create {
 	
 	private static final String JSONP_PATH = "api/annotation/jsonp/create?json=";
 	
-	public static void executeJSONP(String serverURL, Annotation a, AsyncCallback<JavaScriptObject> callback) {
+	public static void executeJSONP(String serverURL, Annotation a, AsyncCallback<JavaScriptObject> callback) {	
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		JSONObject json = new JSONObject(a);
 		
@@ -20,7 +20,18 @@ public class Create {
 		if (json.containsKey("$H"))
 			json.put("$H", null);
 		
-		jsonp.requestObject(serverURL + JSONP_PATH + URL.encodeQueryString(json.toString()), callback);
+		// Remove the annotation's ID if it is a temporary one. Refer to documentation
+		// in the addAnnotation() method of subclasses of Annotatable for more info.
+		// Note: I don't like this workaround at all, but have yet to come up with a 
+		// better solution...
+		String id = a.getID();
+		if (id != null && id.startsWith("unassigned")) {
+			a.setID(null);
+			jsonp.requestObject(serverURL + JSONP_PATH + URL.encodeQueryString(json.toString()), callback);
+			a.setID(id);
+		} else {
+			jsonp.requestObject(serverURL + JSONP_PATH + URL.encodeQueryString(json.toString()), callback);
+		}
 	}
 
 }

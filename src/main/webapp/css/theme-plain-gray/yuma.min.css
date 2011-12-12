@@ -48,6 +48,7 @@ html {
 }
 
 .yuma-comment {
+	display:inline-block;
 	line-height:100%;
 	margin:3px 0px 0px 1px;
 	padding:1px 1px 0px 1px;
@@ -114,11 +115,6 @@ html {
 
 .yuma-comment .yuma-button:hover {
 	background:#999;
-}
-
-.yuma-annotation-list {
-	padding-top:2px;
-	background-image:url('1px-transp.png');
 }
 
 .yuma-annotation {
