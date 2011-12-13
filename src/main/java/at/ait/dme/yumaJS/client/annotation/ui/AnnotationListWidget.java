@@ -90,6 +90,7 @@ public class AnnotationListWidget extends Composite {
 		});
 		
 		container.add(commentWidget);
+		commentWidget.setVisible(false);
 		container.setVisible(false);
 		
 		addToList(a, fragmentWidget);
