@@ -152,6 +152,7 @@ public class AnnotationListWidget extends Composite {
 		}
 		
 		// Always keep the commentWidget hidden initally
+		commentWidget.setFocus(false);
 		commentWidget.setVisible(false);
 	}
 	
@@ -173,6 +174,7 @@ public class AnnotationListWidget extends Composite {
 	}
 	
 	public void edit(Annotation a) {
+		container.setVisible(true);
 		AnnotationWidget widget = widgets.get(a.getID());
 		if (widget != null) {
 			widget.edit();

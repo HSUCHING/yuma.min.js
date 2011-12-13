@@ -35,8 +35,8 @@ public class TestOpenLayersHosted implements EntryPoint {
 	
 	private native InitParams createInitParams() /*-{
 		return {
-			enableReplies:true,
-			serverURL:"http://dme.ait.ac.at/yuma4j-server"
+			enableReplies:true
+			// serverURL:"http://dme.ait.ac.at/yuma4j-server"
 		};
 	}-*/;
 	
