@@ -119,6 +119,9 @@ html {
 
 .yuma-annotation-list {
 	z-index:99010;
+	transition:visibility 0.2s linear 0s, opacity 0.2s linear;
+	-moz-transition:visibility 0.2s linear 0s, opacity 0.2s linear;
+	-webkit-transition:visibility 0.2s linear 0s, opacity 0.2s linear;
 }
 
 .yuma-annotation {
@@ -127,15 +130,9 @@ html {
 	white-space:nowrap;
 	z-index:99011;
 	opacity:0;
-	transition:visibility 0.15s linear 0s, opacity 0.15s linear;
-	-moz-transition:visibility 0.15s linear 0s, opacity 0.15s linear;
-	-webkit-transition:visibility 0.15s linear 0s, opacity 0.15s linear;
-}
-
-.yuma-annotation:hover {
-	transition-delay:0s;
-	-moz-transition-delay:0s;
-	-webkit-transition-delay:0s;
+	transition:visibility 0.2s linear 0s, opacity 0.2s linear;
+	-moz-transition:visibility 0.2s linear 0s, opacity 0.2s linear;
+	-webkit-transition:visibility 0.2s linear 0s, opacity 0.2s linear;
 }
 
 .yuma-annotation-content {

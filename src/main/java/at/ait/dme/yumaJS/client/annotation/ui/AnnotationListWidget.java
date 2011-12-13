@@ -10,6 +10,9 @@ import at.ait.dme.yumaJS.client.io.Create;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -86,12 +89,12 @@ public class AnnotationListWidget extends Composite {
 			}
 		});
 		
-		commentWidget.setVisible(false);
 		container.add(commentWidget);
 		container.setVisible(false);
 		
 		addToList(a, fragmentWidget);
 		
+		container.getElement().getStyle().setDisplay(Display.BLOCK);
 		initWidget(container);
 	}
 	
@@ -146,7 +149,15 @@ public class AnnotationListWidget extends Composite {
 	
 	@Override
 	public void setVisible(boolean visible) {
-		container.setVisible(visible);
+		Style style = container.getElement().getStyle();
+		if (visible) {
+			style.setOpacity(1);
+			style.setVisibility(Visibility.VISIBLE);
+		} else {
+			style.setOpacity(0);
+			style.setVisibility(Visibility.HIDDEN);
+		}
+		
 		for (AnnotationWidget widget : widgets.values()) {
 			widget.setVisible(visible);
 		}
@@ -175,6 +186,8 @@ public class AnnotationListWidget extends Composite {
 	
 	public void edit(Annotation a) {
 		container.setVisible(true);
+		container.getElement().getStyle().setOpacity(1);
+		
 		AnnotationWidget widget = widgets.get(a.getID());
 		if (widget != null) {
 			widget.edit();
