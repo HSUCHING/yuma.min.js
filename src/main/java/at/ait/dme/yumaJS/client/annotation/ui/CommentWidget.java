@@ -7,6 +7,9 @@ import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -57,6 +60,14 @@ public class CommentWidget extends Composite {
 			}
 		});
 		
+		textArea.addKeyUpHandler(new KeyUpHandler() {
+			public void onKeyUp(KeyUpEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
+					clear();
+				}
+			}
+		});
+		
 		if (labels == null) {
 			btnSave = new PushButton("OK");
 			btnCancel = new PushButton("CANCEL");
@@ -96,6 +107,7 @@ public class CommentWidget extends Composite {
 	}
 	
 	public void setFocus(boolean focused) {
+		hasFocus = focused;
 		textArea.setFocus(focused);
 	}
 	

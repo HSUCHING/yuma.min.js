@@ -57,7 +57,9 @@ public class CommentListOpenLayersOverlay implements OpenLayersCompoundOverlay {
 		bboxOverlay.setEventListener(new EventListener() {
 			public void onBrowserEvent(Event event) {
 				if (event.getTypeInt() == Event.ONMOUSEOUT) {
-					if (!annotationListWidget.contains(event.getClientX(), event.getClientY()))
+					if (!annotationListWidget.contains(event.getClientX(), event.getClientY())
+						&& !annotationListWidget.isEditing())
+						
 						annotationListWidget.setVisible(false);
 				} else if (event.getTypeInt() == Event.ONMOUSEWHEEL) {
 					Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -66,8 +68,10 @@ public class CommentListOpenLayersOverlay implements OpenLayersCompoundOverlay {
 						}
 					});
 				} else {
-					refresh();
-					annotationListWidget.setVisible(true);
+					if (!annotationListWidget.isEditing()) {
+						refresh();
+						annotationListWidget.setVisible(true);
+					}
 				}
 			}
 		});
