@@ -186,8 +186,9 @@ public class AnnotationListWidget extends Composite {
 	}
 	
 	public void edit(Annotation a) {
-		container.setVisible(true);
-		container.getElement().getStyle().setOpacity(1);
+		Style style = container.getElement().getStyle();
+		style.setVisibility(Visibility.VISIBLE);
+		style.setOpacity(1);
 		
 		AnnotationWidget widget = widgets.get(a.getID());
 		if (widget != null) {
