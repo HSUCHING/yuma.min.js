@@ -216,9 +216,6 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 			overlay = overlays.get(updated.getIsReplyTo());
 			if (overlay != null) {
 				overlay.updateAnnotation(id, updated);
-				overlays.remove(id);
-				overlays.put(updated.getID(), overlay);
-				redraw();
 			}
 		}
 	}
