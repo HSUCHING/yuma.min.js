@@ -1,6 +1,7 @@
 package at.ait.dme.yumaJS.client;
 
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
+import at.ait.dme.yumaJS.client.auth.AuthWidget;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -12,6 +13,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class TestImageHosted implements EntryPoint {
 
 	public void onModuleLoad() {
+		// OpenID auth widget
+		new AuthWidget("yuma-auth");
+		
+		// Image annotation layer
 		final ImageAnnotationLayer annotationLayer = 
 			new ImageAnnotationLayer("annotateMe", createInitParams());
 		
