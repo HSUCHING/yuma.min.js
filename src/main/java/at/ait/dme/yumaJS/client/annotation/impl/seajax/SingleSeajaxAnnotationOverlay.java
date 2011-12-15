@@ -20,7 +20,7 @@ import at.ait.dme.yumaJS.client.init.Labels;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class ZoomableAnnotationOverlay {
+public class SingleSeajaxAnnotationOverlay {
 	
 	private SeadragonViewer viewer;
 	
@@ -30,7 +30,7 @@ public class ZoomableAnnotationOverlay {
 	
 	// private InfoPopup detailsPopup;
 	
-	public ZoomableAnnotationOverlay(Annotation annotation, Annotatable annotatable, SeadragonViewer viewer, Labels labels) {
+	public SingleSeajaxAnnotationOverlay(Annotation annotation, Annotatable annotatable, SeadragonViewer viewer, Labels labels) {
 		this.viewer = viewer;
 		
 		BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());

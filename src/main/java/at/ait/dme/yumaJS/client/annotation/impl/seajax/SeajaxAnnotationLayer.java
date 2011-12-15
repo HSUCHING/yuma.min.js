@@ -43,8 +43,8 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	
 	private SeadragonViewer viewer;
 	
-	private HashMap<Annotation, ZoomableAnnotationOverlay> annotations = 
-		new HashMap<Annotation, ZoomableAnnotationOverlay>();
+	private HashMap<Annotation, SingleSeajaxAnnotationOverlay> annotations = 
+		new HashMap<Annotation, SingleSeajaxAnnotationOverlay>();
 
 	public SeajaxAnnotationLayer(String id, JavaScriptObject deepZoomViewer) {
 		this(id, deepZoomViewer, null);
@@ -134,15 +134,15 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public void addAnnotation(Annotation a) {
-		ZoomableAnnotationOverlay overlay = 
-			new ZoomableAnnotationOverlay(a, this, viewer, getLabels());		
+		SingleSeajaxAnnotationOverlay overlay = 
+			new SingleSeajaxAnnotationOverlay(a, this, viewer, getLabels());		
 		annotations.put(a, overlay);
 		fireOnAnnotationCreated(a);
 	}
 
 	@Override
 	public void removeAnnotation(Annotation a) {
-		ZoomableAnnotationOverlay overlay = annotations.get(a);
+		SingleSeajaxAnnotationOverlay overlay = annotations.get(a);
 		if (overlay != null) {
 			overlay.destroy();
 			annotations.remove(a);
