@@ -4,6 +4,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.html5media.audio.AudioPlayer;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
+import at.ait.dme.yumaJS.client.auth.AuthWidget;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -28,6 +29,8 @@ public class YUMA implements EntryPoint {
 		GWT.create(SeajaxAnnotationLayer.class);
 		GWT.create(OpenLayersAnnotationLayer.class);
 		GWT.create(AudioPlayer.class);
+		
+		GWT.create(AuthWidget.class);
 		
 		Timer t = new Timer() {
 			@Override
