@@ -32,7 +32,7 @@ public class SeadragonViewer {
 	}
 	
 	private native SeadragonPoint _toImageCoordinates(SeadragonPoint pt, JavaScriptObject viewer) /*-{
-		return new Seadragon.Point(pt.x * viewer.source.width, pt.y * viewer.source.height * viewer.source.aspectRatio);
+		return new $wnd.Seadragon.Point(pt.x * viewer.source.width, pt.y * viewer.source.height * viewer.source.aspectRatio);
 	}-*/;
 
 	public SeadragonPoint toWorldCoordinates(SeadragonPoint pt) {
@@ -40,7 +40,7 @@ public class SeadragonViewer {
 	}
 	
 	private native SeadragonPoint _toWorldCoordinates(SeadragonPoint pt, JavaScriptObject viewer) /*-{
-		   return new Seadragon.Point(pt.x / viewer.source.width, pt.y / viewer.source.height / viewer.source.aspectRatio);	
+		   return new $wnd.Seadragon.Point(pt.x / viewer.source.width, pt.y / viewer.source.height / viewer.source.aspectRatio);	
 	}-*/;
 	
 	public SeadragonPoint pointFromPixel(SeadragonPoint p) {
