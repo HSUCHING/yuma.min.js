@@ -21,6 +21,8 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	
 	private SeadragonViewer viewer;
 	
+	private FlowPanel outerBorder;
+	
 	private SeadragonRect overlay;
 	
 	private AbsolutePanel editingLayer;
@@ -33,7 +35,7 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 		this.viewer = viewer;
 		this.editingLayer = editingLayer;
 		
-		FlowPanel outerBorder = new FlowPanel();
+		outerBorder = new FlowPanel();
 		outerBorder.setStyleName("annotation-bbox-outer");
 		outerBorder.setPixelSize(bbox.getWidth(), bbox.getHeight());
 
@@ -88,7 +90,7 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	}
 
 	public void startEditing() {
-		// boxMarker.getDiv().getStyle().setVisibility(Visibility.HIDDEN);
+		outerBorder.setVisible(false);
 		BoundingBox bbox = getBoundingBox();
 		selection =  new BoundingBoxSelection(editingLayer, bbox);
 		selection.setSelectionChangeHandler(handler);
@@ -97,18 +99,23 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	public void cancelEditing() {
 		selection.destroy();
 		selection = null;
-		// boxMarker.getDiv().getStyle().setVisibility(Visibility.VISIBLE);
+		outerBorder.setVisible(true);
 	}
 
 	public void stopEditing() {
 		setBoundingBox(selection.getSelectedBounds());
 		selection.destroy();
 		selection = null;
-		// boxMarker.getDiv().getStyle().setVisibility(Visibility.VISIBLE);
+		outerBorder.setVisible(true);
+	}
+	
+	public void destroy() {
+		viewer.removeOverlay(outerBorder.getElement());
+		outerBorder.removeFromParent();
 	}
 
 	public void setZIndex(int idx) {
-		// boxMarker.getDiv().getStyle().setZIndex(idx);
+		outerBorder.getElement().getStyle().setZIndex(idx);
 	}
 
 	public int compareTo(FragmentWidget other) {

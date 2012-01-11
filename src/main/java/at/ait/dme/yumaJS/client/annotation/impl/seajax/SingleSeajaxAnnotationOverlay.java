@@ -10,6 +10,8 @@ import at.ait.dme.yumaJS.client.annotation.impl.image.ImageFragmentWidget;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Range;
+import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHandler;
 import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget;
 import at.ait.dme.yumaJS.client.annotation.ui.CompoundOverlay;
 
@@ -39,25 +41,15 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 				editingLayer,
 				annotatable);
 		
-		// BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());
-		// bboxOverlay = new BoundingBoxOverlay(null, bbox);
-		// bboxDiv = bboxOverlay.getElement();
-		// DOM.sinkEvents(bboxDiv, Event.ONMOUSEOVER | Event.ONMOUSEOUT);
-		
-		/*
-		Event.setEventListener(bboxDiv, new EventListener() {
-			public void onBrowserEvent(Event event) {
-				if (event.getTypeInt() == Event.ONMOUSEOVER) {
-					RootPanel.get().setWidgetPosition(detailsPopup, 
-							bboxDiv.getAbsoluteLeft(), 
-							bboxDiv.getAbsoluteTop() +  bboxDiv.getOffsetHeight());
-					detailsPopup.setVisible(true);
-				} else if (event.getTypeInt() == Event.ONMOUSEOUT) {
-					if (!detailsPopup.contains(event.getClientX(), event.getClientY()))
-						detailsPopup.setVisible(false);
-				}
+		this.fragmentWidget.setSelectionChangeHandler(new SelectionChangeHandler() {
+			public void onRangeChanged(Range range) { }
+			
+			public void onBoundsChanged(BoundingBox bbox) {
+				refresh();				
 			}
 		});
+
+		/*
 		
 		// TODO this means we're attaching a listener for EVERY annotation 
 		// whereas we really only need to listen for those with visible 
@@ -115,10 +107,8 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 	}
 	
 	public void destroy() {
-		// TODO implement!
-		// viewer.removeOverlay(bboxDiv);
-		// bboxOverlay.removeFromParent();
-		// detailsPopup.removeFromParent();
+		fragmentWidget.destroy();
+		annotationWidget.removeFromParent();
 	}
 
 	public void setZIndex(int idx) {

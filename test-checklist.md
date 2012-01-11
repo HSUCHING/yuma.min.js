@@ -4,7 +4,9 @@ This is the checklist for performing GUI integration tests. We REALLY need to au
 The [doh robot] (http://dojotoolkit.org/reference-guide/util/dohrobot.html) seems to be a suitable
 candidate, as it captures mouse movement as well. (Critical - but not supported by e.g. Selenium).
 
-# Image Annotation - no replies
+# Image Annotation
+
+## Image Annotation Without Replies
 
 Repeat tests 2 times: (i) in serverless mode and (ii) with annotation server. In server mode,
 refresh the page after each test, to confirm whether client and server remain in sync. 
@@ -20,12 +22,7 @@ refresh the page after each test, to confirm whether client and server remain in
    
 Compile the project and repeat all tests outside of hosted mode.
 
-# OpenLayers Annotation - no replies
-
-Repeat the same steps as for image annotation - no replies. Each time an annotation was created or
-edited, pan and zoom the map to ensure the bounding boxes stay correctly aligned in OpenLayers.
-
-# Image Annotation - replies
+## Image Annotation With Replies
 
 Repeat the tests 2 times: (i) in serverless mode and (ii) with annotation server.
 
@@ -46,4 +43,13 @@ Repeat the tests 2 times: (i) in serverless mode and (ii) with annotation server
    d) Repeat steps 3b and 3c for the middle annotation.
    e) Delete the middle annotation and confirm it works as expected. 
 
+# OpenLayers Annotation
+
+Repeat the same steps as for image annotation. Each time an annotation was created or
+edited, pan and zoom the map to ensure the bounding boxes stay correctly aligned in OpenLayers. 
+
+# Seadragon AJAX 
+
+Repeat the same steps as for image annotation. Each time an annotation was created or
+edited, pan and zoom the image to ensure the bounding boxes stay correctly aligned in the Seajax viewer. 
 
