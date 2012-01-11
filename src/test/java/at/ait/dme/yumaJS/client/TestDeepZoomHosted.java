@@ -1,6 +1,7 @@
 package at.ait.dme.yumaJS.client;
 
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
+import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -29,11 +30,18 @@ public class TestDeepZoomHosted implements EntryPoint {
 	}
 	
 	private void initCanvas() {
-		canvas = new SeajaxAnnotationLayer("viewer", getViewer());
+		canvas = new SeajaxAnnotationLayer("viewer", getViewer(), createInitParams());
 	}
 	
 	private native JavaScriptObject getViewer() /*-{
 		return $wnd.viewer;
+	}-*/;
+	
+	private native InitParams createInitParams() /*-{
+		return {
+			enableReplies:false
+			// serverURL:"http://dme.ait.ac.at/yuma4j-server"
+		};
 	}-*/;
 
 }

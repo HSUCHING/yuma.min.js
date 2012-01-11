@@ -26,7 +26,12 @@ public class SeadragonViewer {
 		return viewer.source.xmlUrl;
 	}-*/;
 	
-
+	/**
+	 * Converts a Seadragon World coordinate pair to an image pixel coordinate
+	 * pair. 
+	 * @param pt the Seadragon World coordinate
+	 * @return the image pixel coordinate
+	 */
 	public SeadragonPoint toImageCoordinates(SeadragonPoint pt) {
 		return _toImageCoordinates(pt, viewer);
 	}
@@ -35,6 +40,12 @@ public class SeadragonViewer {
 		return new $wnd.Seadragon.Point(pt.x * viewer.source.width, pt.y * viewer.source.height * viewer.source.aspectRatio);
 	}-*/;
 
+	/**
+	 * Converts an image pixel coordinate pair (x = {0, imgWidth}, y = {0, imgHeight}) to
+	 * a normalized Seadragon World coordinate pair.
+	 * @param pt the image pixel coordinate
+	 * @return the Seadragon World coordiante
+	 */
 	public SeadragonPoint toWorldCoordinates(SeadragonPoint pt) {
 		return _toWorldCoordinates(pt, viewer);
 	}
@@ -43,6 +54,11 @@ public class SeadragonViewer {
 		   return new $wnd.Seadragon.Point(pt.x / viewer.source.width, pt.y / viewer.source.height / viewer.source.aspectRatio);	
 	}-*/;
 	
+	/**
+	 * Converts a viewport pixel coordinate to a Seadragon World coordinate.
+	 * @param p the viewport pixel coordinate
+	 * @return the Seadragon World coordinate
+	 */
 	public SeadragonPoint pointFromPixel(SeadragonPoint p) {
 		return _pointFromPixel(viewer, p);
 	}
@@ -51,6 +67,18 @@ public class SeadragonViewer {
 		return viewer.viewport.pointFromPixel(p, true);
 	}-*/;
 
+	/**
+	 * Converts a viewport pixel coordinate to a Seadragon World coordinate.
+	 * @param p the viewport pixel coordinate
+	 * @return the Seadragon World coordinate
+	 */
+	public SeadragonPoint pixelFromPoint(SeadragonPoint p) {
+		return _pixelFromPoint(viewer, p);
+	}
+	
+	private native SeadragonPoint _pixelFromPoint(JavaScriptObject viewer, SeadragonPoint p) /*-{
+		return viewer.viewport.pixelFromPoint(p, true);
+	}-*/;
 	
 	public void addOverlay(Element el, SeadragonRect rect) {
 		_addOverlay(viewer, el, rect);

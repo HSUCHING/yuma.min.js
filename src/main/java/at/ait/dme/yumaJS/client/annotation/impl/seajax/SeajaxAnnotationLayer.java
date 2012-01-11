@@ -49,7 +49,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	
 	private HTML parentDiv;
 	
-	private AbsolutePanel annotationLayer;
+	private AbsolutePanel editingLayer;
 	
 	private SeadragonViewer viewer;
 	
@@ -78,11 +78,11 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		
 		parentDiv = HTML.wrap(el);
 		
-		annotationLayer = new AbsolutePanel();
-		annotationLayer.setStyleName("deepzoom-canvas");
-		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
-		annotationLayer.setPixelSize(parentDiv.getOffsetWidth(), parentDiv.getOffsetHeight());		
-		RootPanel.get().insert(annotationLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop(), 0);
+		editingLayer = new AbsolutePanel();
+		editingLayer.setStyleName("deepzoom-canvas");
+		editingLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
+		editingLayer.setPixelSize(parentDiv.getOffsetWidth(), parentDiv.getOffsetHeight());		
+		RootPanel.get().insert(editingLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop(), 0);
 		
 		viewer = new SeadragonViewer(deepZoomViewer);
 		viewer.addMouseHandler(new SeadragonMouseHandler() {
@@ -112,17 +112,23 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public String toFragment(BoundingBox bbox, Range range) {
+		// BoundingBoxes are in viewport coordinates
 		SeadragonPoint viewportBottomLeft = SeadragonPoint.create(bbox.getX(), bbox.getY() + bbox.getHeight());
 		SeadragonPoint viewportTopRight = SeadragonPoint.create(bbox.getX() + bbox.getWidth(), bbox.getY());
 		
-		SeadragonPoint imgBottomLeft = viewer.toWorldCoordinates(viewportBottomLeft);
-		SeadragonPoint imgTopRight = viewer.toWorldCoordinates(viewportTopRight);
+		// Step 1 - convert coords to normalized Seajax World coordinates (where x = {0,1})
+		SeadragonPoint seajaxBottomLeft = viewer.pointFromPixel(viewportBottomLeft);
+		SeadragonPoint seajaxTopRight = viewer.pointFromPixel(viewportTopRight);
+		
+		// Step 2 - convert coords to true image pixel coordinates
+		SeadragonPoint imgBottomLeft = viewer.toImageCoordinates(seajaxBottomLeft);
+		SeadragonPoint imgTopRight = viewer.toImageCoordinates(seajaxTopRight);
 		
 		return "xywh=pixel:" 
-			+ imgBottomLeft.getX() + "," 
-			+ imgTopRight.getY() + "," 
-			+ (imgTopRight.getX() - imgBottomLeft.getX()) + ","
-			+ (imgBottomLeft.getY() - imgTopRight.getY());
+			+ (int) imgBottomLeft.getX() + "," 
+			+ (int) imgTopRight.getY() + "," 
+			+ (int) (imgTopRight.getX() - imgBottomLeft.getX()) + ","
+			+ (int) (imgBottomLeft.getY() - imgTopRight.getY());
 	}
 
 	@Override
@@ -149,13 +155,18 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		int y = Integer.parseInt(xywh[1]);
 		int w = Integer.parseInt(xywh[2]);
 		int h = Integer.parseInt(xywh[3]);
-		
+
+		// Fragments are in image pixel coordinates		
 		SeadragonPoint imgBottomLeft = SeadragonPoint.create(x, y + h);
 		SeadragonPoint imgTopRight = SeadragonPoint.create(x + w, y);
 		
-		// TODO non-functional code!
-		SeadragonPoint viewportBottomLeft = viewer.toImageCoordinates(imgBottomLeft);
-		SeadragonPoint viewportTopRight = viewer.toImageCoordinates(imgTopRight);
+		// Step 1 - convert to Seajax World coordinates
+		SeadragonPoint seajaxBottomLeft = viewer.toWorldCoordinates(imgBottomLeft);
+		SeadragonPoint seajaxTopRight = viewer.toWorldCoordinates(imgTopRight);
+		
+		// Step 2 - convert to viewport coordinates
+		SeadragonPoint viewportBottomLeft = viewer.pixelFromPoint(seajaxBottomLeft);
+		SeadragonPoint viewportTopRight = viewer.pixelFromPoint(seajaxTopRight);
 		
 		return BoundingBox.create(
 				(int) viewportBottomLeft.getX(), 
@@ -166,7 +177,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		
 	@Override
 	protected void onWindowResize(int width, int height) {
-		RootPanel.get().setWidgetPosition(annotationLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop());
+		RootPanel.get().setWidgetPosition(editingLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop());
 	}
 	
 	@Override
@@ -183,13 +194,12 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		
 		if (annotation.getIsReplyTo() == null) {
 			// Add new overlay
-			/* final CompoundOverlay overlay = (getRepliesEnabled()) ? 
-					new CommentListOpenLayersOverlay(annotation, annotationLayer, editingLayer, this) :
-					new SingleOpenLayersAnnotationOverlay(annotation, annotationLayer, editingLayer, this);
+			final CompoundOverlay overlay = (getRepliesEnabled()) ? 
+					new CommentListSeajaxOverlay() :
+					new SingleSeajaxAnnotationOverlay(annotation, viewer, editingLayer, this);
 
 			overlays.put(annotation.getID(), overlay);
-			redraw();
-			*/
+			// redraw();
 		} else {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
