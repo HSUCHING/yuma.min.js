@@ -96,6 +96,14 @@ public class SeadragonViewer {
 		viewer.drawer.removeOverlay(el);
 	}-*/;
 	
+	public void updateOverlay(Element el, SeadragonRect rect) {
+		_updateOverlay(viewer, el, rect);
+	}
+	
+	private native void _updateOverlay(JavaScriptObject viewer, Element el, SeadragonRect rect) /*-{
+		viewer.drawer.updateOverlay(el, rect);
+	}-*/;
+	
 	public void addAnimationtListener(SeadragonAnimationHandler listener) {
 		_addAnimationListener(viewer, listener);
 	}

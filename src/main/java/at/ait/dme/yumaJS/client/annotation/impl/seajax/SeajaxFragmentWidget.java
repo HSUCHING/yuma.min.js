@@ -1,6 +1,9 @@
 package at.ait.dme.yumaJS.client.annotation.impl.seajax;
 
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 
@@ -44,19 +47,27 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 		innerBorder.setHeight("100%");
 		innerBorder.setStyleName("annotation-bbox-inner");
 		outerBorder.add(innerBorder);
-				
+		
+		overlay = toRect(bbox);
+		
+		Element bboxDiv = outerBorder.getElement();
+		
+		DOM.sinkEvents(bboxDiv, 
+				Event.ONMOUSEOVER | Event.ONMOUSEOUT | Event.ONMOUSEMOVE | Event.ONMOUSEWHEEL);		
+		
+		viewer.addOverlay(bboxDiv, overlay);
+	}
+
+	private SeadragonRect toRect(BoundingBox bbox) {
 		SeadragonPoint topLeft =
 			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX(), bbox.getY())); 
 		SeadragonPoint bottomRight = 
 			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX() + bbox.getWidth(), bbox.getY() + bbox.getHeight()));
 		
-		overlay = SeadragonRect.create(
-				topLeft.getX(), topLeft.getY(), 
-				bottomRight.getX() - topLeft.getX(), 
-				bottomRight.getY() - topLeft.getY());
-		
-		Element bboxDiv = outerBorder.getElement();
-		viewer.addOverlay(bboxDiv, overlay);
+		return SeadragonRect.create(
+			topLeft.getX(), topLeft.getY(), 
+			bottomRight.getX() - topLeft.getX(), 
+			bottomRight.getY() - topLeft.getY());
 	}
 	
 	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
@@ -78,7 +89,7 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	}
 
 	public void setBoundingBox(BoundingBox bbox) {
-		// 
+		viewer.updateOverlay(outerBorder.getElement(), toRect(bbox));
 	}
 
 	public Range getRange() {
@@ -112,6 +123,10 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	public void destroy() {
 		viewer.removeOverlay(outerBorder.getElement());
 		outerBorder.removeFromParent();
+	}
+	
+	public void setEventListener(EventListener listener) {
+		Event.setEventListener(outerBorder.getElement(), listener);
 	}
 
 	public void setZIndex(int idx) {

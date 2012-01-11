@@ -1,7 +1,11 @@
 package at.ait.dme.yumaJS.client.annotation.impl.seajax;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
@@ -48,13 +52,29 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 				refresh();				
 			}
 		});
-
-		/*
 		
+		this.fragmentWidget.setEventListener(new EventListener() {
+			public void onBrowserEvent(Event event) {
+				if (event.getTypeInt() == Event.ONMOUSEOUT) {
+					if (!annotationWidget.contains(event.getClientX(), event.getClientY()))
+						annotationWidget.setVisible(false);
+				} else if (event.getTypeInt() == Event.ONMOUSEWHEEL) {
+					Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+						public void execute() {
+							refresh();
+						}
+					});
+				} else {
+					annotationWidget.setVisible(true);
+					refresh();
+				}
+			}
+		});
+
 		// TODO this means we're attaching a listener for EVERY annotation 
 		// whereas we really only need to listen for those with visible 
 		// popup-> make this more efficient!
-		
+		/*
 		viewer.addAnimationtListener(new SeadragonAnimationHandler() {
 			public void onAnimation() {
 				if (detailsPopup.isVisible()) {
