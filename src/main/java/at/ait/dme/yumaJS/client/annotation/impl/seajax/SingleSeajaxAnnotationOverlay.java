@@ -59,16 +59,6 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 			}
 		});
 		
-		SeadragonPoint anchor =
-			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX(), bbox.getY())); 
-		SeadragonPoint bottomRight = 
-			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX() + bbox.getWidth(), bbox.getY() + bbox.getHeight()));
-		
-		viewer.addOverlay(bboxDiv, SeadragonRect.create(
-				anchor.getX(), anchor.getY(), 
-				bottomRight.getX() - anchor.getX(), 
-				bottomRight.getY() - anchor.getY()));
-		
 		// TODO this means we're attaching a listener for EVERY annotation 
 		// whereas we really only need to listen for those with visible 
 		// popup-> make this more efficient!
@@ -82,8 +72,6 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 				}
 			}
 		});
-		
-		RootPanel.get().add(detailsPopup);
 		*/
 		
 		annotationWidget = new AnnotationWidget(annotation, fragmentWidget, annotatable);

@@ -36,16 +36,27 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 		this.editingLayer = editingLayer;
 		this.annotatable = annotatable;
 		
-		SeadragonPoint anchor =
+		FlowPanel outerBorder = new FlowPanel();
+		outerBorder.setStyleName("annotation-bbox-outer");
+		outerBorder.setPixelSize(bbox.getWidth(), bbox.getHeight());
+
+		FlowPanel innerBorder = new FlowPanel();
+		innerBorder.setWidth("100%");
+		innerBorder.setHeight("100%");
+		innerBorder.setStyleName("annotation-bbox-inner");
+
+		outerBorder.add(innerBorder);
+		bboxDiv = outerBorder.getElement();
+		
+		SeadragonPoint topLeft =
 			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX(), bbox.getY())); 
 		SeadragonPoint bottomRight = 
 			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX() + bbox.getWidth(), bbox.getY() + bbox.getHeight()));
-		
-		bboxDiv = new FlowPanel().getElement();
+	
 		viewer.addOverlay(bboxDiv, SeadragonRect.create(
-				anchor.getX(), anchor.getY(), 
-				bottomRight.getX() - anchor.getX(), 
-				bottomRight.getY() - anchor.getY()));
+				topLeft.getX(), topLeft.getY(), 
+				bottomRight.getX() - topLeft.getX(), 
+				bottomRight.getY() - topLeft.getY()));
 	}
 
 	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
