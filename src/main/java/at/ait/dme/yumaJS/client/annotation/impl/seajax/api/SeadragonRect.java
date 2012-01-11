@@ -31,4 +31,12 @@ public class SeadragonRect extends JavaScriptObject {
 		return this.height;
 	}-*/;
 	
+	public final native SeadragonPoint getTopLeft() /*-{
+		return this.getTopLeft();
+	}-*/;
+	
+	public final native SeadragonPoint getBottomRight() /*-{
+		return this.getBottomRight();
+	}-*/;
+	
 }

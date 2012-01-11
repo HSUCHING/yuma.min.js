@@ -17,24 +17,21 @@ import at.ait.dme.yumaJS.client.annotation.ui.edit.Selection.SelectionChangeHand
 
 public class SeajaxFragmentWidget implements FragmentWidget {
 	
-	/**
-	 * The selection change handler
-	 */
 	private SelectionChangeHandler handler = null;
 	
-	private Element bboxDiv;
+	private SeadragonViewer viewer;
+	
+	private SeadragonRect overlay;
 	
 	private AbsolutePanel editingLayer;
-	
-	private Annotatable annotatable;
 	
 	private Selection selection;
 	
 	public SeajaxFragmentWidget(BoundingBox bbox, SeadragonViewer viewer, AbsolutePanel editingLayer,
 			Annotatable annotatable) {
 		
+		this.viewer = viewer;
 		this.editingLayer = editingLayer;
-		this.annotatable = annotatable;
 		
 		FlowPanel outerBorder = new FlowPanel();
 		outerBorder.setStyleName("annotation-bbox-outer");
@@ -44,21 +41,22 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 		innerBorder.setWidth("100%");
 		innerBorder.setHeight("100%");
 		innerBorder.setStyleName("annotation-bbox-inner");
-
 		outerBorder.add(innerBorder);
-		bboxDiv = outerBorder.getElement();
-		
+				
 		SeadragonPoint topLeft =
 			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX(), bbox.getY())); 
 		SeadragonPoint bottomRight = 
 			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX() + bbox.getWidth(), bbox.getY() + bbox.getHeight()));
-	
-		viewer.addOverlay(bboxDiv, SeadragonRect.create(
+		
+		overlay = SeadragonRect.create(
 				topLeft.getX(), topLeft.getY(), 
 				bottomRight.getX() - topLeft.getX(), 
-				bottomRight.getY() - topLeft.getY()));
+				bottomRight.getY() - topLeft.getY());
+		
+		Element bboxDiv = outerBorder.getElement();
+		viewer.addOverlay(bboxDiv, overlay);
 	}
-
+	
 	public void setSelectionChangeHandler(SelectionChangeHandler handler) {
 		this.handler = handler;
 	}
@@ -66,12 +64,15 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	public BoundingBox getBoundingBox() {
 		if (selection != null)
 			return selection.getSelectedBounds();
-
+		
+		SeadragonPoint topLeft = viewer.pixelFromPoint(overlay.getTopLeft());
+		SeadragonPoint bottomRight = viewer.pixelFromPoint(overlay.getBottomRight());
+		
 		return BoundingBox.create(
-				bboxDiv.getAbsoluteLeft() - editingLayer.getAbsoluteLeft(),
-				bboxDiv.getAbsoluteTop() - editingLayer.getAbsoluteTop(),
-				bboxDiv.getClientWidth(), 
-				bboxDiv.getClientHeight());
+				(int) topLeft.getX(),
+				(int) topLeft.getY(),
+				(int) (bottomRight.getX() - topLeft.getX()),
+				(int) (bottomRight.getY() - topLeft.getY()));
 	}
 
 	public void setBoundingBox(BoundingBox bbox) {
