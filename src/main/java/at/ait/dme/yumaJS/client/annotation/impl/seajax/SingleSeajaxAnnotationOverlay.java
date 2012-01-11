@@ -36,7 +36,8 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 		this.fragmentWidget = new SeajaxFragmentWidget(
 				annotatable.toBoundingBox(annotation.getFragment()), 
 				viewer, 
-				editingLayer);
+				editingLayer,
+				annotatable);
 		
 		// BoundingBox bbox = annotatable.toBoundingBox(annotation.getFragment());
 		// bboxOverlay = new BoundingBoxOverlay(null, bbox);

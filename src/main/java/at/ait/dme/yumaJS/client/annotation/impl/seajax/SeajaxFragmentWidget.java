@@ -4,6 +4,7 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonPoint;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonRect;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
@@ -25,10 +26,15 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	
 	private AbsolutePanel editingLayer;
 	
+	private Annotatable annotatable;
+	
 	private Selection selection;
 	
-	public SeajaxFragmentWidget(BoundingBox bbox, SeadragonViewer viewer, AbsolutePanel editingLayer) {
+	public SeajaxFragmentWidget(BoundingBox bbox, SeadragonViewer viewer, AbsolutePanel editingLayer,
+			Annotatable annotatable) {
+		
 		this.editingLayer = editingLayer;
+		this.annotatable = annotatable;
 		
 		SeadragonPoint anchor =
 			viewer.pointFromPixel(SeadragonPoint.create(bbox.getX(), bbox.getY())); 
@@ -47,13 +53,18 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	}
 
 	public BoundingBox getBoundingBox() {
-		// TODO Auto-generated method stub
-		return null;
+		if (selection != null)
+			return selection.getSelectedBounds();
+
+		return BoundingBox.create(
+				bboxDiv.getAbsoluteLeft() - editingLayer.getAbsoluteLeft(),
+				bboxDiv.getAbsoluteTop() - editingLayer.getAbsoluteTop(),
+				bboxDiv.getClientWidth(), 
+				bboxDiv.getClientHeight());
 	}
 
 	public void setBoundingBox(BoundingBox bbox) {
-		// TODO Auto-generated method stub
-		
+		// 
 	}
 
 	public Range getRange() {
