@@ -197,7 +197,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		if (annotation.getIsReplyTo() == null) {
 			// Add new overlay
 			final CompoundOverlay overlay = (getRepliesEnabled()) ? 
-					new CommentListSeajaxOverlay() :
+					new CommentListSeajaxOverlay(annotation, viewer, editingLayer, this) :
 					new SingleSeajaxAnnotationOverlay(annotation, viewer, editingLayer, this);
 
 			overlays.put(annotation.getID(), overlay);

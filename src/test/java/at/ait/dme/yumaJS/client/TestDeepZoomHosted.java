@@ -39,7 +39,7 @@ public class TestDeepZoomHosted implements EntryPoint {
 	
 	private native InitParams createInitParams() /*-{
 		return {
-			enableReplies:false
+			enableReplies:true
 			// serverURL:"http://dme.ait.ac.at/yuma4j-server"
 		};
 	}-*/;
