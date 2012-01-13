@@ -1,7 +1,11 @@
 package at.ait.dme.yumaJS.client.annotation.impl.seajax;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
@@ -38,6 +42,28 @@ public class CommentListSeajaxOverlay implements CompoundOverlay {
 			
 			public void onBoundsChanged(BoundingBox bbox) {
 				refresh();				
+			}
+		});
+		
+		this.fragmentWidget.setEventListener(new EventListener() {
+			public void onBrowserEvent(Event event) {
+				if (event.getTypeInt() == Event.ONMOUSEOUT) {
+					if (!annotationListWidget.contains(event.getClientX(), event.getClientY())
+						&& !annotationListWidget.isEditing())
+						
+						annotationListWidget.setVisible(false);
+				} else if (event.getTypeInt() == Event.ONMOUSEWHEEL) {
+					Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+						public void execute() {
+							refresh();
+						}
+					});
+				} else {
+					if (!annotationListWidget.isEditing()) {
+						refresh();
+						annotationListWidget.setVisible(true);
+					}
+				}
 			}
 		});
 		
