@@ -89,7 +89,8 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	}
 
 	public void setBoundingBox(BoundingBox bbox) {
-		viewer.updateOverlay(outerBorder.getElement(), toRect(bbox));
+		overlay = toRect(bbox);
+		viewer.updateOverlay(outerBorder.getElement(), overlay);
 	}
 
 	public Range getRange() {
