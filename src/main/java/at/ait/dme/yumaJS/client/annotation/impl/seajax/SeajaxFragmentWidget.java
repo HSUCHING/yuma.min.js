@@ -138,18 +138,17 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 		if (!(other instanceof SeajaxFragmentWidget))
 			return 0;
 		
-		/*
-		SeajaxFragmentWidget overlay = (SeajaxFragmentWidget) other;
+		SeajaxFragmentWidget fw = (SeajaxFragmentWidget) other;
 		
-		int thisArea = boxMarker.getDiv().getOffsetWidth() * boxMarker.getDiv().getOffsetHeight();
-		int otherArea = overlay.boxMarker.getDiv().getOffsetWidth() * overlay.boxMarker.getDiv().getOffsetHeight();
+		float thisArea = overlay.getWidth() * overlay.getHeight();
+		float otherArea = fw.overlay.getWidth() * fw.overlay.getHeight();
 		
 		if (thisArea > otherArea)
 			return -1;
 
 		if (thisArea < otherArea)
 			return 1;
-		*/
+		
 		return 0;
 	}
 

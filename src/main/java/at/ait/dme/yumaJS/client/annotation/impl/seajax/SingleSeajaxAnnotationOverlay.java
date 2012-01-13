@@ -132,8 +132,7 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 	}
 
 	public void setZIndex(int idx) {
-		// TODO Auto-generated method stub
-		
+		fragmentWidget.setZIndex(idx);
 	}
 
 	public int compareTo(CompoundOverlay other) {

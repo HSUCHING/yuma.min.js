@@ -221,7 +221,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	}
 	
 	private void redraw() {
-		// Redraw not necessary - just re-assign z-indexes
+		// Re-assign z-indexes
 		ArrayList<CompoundOverlay> sortedOverlays = new ArrayList<CompoundOverlay>();
 		for (String id : overlays.keySet()) {
 			sortedOverlays.add(overlays.get(id));

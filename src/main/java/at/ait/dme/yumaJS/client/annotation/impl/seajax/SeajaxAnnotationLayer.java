@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.seajax;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.timepedia.exporter.client.Export;
@@ -199,7 +201,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 					new SingleSeajaxAnnotationOverlay(annotation, viewer, editingLayer, this);
 
 			overlays.put(annotation.getID(), overlay);
-			// redraw();
+			redraw();
 		} else {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
@@ -229,13 +231,12 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	public void updateAnnotation(String id, Annotation updated) {
 		// TODO code duplication with ImageAnnotationLayer -> refactor
 		CompoundOverlay overlay = overlays.get(id);
-		
 		if (overlay != null) {
 			// No-reply mode, or reply mode + root annotation
 			overlay.updateAnnotation(id, updated);
 			overlays.remove(id);
 			overlays.put(updated.getID(), overlay);
-			// redraw();
+			redraw();
 		} else if (getRepliesEnabled() && (updated.getIsReplyTo() != null)) { 
 			// Reply mode + reply annotation
 			overlay = overlays.get(updated.getIsReplyTo());
@@ -245,14 +246,28 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		}
 	}
 	
+	private void redraw() {
+		// Re-assign z-indexes 
+		// TODO code duplication with OpenLayerAnnotationLayer -> remove!
+		ArrayList<CompoundOverlay> sortedOverlays = new ArrayList<CompoundOverlay>();
+		for (String id : overlays.keySet()) {
+			sortedOverlays.add(overlays.get(id));
+		}
+		Collections.sort(sortedOverlays);
+				 
+		int zIndex = 9010;
+		for (CompoundOverlay overlay : sortedOverlays) {
+			overlay.setZIndex(zIndex);
+			zIndex++;
+		}
+	}
+	
 	private String createEmptyFragment() {
 		return toFragment(BoundingBox.create(DEFAULT_FRAGMENT_LEFT, DEFAULT_FRAGMENT_TOP, 
 				DEFAULT_SIZE, DEFAULT_SIZE), null);
 	}
 	
 	public void createNewAnnotation() {
-		// annotationLayer.redraw();
-		
 		final Annotation empty = createEmptyAnnotation();
 		empty.setFragment(createEmptyFragment());
 		addAnnotation(empty);
@@ -278,6 +293,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 				removeAnnotation(empty);
 			}
 		});
-		overlay.edit(empty);	}
+		overlay.edit(empty);	
+	}
 	
 }
