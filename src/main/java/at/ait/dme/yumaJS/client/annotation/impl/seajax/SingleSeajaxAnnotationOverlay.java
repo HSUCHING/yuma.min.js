@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageFragmentWidget;
+import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonAnimationHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
@@ -74,17 +75,12 @@ public class SingleSeajaxAnnotationOverlay implements CompoundOverlay {
 		// TODO this means we're attaching a listener for EVERY annotation 
 		// whereas we really only need to listen for those with visible 
 		// popup-> make this more efficient!
-		/*
 		viewer.addAnimationtListener(new SeadragonAnimationHandler() {
 			public void onAnimation() {
-				if (detailsPopup.isVisible()) {
-					RootPanel.get().setWidgetPosition(detailsPopup, 
-							bboxDiv.getAbsoluteLeft(), 
-							bboxDiv.getAbsoluteTop() +  bboxDiv.getOffsetHeight());
-				}
+				if (fragmentWidget.isVisible())
+					refresh();
 			}
 		});
-		*/
 		
 		annotationWidget = new AnnotationWidget(annotation, fragmentWidget, annotatable);
 		annotationWidget.addDomHandler(new MouseOutHandler() {

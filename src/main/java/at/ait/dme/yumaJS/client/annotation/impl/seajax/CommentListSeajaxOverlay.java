@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonAnimationHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.ui.AnnotationWidget.AnnotationWidgetEditHandler;
 import at.ait.dme.yumaJS.client.annotation.ui.edit.BoundingBox;
@@ -64,6 +65,16 @@ public class CommentListSeajaxOverlay implements CompoundOverlay {
 						annotationListWidget.setVisible(true);
 					}
 				}
+			}
+		});
+		
+		// TODO this means we're attaching a listener for EVERY annotation 
+		// whereas we really only need to listen for those with visible 
+		// popup-> make this more efficient!
+		viewer.addAnimationtListener(new SeadragonAnimationHandler() {
+			public void onAnimation() {
+				if (fragmentWidget.isVisible())
+					refresh();
 			}
 		});
 		

@@ -129,6 +129,10 @@ public class SeajaxFragmentWidget implements FragmentWidget {
 	public void setEventListener(EventListener listener) {
 		Event.setEventListener(outerBorder.getElement(), listener);
 	}
+	
+	public boolean isVisible() {
+		return outerBorder.isVisible();
+	}
 
 	public void setZIndex(int idx) {
 		outerBorder.getElement().getStyle().setZIndex(idx);
