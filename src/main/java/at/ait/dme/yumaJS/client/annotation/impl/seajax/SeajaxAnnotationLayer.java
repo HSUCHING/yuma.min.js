@@ -100,6 +100,9 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		});
 		
 		objectURI = viewer.getObjectURI();
+		
+		if (getServerURL() != null)
+			fetchAnnotations(getServerURL());
 	}
 	
 	@Override
