@@ -9,8 +9,8 @@ The present version of yuma.min.js provides annotation for
 
    * images (any JPG, PNG, etc. included in your HTML page)
    * maps displayed in the [OpenLayers] (http://openlayers.org) Web map viewer
-   * zoomable images embedded with the [Seadragon AJAX] 
-     (http://gallery.expression.microsoft.com/SeadragonAjax) JavaScript viewer (unfinished) 
+   * Deep Zoom images embedded with the [Seadragon AJAX] 
+     (http://gallery.expression.microsoft.com/SeadragonAjax) JavaScript viewer 
    * audio files (unfinished, HTML5-capable browsers only)
 
 ## Getting Started: Images
