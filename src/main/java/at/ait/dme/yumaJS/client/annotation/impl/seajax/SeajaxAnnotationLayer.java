@@ -11,7 +11,6 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
-import at.ait.dme.yumaJS.client.annotation.impl.openlayers.CommentListOpenLayersOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonMouseHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonPoint;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
@@ -208,7 +207,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		} else {
 			// Reply - ignore if replies are not enabled!
 			if (getInitParams().isRepliesEnabled()) {
-				CommentListOpenLayersOverlay overlay = (CommentListOpenLayersOverlay) overlays.get(annotation.getIsReplyTo());
+				CommentListSeajaxOverlay overlay = (CommentListSeajaxOverlay) overlays.get(annotation.getIsReplyTo());
 				if (overlay != null)
 					overlay.addToList(annotation);
 			}

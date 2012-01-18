@@ -110,6 +110,10 @@ public class CommentListSeajaxOverlay implements CompoundOverlay {
 		annotationListWidget.removeAnnotationWidgetEditHandler(a, handler);
 	}
 
+	public void addToList(Annotation a) {
+		annotationListWidget.addToList(a);
+	}
+	
 	public void updateAnnotation(String id, Annotation updated) {
 		// TODO code duplication -> refactor
 		annotationListWidget.setAnnotation(id, updated);
