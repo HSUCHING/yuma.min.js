@@ -83,6 +83,14 @@ html {
 	overflow-y:auto;
 }
 
+.yuma-comment-taginput {
+	background-color:#fff;
+	width:240px;
+	border:1px solid #aaa;
+	padding:2px;
+	color:#000;
+}
+
 .yuma-comment-textarea:hover {
 	background-color:#fff;
 	border:1px solid #aaa;

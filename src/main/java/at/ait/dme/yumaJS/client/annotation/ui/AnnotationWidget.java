@@ -6,6 +6,7 @@ import java.util.Date;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
+import at.ait.dme.yumaJS.client.annotation.SemanticTag;
 import at.ait.dme.yumaJS.client.init.Labels;
 import at.ait.dme.yumaJS.client.io.Create;
 import at.ait.dme.yumaJS.client.io.Delete;
@@ -227,7 +228,9 @@ public class AnnotationWidget extends Composite {
 				}
 	
 				annotation.setText(commentWidget.getText());
-					
+				for (String tag : commentWidget.getTags())
+					annotation.addTag(SemanticTag.create(tag.trim()));
+									
 				if (annotatable.getServerURL() == null) {
 					annotatable.updateAnnotation(annotation.getID(), annotation);
 				} else {

@@ -1,6 +1,10 @@
 package at.ait.dme.yumaJS.client.annotation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 
 /**
  * The annotation.
@@ -48,6 +52,28 @@ public class Annotation extends JavaScriptObject {
 	
 	public final native String getText() /*-{
 		return this.text;
+	}-*/;
+	
+	public final native void addTag(SemanticTag tag) /*-{
+		if (!this.tags)
+			this.tags = new Array();
+	
+		this.tags.push(tag);
+	}-*/;
+	
+	public final List<SemanticTag> getTags() {
+		List<SemanticTag> tags = new ArrayList<SemanticTag>();
+		
+		JsArray<JavaScriptObject> jsArray = _getTags();
+		if (jsArray != null)
+			for (int i=0; i<jsArray.length(); i++)
+				tags.add((SemanticTag) jsArray.get(i));
+		
+		return tags;
+	}
+	
+	private final native JsArray<JavaScriptObject> _getTags() /*-{
+		return this.tags;
 	}-*/;
 	
 	public final native void setText(String text) /*-{

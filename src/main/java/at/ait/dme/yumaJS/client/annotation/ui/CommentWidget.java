@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * The {@link CommentWidget} is an editable text field. It is used as part of the 
@@ -27,6 +28,8 @@ public class CommentWidget extends Composite {
 	private FlowPanel container = new FlowPanel();
 	
 	private TextArea textArea = new TextArea();
+	
+	private TextBox tagTextBox = new TextBox();
 	
 	private PushButton btnSave, btnCancel;
 	
@@ -67,6 +70,9 @@ public class CommentWidget extends Composite {
 				}
 			}
 		});
+
+		tagTextBox.setStyleName("yuma-comment-taginput");
+		tagTextBox.getElement().setAttribute("placeholder", "Add Tags (comma-separated)...");		
 		
 		if (labels == null) {
 			btnSave = new PushButton("OK");
@@ -90,6 +96,7 @@ public class CommentWidget extends Composite {
 		
 
 		container.add(textArea);
+		container.add(tagTextBox);
 		container.add(buttonContainer);
 		initWidget(container);
 	}
@@ -104,6 +111,10 @@ public class CommentWidget extends Composite {
 	
 	public String getText() {
 		return textArea.getText();
+	}
+	
+	public String[] getTags() {
+		return tagTextBox.getText().split(",");
 	}
 	
 	public void setFocus(boolean focused) {
