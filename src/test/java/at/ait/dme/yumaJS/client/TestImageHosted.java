@@ -12,23 +12,34 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class TestImageHosted implements EntryPoint {
 
 	public void onModuleLoad() {
-		final ImageAnnotationLayer annotationLayer = 
-			new ImageAnnotationLayer("annotateMe", createInitParams());
+		final ImageAnnotationLayer annotationLayer01 = 
+			new ImageAnnotationLayer("annotateMe_01", createInitParams());
 		
-		PushButton annotate = new PushButton("Add Note");
-		annotate.addClickHandler(new ClickHandler() {
+		PushButton annotate01 = new PushButton("Add Note to 1st Image");
+		annotate01.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					annotationLayer01.createNewAnnotation();
+				}
+			});
+		
+		final ImageAnnotationLayer annotationLayer02 = 
+				new ImageAnnotationLayer("annotateMe_02", createInitParams());
+		
+		PushButton annotate02 = new PushButton("Add Note to 2nd Image");
+		annotate02.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				annotationLayer.createNewAnnotation();
+				annotationLayer02.createNewAnnotation();
 			}
 		});
 		
-		RootPanel.get().add(annotate);
+		RootPanel.get().add(annotate01);		
+		RootPanel.get().add(annotate02);
 	}
 	
 	private native InitParams createInitParams() /*-{
 		return {
 			enableReplies:true,
-			serverURL:"http://localhost:8081/yuma4j-server"
+			serverURL:"http://dme.ait.ac.at/yuma4j-server"
 		};
 	}-*/;
 

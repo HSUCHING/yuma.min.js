@@ -34,6 +34,10 @@ public class Annotation extends JavaScriptObject {
 		this.id = id;
 	}-*/;
 	
+	public final native String getObjectURI() /*-{
+		return this.objectURI;
+	}-*/;
+	
 	public final native String getIsReplyTo() /*-{
 		return this.isReplyTo;
 	}-*/;

@@ -43,7 +43,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	private static final String MEDIATYPE = "IMAGE";
 	
-	private static String objectURI;
+	private String objectURI;
 	
 	private Element image;
 	
@@ -228,6 +228,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 		
 	public void createNewAnnotation() {
+		System.out.println("create new on " + getObjectURI());
+		
 		final Annotation empty = createEmptyAnnotation();
 		empty.setFragment(EMPTY_ANNOTATION);
 		addAnnotation(empty);

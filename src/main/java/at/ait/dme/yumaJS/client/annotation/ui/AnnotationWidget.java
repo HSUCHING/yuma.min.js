@@ -74,7 +74,7 @@ public class AnnotationWidget extends Composite {
 	private static final String CSS_HIDDEN = "yuma-button-hidden";
 	private static final String DATE_FORMAT = "MMMM dd, yyyy 'at' HH:mm"; 
 	
-	public AnnotationWidget(Annotation a, FragmentWidget fragmentWidget, Annotatable annotatable) {
+	public AnnotationWidget(Annotation a, FragmentWidget fragmentWidget, Annotatable annotatable) {		
 		this.fragmentWidget = fragmentWidget;
 		this.annotatable = annotatable;
 		
