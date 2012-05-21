@@ -31,23 +31,25 @@
             </ul>
           </p>
 	  
-	  <h2>How Does yuma.min.js Work?</h2>
-	  <p><strong>yuma.min.js</strong> makes it easy to attach annotation functionality to content
-	  on your Web pages. Simply include the <strong>yuma.min.js</strong> JavaScript file and
-	  CSS stylesheet, and you are ready to go. Developer documentation and code samples are available on 
-	  <a href="http://github.com/rsimon/yuma.min.js">our GitHub site</a>. Give it a try! 
-	  <a href="#" onclick="javascript:annotationLayer.createNewAnnotation();return false">Click
-	  here</a> (or on the 'Add Annotation' button) to add an annotation to the image below. Note
-	  that this demo <strong>will not store</strong> your annotations!</p>
+	  <div id="scrollable-section" style="height:300px; overflow:scroll;" onscroll="annotationLayer.updatePosition();">
+	    <h2>How Does yuma.min.js Work?</h2>
+	    <p><strong>yuma.min.js</strong> makes it easy to attach annotation functionality to content
+	    on your Web pages. Simply include the <strong>yuma.min.js</strong> JavaScript file and
+	    CSS stylesheet, and you are ready to go. Developer documentation and code samples are available on 
+	    <a href="http://github.com/rsimon/yuma.min.js">our GitHub site</a>. Give it a try! 	
+	    <a href="#" onclick="javascript:annotationLayer.createNewAnnotation();return false">Click
+	    here</a> (or on the 'Add Annotation' button) to add an annotation to the image below. Note
+	    that this demo <strong>will not store</strong> your annotations!</p>
 	  
-	  <div id="image-container">
-	    <img id="sample-image" src="samples/640px-Hotel_Bristol_dinner.jpg" />
+	    <div id="image-container">
+	      <img id="sample-image" src="samples/640px-Hotel_Bristol_dinner.jpg" />
 	  
-	    <p class="attribution">
-          <input class="button" type="button" value="Add Annotation" onclick="javascript:annotationLayer.createNewAnnotation();"/>
-	      <a href="http://commons.wikimedia.org/wiki/File:Hotel_Bristol_dinner.jp">Banquet at the Hotel Bristol, Warsaw</a>,
-          Wikimedia Commons. Public Domain.
-	    </p>
+	      <p class="attribution">
+            <input class="button" type="button" value="Add Annotation" onclick="javascript:annotationLayer.createNewAnnotation();"/>
+	        <a href="http://commons.wikimedia.org/wiki/File:Hotel_Bristol_dinner.jp">Banquet at the Hotel Bristol, Warsaw</a>,
+            Wikimedia Commons. Public Domain.
+	      </p>
+	    </div>
 	  </div>
 	  
 	  <p></p>

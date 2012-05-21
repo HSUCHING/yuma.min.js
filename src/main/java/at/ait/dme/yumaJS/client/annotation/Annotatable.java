@@ -100,6 +100,7 @@ public abstract class Annotatable implements Exportable {
 	
 	protected abstract void onWindowResize(int width, int height);
 	
+	@Export
 	public void updatePosition() {
 		onWindowResize(Window.getClientWidth(), Window.getClientHeight());
 	}
