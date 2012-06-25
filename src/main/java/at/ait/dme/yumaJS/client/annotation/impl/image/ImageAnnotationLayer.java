@@ -43,6 +43,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	private static final String MEDIATYPE = "IMAGE";
 	
+	private static final String DATA_ORIGINAL = "data-original";
+	
 	private String objectURI;
 	
 	private Element image;
@@ -68,8 +70,13 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		
 		if (!image.getTagName().toLowerCase().equals("img"))
 			YUMA.fatalError("Error: you can only create an ImageCanvas on an <img> element");
-		
-		objectURI = Image.wrap(image).getUrl();
+		 
+		// We're checking for @data-original as first priority, in order to support the 
+		// jQuery lazy load plugin
+		if (image.hasAttribute(DATA_ORIGINAL))
+			objectURI = image.getAttribute(DATA_ORIGINAL);	
+		else
+			objectURI = Image.wrap(image).getUrl();		
 
 		annotationLayer = new AbsolutePanel();
 		annotationLayer.setStyleName("image-canvas");	
