@@ -1,3 +1,7 @@
+# WE'RE MOVING
+
+This version of Yuma is no longer maintained. Any further development happens at the [rsimon/image-annotation-js](http://github.com/rsimon/image-annotation-js) repository.
+
 # yuma.min.js
 
 __yuma.min.js__ aims to be a leaner, lighter and more portable user interface for the [YUMA]
